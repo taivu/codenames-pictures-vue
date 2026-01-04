@@ -221,16 +221,28 @@ const baseUrl = import.meta.env.BASE_URL
         <h2 class="text-2xl font-bold mb-4">Online Actions</h2>
         <div class="grid gap-3 sm:grid-cols-2">
           <div class="bg-white rounded-lg p-3 border border-gray-200">
-            <p><strong>Marking a state:</strong> click on the tile</p>
+            <p><strong>Mark a card:</strong> tap an unmarked card and select a color</p>
           </div>
           <div class="bg-white rounded-lg p-3 border border-gray-200">
-            <p><strong>Remove a marking:</strong> click on the tile</p>
+            <p><strong>Remove marking:</strong> tap a marked card to clear it</p>
           </div>
           <div class="bg-white rounded-lg p-3 border border-gray-200">
-            <p><strong>Choosing a spymasters key card:</strong> click on the <strong><em>spy master</em></strong> button</p>
+            <p><strong>View card full screen:</strong> tap the card number in the corner</p>
           </div>
           <div class="bg-white rounded-lg p-3 border border-gray-200">
-            <p><strong>Search for a spymaster key:</strong> enter the card ID on the spymaster page and submit.</p>
+            <p><strong>Set starting team:</strong> tap the score badge next to a team name</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p><strong>Track score:</strong> use the + and - buttons under each team's score</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p><strong>Spy master key:</strong> open from menu, share URL with the other spymaster</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p><strong>Lock spy master screen:</strong> tap lock button to hide card, hold to peek</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p><strong>Setup teams:</strong> add players, shuffle teams, and randomize spy masters</p>
           </div>
         </div>
       </div>

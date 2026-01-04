@@ -4,6 +4,7 @@ import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { getCardRingClass, getCardOverlayClass } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
+import CardViewModal from './CardViewModal.vue'
 import { BaseBadge } from '@/components/ui'
 
 interface Props {
@@ -14,6 +15,7 @@ const props = defineProps<Props>()
 
 const store = useGameStore()
 const showMenu = ref(false)
+const showCardView = ref(false)
 
 const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/card-${props.card.imageId}.jpg`)
 
@@ -43,18 +45,19 @@ function handleMenuClose(): void {
   showMenu.value = false
   store.colorMenuOpen = false
 }
+
+function handleBadgeClick(event: MouseEvent): void {
+  event.stopPropagation()
+  event.preventDefault()
+  showCardView.value = true
+}
+
+function handleCardViewClose(): void {
+  showCardView.value = false
+}
 </script>
 
 <template>
-  <!-- Dark overlay when menu is open -->
-  <Teleport to="body">
-    <div
-      v-if="showMenu"
-      class="fixed inset-0 bg-black/[.42] z-40"
-      @click="handleMenuClose"
-    />
-  </Teleport>
-
   <div
     class="relative cursor-pointer rounded-xl border border-gray-400"
     :class="[
@@ -65,7 +68,18 @@ function handleMenuClose(): void {
     @click="handleClick"
     @contextmenu="handleClick"
   >
-    <BaseBadge class="absolute top-1 left-1 z-10">
+    <!-- Dark overlay when menu is open -->
+    <Teleport to="body">
+      <div
+        v-if="showMenu"
+        class="fixed inset-0 bg-black/[.42] z-40"
+        @click="handleMenuClose"
+      />
+    </Teleport>
+    <BaseBadge
+      class="absolute top-1 left-1 z-10 cursor-pointer hover:scale-110 transition-transform"
+      @click="handleBadgeClick"
+    >
       {{ card.id + 1 }}
     </BaseBadge>
 
@@ -94,6 +108,13 @@ function handleMenuClose(): void {
       v-if="showMenu"
       @select="handleColorSelect"
       @close="handleMenuClose"
+    />
+
+    <!-- Full screen card view modal -->
+    <CardViewModal
+      v-if="showCardView"
+      :card="card"
+      @close="handleCardViewClose"
     />
   </div>
 </template>
