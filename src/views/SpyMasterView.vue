@@ -116,18 +116,9 @@ function endPeek(): void {
 </script>
 
 <template>
-  <div
-    class="min-h-screen p-4 sm:p-8 relative"
-    :class="lockedIn ? 'locked-mode' : ''"
-    @mousedown="startPeek"
-    @mouseup="endPeek"
-    @mouseleave="endPeek"
-    @touchstart="startPeek"
-    @touchend="endPeek"
-    @touchcancel="endPeek"
-  >
+  <div class="min-h-screen p-4 sm:p-8 relative">
     <!-- Lock toggle switch (sticky, compact, above overlay) -->
-    <div v-if="store.currentCard" class="sticky top-2 z-20 flex justify-end mb-2">
+    <div v-if="store.currentCard" class="sticky top-2 z-40 flex justify-end mb-2">
       <button
         class="flex items-center gap-1.5 px-2 py-1 rounded-full shadow text-xs transition-colors"
         :class="lockedIn ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-600'"
@@ -138,10 +129,22 @@ function endPeek(): void {
       </button>
     </div>
 
+    <!-- Transparent touch capture overlay (when locked) -->
+    <div
+      v-if="lockedIn"
+      class="fixed inset-0 z-30"
+      @mousedown="startPeek"
+      @mouseup="endPeek"
+      @mouseleave="endPeek"
+      @touchstart="startPeek"
+      @touchend="endPeek"
+      @touchcancel="endPeek"
+    />
+
     <!-- Full screen black overlay (when locked and not peeking) -->
     <div
       v-if="lockedIn && !peeking"
-      class="fixed inset-0 bg-black z-10 flex flex-col items-center justify-center select-none px-8"
+      class="fixed inset-0 bg-black z-20 flex flex-col items-center justify-center select-none px-8 pointer-events-none"
     >
       <span class="text-white text-xl font-medium mb-6">Hold anywhere to reveal</span>
       <p v-if="currentPhrase" class="text-gray-400 text-center text-sm sm:text-base max-w-md italic">
@@ -223,13 +226,3 @@ function endPeek(): void {
     </div>
   </div>
 </template>
-
-<style scoped>
-.locked-mode {
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  touch-action: manipulation;
-}
-</style>
