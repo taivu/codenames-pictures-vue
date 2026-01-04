@@ -12,6 +12,11 @@
 
   /* Font */
   --font-game: 'Gaegu', cursive;
+
+  /* Card Grid Layout */
+  --spacing-sidebar: 12rem;
+  --width-card-max: 220px;
+  --width-grid-ideal: calc(5 * 220px + 4 * 0.5rem);
 }
 
 @layer base {
@@ -28,6 +33,10 @@
 
   #app {
     width: 100%;
+  }
+
+  button {
+    cursor: pointer;
   }
 }
 
@@ -68,5 +77,6 @@
     padding: 0.5rem 0.75rem;
     border: 2px dashed #9ca3af;
     border-radius: 0.25rem;
+    background-color: white;
   }
 }

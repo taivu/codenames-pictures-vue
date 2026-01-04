@@ -20,9 +20,15 @@ const routes: RouteRecordRaw[] = [
     props: { mode: 'duet' },
   },
   {
-    path: '/spy-master',
+    path: '/spy-master/:cardId?',
     name: 'spy-master',
     component: () => import('@/views/SpyMasterView.vue'),
+    props: true,
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('@/views/AboutView.vue'),
   },
 ]
 

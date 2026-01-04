@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'
 import { gameConfig } from '@/config'
-import { shuffle, chunk } from '@/utils'
+import { shuffle, chunk, capitalize } from '@/utils'
 
 export const useGameStore = defineStore('game', () => {
   // ===================
@@ -12,6 +12,7 @@ export const useGameStore = defineStore('game', () => {
   const cards = ref<Card[]>([])
   const usedCardIds = ref<number[]>([])
   const startingTeam = ref<TeamColor | null>(null)
+  const colorMenuOpen = ref(false)
 
   const teams = ref<Record<TeamColor, Team>>({
     red: { color: 'red', players: [], score: 0 },
@@ -37,7 +38,7 @@ export const useGameStore = defineStore('game', () => {
   const cardColorOptions = computed<CardColorOption[]>(() => {
     const teamOptions = activeTeamColors.value.map((color) => ({
       value: color as CardColor,
-      label: color.charAt(0).toUpperCase() + color.slice(1),
+      label: capitalize(color),
     }))
     return [
       ...teamOptions,
@@ -153,6 +154,13 @@ export const useGameStore = defineStore('game', () => {
     teams.value[teamColor].score++
   }
 
+  function decrementScore(teamColor: TeamColor): void {
+    const team = teams.value[teamColor]
+    if (team.score > 0) {
+      team.score = team.score - 1
+    }
+  }
+
   function resetScores(): void {
     activeTeamColors.value.forEach((color) => {
       teams.value[color].score = 0
@@ -171,6 +179,7 @@ export const useGameStore = defineStore('game', () => {
     teams,
     startingTeam,
     usedCardIds,
+    colorMenuOpen,
     // Computed
     isDuetMode,
     activeTeamColors,
@@ -191,6 +200,7 @@ export const useGameStore = defineStore('game', () => {
     pickSpyMasters,
     setStartingTeam,
     incrementScore,
+    decrementScore,
     resetScores,
     newGame,
   }

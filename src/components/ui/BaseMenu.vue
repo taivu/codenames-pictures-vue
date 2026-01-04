@@ -21,20 +21,23 @@ useClickOutside(menuRef, close)
     <!-- Dropdown content (above button) -->
     <div
       v-if="expanded"
-      class="absolute left-0 right-0 bottom-full mb-0 bg-white border-2 border-b-0 border-green-600 rounded-t z-50"
+      class="absolute left-0 right-0 bottom-full w-full bg-white border-2 border-green-600 border-b-0 rounded-t z-50 overflow-hidden"
+      @click="close"
     >
-      <slot />
+      <div class="whitespace-nowrap overflow-hidden text-ellipsis">
+        <slot />
+      </div>
     </div>
 
     <!-- Menu trigger button -->
     <button
       type="button"
-      class="btn border-2 border-green-600 bg-white min-w-28 w-full"
+      class="btn border-2 border-green-600 bg-white min-w-20 md:min-w-28 w-full text-sm md:text-base py-1 md:py-2"
       :class="expanded ? 'rounded-b rounded-t-none' : ''"
       @click="toggle"
     >
-      Menu
-      <span class="ml-2">{{ expanded ? '⋁' : '⋀' }}</span>
+      Main Menu
+      <FontAwesomeIcon :icon="expanded ? 'chevron-down' : 'chevron-up'" class="ml-1 md:ml-2" />
     </button>
   </div>
 </template>

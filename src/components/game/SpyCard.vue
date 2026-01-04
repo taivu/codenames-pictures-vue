@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { SpyCard } from '@/types'
+import { spyCellClasses, startingColorClasses } from '@/utils'
 
 interface Props {
   card: SpyCard
@@ -8,52 +9,47 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const cellColorClasses: Record<string, string> = {
-  red: 'bg-gradient-radial from-red-400 to-red-600',
-  blue: 'bg-gradient-radial from-blue-400 to-blue-600',
-  green: 'bg-gradient-radial from-green-400 to-green-600',
-  neutral: 'bg-amber-200',
-  black: 'bg-gradient-radial from-gray-600 to-gray-900',
-  '': 'bg-gray-200',
-}
-
 const startingColorClass = computed(() => {
   if (!props.card.startingColor) return 'bg-gray-400'
-
-  const colorMap: Record<string, string> = {
-    red: 'bg-red-500',
-    blue: 'bg-blue-500',
-    green: 'bg-green-500',
-  }
-  return colorMap[props.card.startingColor] ?? 'bg-gray-400'
+  return startingColorClasses[props.card.startingColor] ?? 'bg-gray-400'
 })
 </script>
 
 <template>
-  <div class="flex items-stretch gap-2">
-    <!-- Starting color indicator (left) -->
-    <div
-      class="w-8 rounded"
-      :class="startingColorClass"
-    />
-
-    <!-- Card grid -->
-    <div class="grid grid-cols-5 gap-1">
-      <div
-        v-for="(cell, index) in card.cells"
-        :key="index"
-        class="w-20 h-16 sm:w-24 sm:h-20 flex items-center justify-center rounded text-white font-bold text-lg"
-        :class="cellColorClasses[cell.color] || 'bg-gray-200'"
-      >
-        {{ index + 1 }}
-      </div>
+  <div>
+    <!-- Starting team label -->
+    <div class="text-center mb-2 font-bold text-lg">
+      Starting team:
+      <span :class="startingColorClass" class="px-2 py-1 rounded text-white capitalize">
+        {{ card.startingColor || 'None' }}
+      </span>
     </div>
 
-    <!-- Starting color indicator (right) -->
-    <div
-      class="w-8 rounded"
-      :class="startingColorClass"
-    />
+    <div class="flex items-stretch gap-1 sm:gap-2">
+      <!-- Starting color indicator (left) -->
+      <div
+        class="w-4 sm:w-8 rounded"
+        :class="startingColorClass"
+      />
+
+      <!-- Card grid -->
+      <div class="grid grid-cols-5 gap-0.5 sm:gap-1">
+        <div
+          v-for="(cell, index) in card.cells"
+          :key="index"
+          class="w-12 h-10 sm:w-20 sm:h-16 md:w-24 md:h-20 flex items-center justify-center rounded border border-black/30 sm:border-2 text-white font-bold text-sm sm:text-lg"
+          :class="spyCellClasses[cell.color] || 'bg-gray-200'"
+        >
+          {{ index + 1 }}
+        </div>
+      </div>
+
+      <!-- Starting color indicator (right) -->
+      <div
+        class="w-4 sm:w-8 rounded"
+        :class="startingColorClass"
+      />
+    </div>
   </div>
 </template>
 

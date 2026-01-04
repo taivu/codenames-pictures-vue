@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
+import { getCardRingClass, getCardOverlayClass } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import { BaseBadge } from '@/components/ui'
 
@@ -17,62 +18,52 @@ const showMenu = ref(false)
 const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/card-${props.card.imageId}.jpg`)
 
 const hasColor = computed(() => props.card.color !== '')
-
-const overlayClasses = computed(() => {
-  if (!hasColor.value) return ''
-
-  const colorMap: Record<Exclude<CardColor, ''>, string> = {
-    red: 'ring-4 ring-red-500',
-    blue: 'ring-4 ring-blue-500',
-    green: 'ring-4 ring-green-500',
-    neutral: 'ring-4 ring-yellow-400',
-    black: 'ring-4 ring-gray-900',
-  }
-  return colorMap[props.card.color as Exclude<CardColor, ''>] ?? ''
-})
-
-const overlayBgClasses = computed(() => {
-  if (!hasColor.value) return ''
-
-  const colorMap: Record<Exclude<CardColor, ''>, string> = {
-    red: 'bg-red-500/50',
-    blue: 'bg-blue-500/50',
-    green: 'bg-green-500/50',
-    neutral: 'bg-yellow-400/50',
-    black: 'bg-gray-900/60',
-  }
-  return colorMap[props.card.color as Exclude<CardColor, ''>] ?? ''
-})
+const overlayClasses = computed(() => getCardRingClass(props.card.color))
+const overlayBgClasses = computed(() => getCardOverlayClass(props.card.color))
 
 function handleClick(event: MouseEvent): void {
   event.preventDefault()
-  // Only show menu if card doesn't have a color yet
-  if (!hasColor.value) {
+  if (hasColor.value) {
+    // Clear selection if card has a color
+    store.resetCardColor(props.card.id)
+  } else {
+    // Show menu if no color
     showMenu.value = true
+    store.colorMenuOpen = true
   }
-}
-
-function handleDoubleClick(): void {
-  store.resetCardColor(props.card.id)
 }
 
 function handleColorSelect(color: CardColor): void {
   store.setCardColor(props.card.id, color)
   showMenu.value = false
+  store.colorMenuOpen = false
 }
 
 function handleMenuClose(): void {
   showMenu.value = false
+  store.colorMenuOpen = false
 }
 </script>
 
 <template>
+  <!-- Dark overlay when menu is open -->
+  <Teleport to="body">
+    <div
+      v-if="showMenu"
+      class="fixed inset-0 bg-black/[.42] z-40"
+      @click="handleMenuClose"
+    />
+  </Teleport>
+
   <div
     class="relative cursor-pointer rounded-xl border border-gray-400"
-    :class="overlayClasses"
+    :class="[
+      overlayClasses,
+      showMenu ? 'z-50 ring-4 ring-white' : '',
+      (store.colorMenuOpen && hasColor && !showMenu) ? 'z-50' : ''
+    ]"
     @click="handleClick"
     @contextmenu="handleClick"
-    @dblclick="handleDoubleClick"
   >
     <BaseBadge class="absolute top-1 left-1 z-10">
       {{ card.id + 1 }}
