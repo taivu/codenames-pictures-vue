@@ -16,11 +16,16 @@ import {
   faUsers,
   faSkullCrossbones,
   faUpRightFromSquare,
+  faGear,
+  faFloppyDisk,
+  faCheck,
+  faImages,
+  faCircleInfo,
 } from '@fortawesome/free-solid-svg-icons'
 import type { App } from 'vue'
 
 // Add only the icons we need (tree-shakable)
-library.add(faPlus, faXmark, faChevronUp, faChevronDown, faStar, faShuffle, faUserSecret, faLock, faLockOpen, faMagnifyingGlass, faDice, faPlay, faUsers, faSkullCrossbones, faUpRightFromSquare)
+library.add(faPlus, faXmark, faChevronUp, faChevronDown, faStar, faShuffle, faUserSecret, faLock, faLockOpen, faMagnifyingGlass, faDice, faPlay, faUsers, faSkullCrossbones, faUpRightFromSquare, faGear, faFloppyDisk, faCheck, faImages, faCircleInfo)
 
 export function setupFontAwesome(app: App): void {
   app.component('FontAwesomeIcon', FontAwesomeIcon)

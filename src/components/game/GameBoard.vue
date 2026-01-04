@@ -4,13 +4,19 @@ import { RouterLink } from 'vue-router'
 import { useGameStore } from '@/stores'
 import CardGrid from './CardGrid.vue'
 import { ScoreBoard, TeamSummary, TeamsModal } from '@/components/team'
+import { SettingsModal } from '@/components/settings'
 import { BaseMenu } from '@/components/ui'
 
 const store = useGameStore()
 const showTeamsModal = ref(false)
+const showSettingsModal = ref(false)
 
 function toggleTeamsModal(): void {
   showTeamsModal.value = !showTeamsModal.value
+}
+
+function toggleSettingsModal(): void {
+  showSettingsModal.value = !showSettingsModal.value
 }
 
 function handleNewGame(event: Event): void {
@@ -22,6 +28,7 @@ function handleNewGame(event: Event): void {
 <template>
   <div class="h-screen overflow-hidden p-2 sm:p-4 pb-14 portrait:pb-14 landscape:pb-2 sm:landscape:pb-4">
     <TeamsModal v-if="showTeamsModal" @close="toggleTeamsModal" />
+    <SettingsModal v-if="showSettingsModal" @close="toggleSettingsModal" />
 
     <!-- Portrait: column layout, Landscape: row layout -->
     <div class="h-full flex flex-col landscape:flex-row gap-2 sm:gap-4">
@@ -99,10 +106,18 @@ function handleNewGame(event: Event): void {
             <RouterLink
               to="/about"
               target="_blank"
-              class="flex items-center justify-between px-2 md:px-4 py-1 md:py-2 text-sm md:text-base hover:bg-green-100"
+              class="flex items-center justify-between px-2 md:px-4 py-1 md:py-2 text-sm md:text-base hover:bg-green-100 border-b border-green-600"
             >
               About
               <FontAwesomeIcon icon="up-right-from-square" class="text-xs opacity-50" />
+            </RouterLink>
+            <RouterLink
+              to="#"
+              class="flex items-center gap-2 px-2 md:px-4 py-1 md:py-2 text-sm md:text-base hover:bg-green-100"
+              @click.prevent="toggleSettingsModal"
+            >
+              <FontAwesomeIcon icon="gear" />
+              Settings
             </RouterLink>
           </BaseMenu>
         </div>
@@ -144,10 +159,18 @@ function handleNewGame(event: Event): void {
         <RouterLink
           to="/about"
           target="_blank"
-          class="flex items-center justify-between px-4 py-2 text-sm hover:bg-green-100"
+          class="flex items-center justify-between px-4 py-2 text-sm hover:bg-green-100 border-b border-green-600"
         >
           About
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs opacity-50" />
+        </RouterLink>
+        <RouterLink
+          to="#"
+          class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-green-100"
+          @click.prevent="toggleSettingsModal"
+        >
+          <FontAwesomeIcon icon="gear" />
+          Settings
         </RouterLink>
       </BaseMenu>
     </div>

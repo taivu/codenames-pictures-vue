@@ -2,37 +2,20 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { cardSets, getDefaultCardSetIds, getCardSetById } from '@/config'
 import type { CardSet } from '@/config'
+import { loadFromStorage, saveToStorage } from '@/utils'
 
 const STORAGE_KEY = 'codenames-settings'
 
 interface PersistedSettings {
   enabledCardSetIds: string[]
-}
-
-function loadFromStorage(): PersistedSettings | null {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) {
-      return JSON.parse(stored)
-    }
-  } catch {
-    // Ignore parse errors
-  }
-  return null
-}
-
-function saveToStorage(settings: PersistedSettings): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
-  } catch {
-    // Ignore storage errors
-  }
+  autoSaveEnabled?: boolean
 }
 
 export const useSettingsStore = defineStore('settings', () => {
   // Load initial state from localStorage or use defaults
-  const stored = loadFromStorage()
+  const stored = loadFromStorage<PersistedSettings>(STORAGE_KEY)
   const enabledCardSetIds = ref<string[]>(stored?.enabledCardSetIds ?? getDefaultCardSetIds())
+  const autoSaveEnabled = ref<boolean>(stored?.autoSaveEnabled ?? false)
 
   // Computed
   const enabledCardSets = computed<CardSet[]>(() =>
@@ -79,16 +62,26 @@ export const useSettingsStore = defineStore('settings', () => {
 
   function resetToDefaults(): void {
     enabledCardSetIds.value = getDefaultCardSetIds()
+    autoSaveEnabled.value = false
+    persist()
+  }
+
+  function setAutoSave(enabled: boolean): void {
+    autoSaveEnabled.value = enabled
     persist()
   }
 
   function persist(): void {
-    saveToStorage({ enabledCardSetIds: enabledCardSetIds.value })
+    saveToStorage<PersistedSettings>(STORAGE_KEY, {
+      enabledCardSetIds: enabledCardSetIds.value,
+      autoSaveEnabled: autoSaveEnabled.value,
+    })
   }
 
   return {
     // State
     enabledCardSetIds,
+    autoSaveEnabled,
     // Computed
     enabledCardSets,
     totalEnabledCards,
@@ -98,5 +91,6 @@ export const useSettingsStore = defineStore('settings', () => {
     setCardSetEnabled,
     isCardSetEnabled,
     resetToDefaults,
+    setAutoSave,
   }
 })

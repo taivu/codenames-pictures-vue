@@ -32,9 +32,6 @@ const baseUrl = import.meta.env.BASE_URL
         <RouterLink to="/spy-master" class="btn btn-blue text-lg px-6 py-3">
           <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master
         </RouterLink>
-        <RouterLink to="/settings" class="btn bg-gray-600 hover:bg-gray-700 text-white text-lg px-6 py-3">
-          <FontAwesomeIcon icon="gear" class="mr-2" />Settings
-        </RouterLink>
       </div>
     </div>
 

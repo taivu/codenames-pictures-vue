@@ -1,13 +1,23 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'
 import { gameConfig } from '@/config'
-import { shuffle, chunk, capitalize } from '@/utils'
+import { shuffle, chunk, capitalize, loadFromStorage, saveToStorage, removeFromStorage } from '@/utils'
 import { useSettingsStore } from './settings'
 
 interface CardPoolItem {
   setId: string
   imageIndex: number
+}
+
+const GAME_STORAGE_KEY = 'codenames-game'
+
+interface PersistedGameState {
+  mode: GameMode
+  cards: Card[]
+  teams: Record<TeamColor, Team>
+  startingTeam: TeamColor | null
+  usedCards: Record<string, number[]>
 }
 
 export const useGameStore = defineStore('game', () => {
@@ -196,6 +206,50 @@ export const useGameStore = defineStore('game', () => {
     startingTeam.value = null
   }
 
+  // ===================
+  // Persistence
+  // ===================
+  const hasSavedGame = computed(() => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null)
+
+  function persistGame(): void {
+    saveToStorage<PersistedGameState>(GAME_STORAGE_KEY, {
+      mode: mode.value,
+      cards: cards.value,
+      teams: teams.value,
+      startingTeam: startingTeam.value,
+      usedCards: usedCards.value,
+    })
+  }
+
+  function restoreSavedGame(): boolean {
+    const saved = loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)
+    if (saved) {
+      mode.value = saved.mode
+      cards.value = saved.cards
+      teams.value = saved.teams
+      startingTeam.value = saved.startingTeam
+      usedCards.value = saved.usedCards
+      return true
+    }
+    return false
+  }
+
+  function clearSavedGame(): void {
+    removeFromStorage(GAME_STORAGE_KEY)
+  }
+
+  // Watch for changes and auto-save (when enabled)
+  watch(
+    [mode, cards, teams, startingTeam, usedCards],
+    () => {
+      const settingsStore = useSettingsStore()
+      if (settingsStore.autoSaveEnabled && cards.value.length > 0) {
+        persistGame()
+      }
+    },
+    { deep: true }
+  )
+
   return {
     // State
     mode,
@@ -210,6 +264,7 @@ export const useGameStore = defineStore('game', () => {
     gridSize,
     cardColorOptions,
     teamsAreSetup,
+    hasSavedGame,
     // Actions
     initializeGame,
     generateCards,
@@ -227,5 +282,8 @@ export const useGameStore = defineStore('game', () => {
     decrementScore,
     resetScores,
     newGame,
+    // Persistence
+    restoreSavedGame,
+    clearSavedGame,
   }
 })
