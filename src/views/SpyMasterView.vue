@@ -101,8 +101,9 @@ async function toggleLockIn(): Promise<void> {
   }
 }
 
-function startPeek(): void {
+function startPeek(event: MouseEvent | TouchEvent): void {
   if (lockedIn.value) {
+    event.preventDefault()
     peeking.value = true
   }
 }
@@ -118,6 +119,7 @@ function endPeek(): void {
 <template>
   <div
     class="min-h-screen p-4 sm:p-8 relative"
+    :class="lockedIn ? 'select-none' : ''"
     @mousedown="startPeek"
     @mouseup="endPeek"
     @mouseleave="endPeek"
