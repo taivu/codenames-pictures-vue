@@ -17,7 +17,7 @@ const store = useGameStore()
 const showMenu = ref(false)
 const showCardView = ref(false)
 
-const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/card-${props.card.imageId}.jpg`)
+const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
 
 const hasColor = computed(() => props.card.color !== '')
 const overlayClasses = computed(() => getCardRingClass(props.card.color))
@@ -85,7 +85,7 @@ function handleCardViewClose(): void {
 
     <img
       :src="imagePath"
-      :alt="`Card ${card.imageId}`"
+      :alt="`Card ${card.setId}-${card.imageIndex}`"
       class="w-full h-full object-cover select-none rounded-xl"
     />
 

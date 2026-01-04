@@ -2,7 +2,8 @@ export type CardColor = '' | 'red' | 'blue' | 'green' | 'neutral' | 'black'
 
 export interface Card {
   id: number
-  imageId: number
+  setId: string
+  imageIndex: number
   color: CardColor
 }
 

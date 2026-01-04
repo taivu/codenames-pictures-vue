@@ -17,7 +17,7 @@ const store = useGameStore()
   >
     <GameCard
       v-for="card in store.cards"
-      :key="card.imageId"
+      :key="`${card.setId}-${card.imageIndex}`"
       :card="card"
       class="aspect-square min-w-0 min-h-0"
     />

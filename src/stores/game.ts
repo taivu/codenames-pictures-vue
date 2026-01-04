@@ -3,6 +3,12 @@ import { ref, computed } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'
 import { gameConfig } from '@/config'
 import { shuffle, chunk, capitalize } from '@/utils'
+import { useSettingsStore } from './settings'
+
+interface CardPoolItem {
+  setId: string
+  imageIndex: number
+}
 
 export const useGameStore = defineStore('game', () => {
   // ===================
@@ -10,7 +16,7 @@ export const useGameStore = defineStore('game', () => {
   // ===================
   const mode = ref<GameMode>('classic')
   const cards = ref<Card[]>([])
-  const usedCardIds = ref<number[]>([])
+  const usedCards = ref<Record<string, number[]>>({}) // Track used cards per set
   const startingTeam = ref<TeamColor | null>(null)
   const colorMenuOpen = ref(false)
 
@@ -62,30 +68,48 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function generateCards(): void {
+    const settingsStore = useSettingsStore()
+    const enabledSets = settingsStore.enabledCardSets
+
     // First, mark current game's cards as used (if any exist)
     if (cards.value.length > 0) {
-      const currentCardIds = cards.value.map((c) => c.imageId)
-      const newUsedIds = currentCardIds.filter((id) => !usedCardIds.value.includes(id))
-      usedCardIds.value.push(...newUsedIds)
+      cards.value.forEach((card) => {
+        const setUsedCards = usedCards.value[card.setId] ?? []
+        if (!setUsedCards.includes(card.imageIndex)) {
+          setUsedCards.push(card.imageIndex)
+          usedCards.value[card.setId] = setUsedCards
+        }
+      })
     }
 
-    // Reset used cards if we've used them all (or close to it)
-    if (usedCardIds.value.length > gameConfig.totalCards - gridSize.value) {
-      usedCardIds.value = []
-    }
+    // Build pool of available cards from all enabled sets
+    const cardPool: CardPoolItem[] = []
+    enabledSets.forEach((set) => {
+      // Get or initialize used tracking for this set
+      let setUsedCards = usedCards.value[set.id] ?? []
 
-    // Get available card IDs (not recently used)
-    const availableIds = Array.from({ length: gameConfig.totalCards }, (_, i) => i).filter(
-      (id) => !usedCardIds.value.includes(id)
-    )
+      // Reset used cards for this set if we've used most of them
+      if (setUsedCards.length > set.cardCount - gridSize.value) {
+        setUsedCards = []
+        usedCards.value[set.id] = setUsedCards
+      }
 
-    // Select random cards from available pool
-    const selectedIds = shuffle(availableIds).slice(0, gridSize.value)
+      // Add available cards from this set to the pool
+      for (let i = 0; i < set.cardCount; i++) {
+        if (!setUsedCards.includes(i)) {
+          cardPool.push({ setId: set.id, imageIndex: i })
+        }
+      }
+    })
+
+    // Select random cards from the pool
+    const selectedCards = shuffle(cardPool).slice(0, gridSize.value)
 
     // Create card objects
-    cards.value = selectedIds.map((imageId, index) => ({
+    cards.value = selectedCards.map((poolItem, index) => ({
       id: index,
-      imageId,
+      setId: poolItem.setId,
+      imageIndex: poolItem.imageIndex,
       color: '' as CardColor,
     }))
   }
@@ -178,7 +202,7 @@ export const useGameStore = defineStore('game', () => {
     cards,
     teams,
     startingTeam,
-    usedCardIds,
+    usedCards,
     colorMenuOpen,
     // Computed
     isDuetMode,

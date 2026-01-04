@@ -29,7 +29,7 @@ const shareableUrl = computed(() => {
 function pickRandomPhrase(): void {
   if (humblePhrases.value.length > 0) {
     const randomIndex = Math.floor(Math.random() * humblePhrases.value.length)
-    currentPhrase.value = humblePhrases.value[randomIndex]
+    currentPhrase.value = humblePhrases.value[randomIndex] ?? ''
   }
 }
 

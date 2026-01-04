@@ -32,6 +32,9 @@ const baseUrl = import.meta.env.BASE_URL
         <RouterLink to="/spy-master" class="btn btn-blue text-lg px-6 py-3">
           <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master
         </RouterLink>
+        <RouterLink to="/settings" class="btn bg-gray-600 hover:bg-gray-700 text-white text-lg px-6 py-3">
+          <FontAwesomeIcon icon="gear" class="mr-2" />Settings
+        </RouterLink>
       </div>
     </div>
 
@@ -122,12 +125,12 @@ const baseUrl = import.meta.env.BASE_URL
 
         <div class="flex gap-4 justify-center mb-4">
           <img
-            :src="`${baseUrl}images/cards/card-29.jpg`"
+            :src="`${baseUrl}images/cards/og/card-29.jpg`"
             alt="card-example"
             class="w-28 sm:w-36 rounded-lg border-2 border-gray-300 shadow-md"
           />
           <img
-            :src="`${baseUrl}images/cards/card-4.jpg`"
+            :src="`${baseUrl}images/cards/og/card-4.jpg`"
             alt="card-example"
             class="w-28 sm:w-36 rounded-lg border-2 border-gray-300 shadow-md"
           />

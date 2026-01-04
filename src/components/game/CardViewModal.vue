@@ -12,7 +12,7 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/card-${props.card.imageId}.jpg`)
+const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
 
 function handleClose(): void {
   emit('close')
@@ -48,7 +48,7 @@ function handleBackdropClick(event: MouseEvent): void {
       <!-- Card image -->
       <img
         :src="imagePath"
-        :alt="`Card ${card.imageId}`"
+        :alt="`Card ${card.setId}-${card.imageIndex}`"
         class="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
       />
     </div>
