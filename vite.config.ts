@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(),
@@ -13,9 +13,9 @@ export default defineConfig(({ mode }) => ({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: mode === 'production' ? '/codenames-pictures-vue/' : '/',
+  base: '/',
   server: {
     port: 3000,
     open: true,
   },
-}))
+})

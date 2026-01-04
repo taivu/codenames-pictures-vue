@@ -22,8 +22,7 @@ const currentPhrase = ref('')
 
 const shareableUrl = computed(() => {
   if (!store.currentCardId) return ''
-  const baseUrl = window.location.origin + window.location.pathname
-  return `${baseUrl}#/spy-master/${store.currentCardId}`
+  return `${window.location.origin}/spy-master/${store.currentCardId}`
 })
 
 function pickRandomPhrase(): void {
