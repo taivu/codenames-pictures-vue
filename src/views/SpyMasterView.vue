@@ -101,9 +101,8 @@ async function toggleLockIn(): Promise<void> {
   }
 }
 
-function startPeek(event: MouseEvent | TouchEvent): void {
+function startPeek(): void {
   if (lockedIn.value) {
-    event.preventDefault()
     peeking.value = true
   }
 }
@@ -119,7 +118,7 @@ function endPeek(): void {
 <template>
   <div
     class="min-h-screen p-4 sm:p-8 relative"
-    :class="lockedIn ? 'select-none' : ''"
+    :class="lockedIn ? 'locked-mode' : ''"
     @mousedown="startPeek"
     @mouseup="endPeek"
     @mouseleave="endPeek"
@@ -224,3 +223,13 @@ function endPeek(): void {
     </div>
   </div>
 </template>
+
+<style scoped>
+.locked-mode {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+</style>
