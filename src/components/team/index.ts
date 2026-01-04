@@ -1,0 +1,5 @@
+export { default as TeamScore } from './TeamScore.vue'
+export { default as ScoreBoard } from './ScoreBoard.vue'
+export { default as TeamSummary } from './TeamSummary.vue'
+export { default as TeamSetup } from './TeamSetup.vue'
+export { default as TeamsModal } from './TeamsModal.vue'

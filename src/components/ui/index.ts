@@ -1,0 +1,4 @@
+export { default as BaseBadge } from './BaseBadge.vue'
+export { default as BaseButton } from './BaseButton.vue'
+export { default as BaseModal } from './BaseModal.vue'
+export { default as BaseMenu } from './BaseMenu.vue'
