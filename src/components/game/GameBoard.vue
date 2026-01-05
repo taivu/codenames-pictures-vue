@@ -6,22 +6,30 @@ import CardGrid from './CardGrid.vue'
 import { ScoreBoard, TeamSummary, TeamsModal } from '@/components/team'
 import { SettingsModal } from '@/components/settings'
 import { BaseMenu } from '@/components/ui'
+import { trackModalOpened, trackNewGame } from '@/plugins/analytics'
 
 const store = useGameStore()
 const showTeamsModal = ref(false)
 const showSettingsModal = ref(false)
 
 function toggleTeamsModal(): void {
+  if (!showTeamsModal.value) {
+    trackModalOpened('teams')
+  }
   showTeamsModal.value = !showTeamsModal.value
 }
 
 function toggleSettingsModal(): void {
+  if (!showSettingsModal.value) {
+    trackModalOpened('settings')
+  }
   showSettingsModal.value = !showSettingsModal.value
 }
 
 function handleNewGame(event: Event): void {
   event.preventDefault()
   store.newGame()
+  trackNewGame(store.mode)
 }
 </script>
 

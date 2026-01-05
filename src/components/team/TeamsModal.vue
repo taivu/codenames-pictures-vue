@@ -2,6 +2,7 @@
 import { useGameStore } from '@/stores'
 import { BaseModal } from '@/components/ui'
 import TeamSetup from './TeamSetup.vue'
+import { trackTeamsShuffled, trackSpymastersPicked } from '@/plugins/analytics'
 
 const emit = defineEmits<{
   close: []
@@ -15,10 +16,15 @@ function handleClose(): void {
 
 function handleShuffleTeams(): void {
   store.shuffleTeams()
+  const teams = Object.fromEntries(
+    store.activeTeamColors.map(color => [color, store.teams[color].players])
+  )
+  trackTeamsShuffled(teams)
 }
 
 function handlePickSpyMasters(): void {
   store.pickSpyMasters()
+  trackSpymastersPicked()
 }
 </script>
 

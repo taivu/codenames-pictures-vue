@@ -4,6 +4,7 @@ import type { GameMode } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { GameBoard } from '@/components/game'
 import { BaseModal } from '@/components/ui'
+import { trackGameStart } from '@/plugins/analytics'
 
 interface Props {
   mode: GameMode
@@ -21,12 +22,14 @@ onMounted(() => {
     showRestorePrompt.value = true
   } else {
     gameStore.initializeGame(props.mode)
+    trackGameStart(props.mode)
     isReady.value = true
   }
 })
 
 function handleRestoreGame(): void {
   gameStore.restoreSavedGame()
+  trackGameStart(gameStore.mode)
   showRestorePrompt.value = false
   isReady.value = true
 }
@@ -36,6 +39,7 @@ function handleNewGame(): void {
   gameStore.clearSavedGame()
   settingsStore.setAutoSave(false)
   gameStore.initializeGame(props.mode)
+  trackGameStart(props.mode)
   showRestorePrompt.value = false
   isReady.value = true
 }
