@@ -2,6 +2,7 @@
 import { useGameStore, useSettingsStore } from '@/stores'
 import { BaseModal } from '@/components/ui'
 import CardSetSelector from './CardSetSelector.vue'
+import { trackAutoSaveToggled } from '@/plugins/analytics'
 
 const emit = defineEmits<{
   close: []
@@ -21,6 +22,7 @@ function handleToggleAutoSave(): void {
     gameStore.clearSavedGame()
   }
   settingsStore.setAutoSave(newValue)
+  trackAutoSaveToggled(newValue)
 }
 </script>
 

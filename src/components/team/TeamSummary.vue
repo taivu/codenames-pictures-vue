@@ -4,6 +4,7 @@ import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
 import { BaseBadge } from '@/components/ui'
+import { trackStartingTeamSet } from '@/plugins/analytics'
 
 interface Props {
   color: TeamColor
@@ -24,6 +25,7 @@ const isStartingTeam = computed(() => store.startingTeam === props.color)
 function handleBadgeClick(): void {
   if (!store.isDuetMode) {
     store.setStartingTeam(props.color)
+    trackStartingTeamSet(props.color)
   }
 }
 </script>

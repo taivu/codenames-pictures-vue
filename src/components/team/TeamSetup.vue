@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
+import { trackPlayerAdded, trackStartingTeamSet } from '@/plugins/analytics'
 
 interface Props {
   color: TeamColor
@@ -16,8 +17,10 @@ const newPlayer = ref('')
 const newPlayerInput = ref<HTMLInputElement | null>(null)
 
 function handleSubmit(): void {
-  if (!newPlayer.value.trim()) return
-  store.addPlayer(props.color, newPlayer.value)
+  const name = newPlayer.value.trim()
+  if (!name) return
+  store.addPlayer(props.color, name)
+  trackPlayerAdded(props.color, name)
   newPlayer.value = ''
   newPlayerInput.value?.focus()
 }
@@ -32,6 +35,7 @@ function handleRemovePlayer(index: number): void {
 
 function handleSetStartingTeam(): void {
   store.setStartingTeam(props.color)
+  trackStartingTeamSet(props.color)
 }
 </script>
 

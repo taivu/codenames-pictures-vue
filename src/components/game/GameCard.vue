@@ -6,6 +6,7 @@ import { getCardRingClass, getCardOverlayClass } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
 import { BaseBadge } from '@/components/ui'
+import { trackModalOpened, trackCardMarked } from '@/plugins/analytics'
 
 interface Props {
   card: Card
@@ -39,6 +40,9 @@ function handleColorSelect(color: CardColor): void {
   store.setCardColor(props.card.id, color)
   showMenu.value = false
   store.colorMenuOpen = false
+  if (color) {
+    trackCardMarked(color)
+  }
 }
 
 function handleMenuClose(): void {
@@ -50,6 +54,7 @@ function handleBadgeClick(event: MouseEvent): void {
   event.stopPropagation()
   event.preventDefault()
   showCardView.value = true
+  trackModalOpened('card_view')
 }
 
 function handleCardViewClose(): void {
