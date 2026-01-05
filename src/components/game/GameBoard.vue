@@ -34,7 +34,7 @@ function handleNewGame(event: Event): void {
 </script>
 
 <template>
-  <div class="h-screen overflow-hidden p-2 sm:p-4 pb-14 portrait:pb-14 landscape:pb-2 sm:landscape:pb-4">
+  <div class="h-dvh overflow-hidden p-2 sm:p-4 pb-14 portrait:pb-14 landscape:pb-2 sm:landscape:pb-4">
     <TeamsModal v-if="showTeamsModal" @close="toggleTeamsModal" />
     <SettingsModal v-if="showSettingsModal" @close="toggleSettingsModal" />
 
