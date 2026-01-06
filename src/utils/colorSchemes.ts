@@ -32,13 +32,13 @@ export const cardButtonClasses: Record<CardColor, string> = {
   black: 'bg-gray-800 hover:bg-gray-900 text-white',
 }
 
-// SpyCard cell gradient styles
+// SpyCard cell styles (radial gradient)
 export const spyCellClasses: Record<string, string> = {
-  red: 'bg-gradient-radial from-red-400 to-red-600',
-  blue: 'bg-gradient-radial from-blue-400 to-blue-600',
-  green: 'bg-gradient-radial from-green-400 to-green-600',
-  neutral: 'bg-amber-200',
-  black: 'bg-gradient-radial from-gray-600 to-gray-900',
+  red: 'bg-radial-red',
+  blue: 'bg-radial-blue',
+  green: 'bg-radial-green',
+  neutral: 'bg-radial-neutral text-gray-800',
+  black: 'bg-radial-black',
   '': 'bg-gray-200',
 }
 
