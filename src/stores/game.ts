@@ -203,7 +203,6 @@ export const useGameStore = defineStore('game', () => {
 
   function newGame(): void {
     generateCards()
-    startingTeam.value = null
   }
 
   // ===================
@@ -283,6 +282,7 @@ export const useGameStore = defineStore('game', () => {
     resetScores,
     newGame,
     // Persistence
+    persistGame,
     restoreSavedGame,
     clearSavedGame,
   }

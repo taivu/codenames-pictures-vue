@@ -52,9 +52,3 @@ const startingColorClass = computed(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.bg-gradient-radial {
-  background: radial-gradient(circle, var(--tw-gradient-from), var(--tw-gradient-to));
-}
-</style>
