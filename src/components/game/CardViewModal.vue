@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Card } from '@/types'
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useEscapeKey } from '@/composables'
 
 interface Props {
   card: Card
@@ -12,28 +13,37 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const isVisible = ref(false)
+
 const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
 
 function handleClose(): void {
+  isVisible.value = false
+}
+
+function onAfterLeave(): void {
   emit('close')
 }
 
-function handleBackdropClick(event: MouseEvent): void {
-  if (event.target === event.currentTarget) {
-    handleClose()
-  }
-}
+onMounted(() => {
+  isVisible.value = true
+})
+
+useEscapeKey(handleClose)
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition name="modal" appear>
+    <Transition name="modal" @after-leave="onAfterLeave">
       <div
+        v-if="isVisible"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
-        @click="handleBackdropClick"
       >
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+        <div
+          class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          @click="handleClose"
+        />
 
         <!-- Close button -->
         <button

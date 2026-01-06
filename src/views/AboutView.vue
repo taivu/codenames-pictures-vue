@@ -5,12 +5,12 @@ import { RouterLink } from 'vue-router'
 <template>
   <div class="min-h-screen p-4 sm:p-8">
     <div class="max-w-4xl mx-auto">
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4">About</h1>
-        <p class="text-lg text-gray-600">
-          Codenames Pictures Online
-        </p>
+      <!-- Page Header -->
+      <div class="mb-6">
+        <RouterLink to="/" class="text-blue-600 hover:underline mb-4 inline-block">
+          <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
+        </RouterLink>
+        <h1 class="text-3xl sm:text-4xl font-bold">About</h1>
       </div>
 
       <!-- About Card -->
@@ -151,10 +151,10 @@ import { RouterLink } from 'vue-router'
         </p>
       </div>
 
-      <!-- Back Link -->
-      <div class="text-center mt-8">
-        <RouterLink to="/" class="text-gray-600 hover:text-gray-900 underline">
-          &larr; Back to Rules
+      <!-- Bottom CTA -->
+      <div class="text-center">
+        <RouterLink to="/" class="btn btn-green text-xl px-8 py-4">
+          <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
         </RouterLink>
       </div>
     </div>
