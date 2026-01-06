@@ -5,7 +5,6 @@ import { useGameStore } from '@/stores'
 import { getCardRingClass, getCardOverlayClass } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
-import { BaseBadge } from '@/components/ui'
 import { trackModalOpened, trackCardMarked } from '@/plugins/analytics'
 
 interface Props {

@@ -1,0 +1,40 @@
+export interface ChangelogEntry {
+  date: string
+  changes: string[]
+}
+
+export const changelog: ChangelogEntry[] = [
+  {
+    date: 'January 2025 (v2)',
+    changes: [
+      'New floating HUD with collapsible team scores',
+      'Slide-out drawer menu for game actions',
+      'Separated homepage with quick start from full rules page',
+      'Card zoom modal with fade transitions',
+      'Responsive score controls (stacked on mobile)',
+      'Auto-save with immediate persist/clear on toggle',
+      'Edge swipe to open drawer',
+    ],
+  },
+  {
+    date: 'January 2025 (v1)',
+    changes: [
+      'Complete rewrite in Vue 3 + Vite + TypeScript',
+      'Mobile-first responsive design',
+      'Portrait and landscape layouts',
+      'Improved card color selection with arrow indicator',
+      'Added team setup modal with shuffle and spy master randomizer',
+      'Score tracking with increment/decrement',
+      'Spy master card lock mode with screen wake lock',
+      'Added About page',
+    ],
+  },
+  {
+    date: 'Original Fork (2024)',
+    changes: [
+      'Fixed mobile touch interactions',
+      'Improved card randomizer to avoid repeats',
+      'Basic bug fixes',
+    ],
+  },
+]

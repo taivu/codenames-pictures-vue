@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { useTeamColors } from '@/composables'
 import { ScoreBoard, TeamSummary } from '@/components/team'
 import { BaseModal } from '@/components/ui'
-import { trackNewGame, trackStartingTeamSet } from '@/plugins/analytics'
+import { trackNewGame } from '@/plugins/analytics'
 
 const emit = defineEmits<{
   close: []
@@ -14,7 +13,6 @@ const emit = defineEmits<{
 
 const gameStore = useGameStore()
 const settingsStore = useSettingsStore()
-const { teamTextClasses } = useTeamColors()
 
 const showNewGameConfirm = ref(false)
 

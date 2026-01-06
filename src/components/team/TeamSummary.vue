@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
-import { BaseBadge } from '@/components/ui'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 interface Props {

@@ -21,7 +21,6 @@ export function useSwipeGesture(
 ) {
   const {
     threshold = 50,
-    edgeSize = 20,
     onSwipeLeft,
     onSwipeRight,
     onSwipeUp,
@@ -33,6 +32,7 @@ export function useSwipeGesture(
 
   function handleTouchStart(e: TouchEvent) {
     const touch = e.touches[0]
+    if (!touch) return
     swipeState.value = {
       startX: touch.clientX,
       startY: touch.clientY,
@@ -45,6 +45,7 @@ export function useSwipeGesture(
     if (!swipeState.value || !isSwiping.value) return
 
     const touch = e.changedTouches[0]
+    if (!touch) return
     const deltaX = touch.clientX - swipeState.value.startX
     const deltaY = touch.clientY - swipeState.value.startY
     const deltaTime = Date.now() - swipeState.value.startTime
@@ -123,6 +124,7 @@ export function useEdgeSwipe(options: {
 
   function handleTouchStart(e: TouchEvent) {
     const touch = e.touches[0]
+    if (!touch) return
     startX = touch.clientX
     startY = touch.clientY
 
@@ -141,6 +143,7 @@ export function useEdgeSwipe(options: {
     if (!isEdgeSwipe) return
 
     const touch = e.changedTouches[0]
+    if (!touch) return
     const deltaX = touch.clientX - startX
     const deltaY = touch.clientY - startY
     const absX = Math.abs(deltaX)

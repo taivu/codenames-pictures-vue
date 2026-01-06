@@ -46,14 +46,18 @@ useEscapeKey(() => {
 
 // Touch handlers for swipe-to-close
 function handleTouchStart(e: TouchEvent) {
-  startX = e.touches[0].clientX
+  const touch = e.touches[0]
+  if (!touch) return
+  startX = touch.clientX
   currentX = startX
   isDragging = true
 }
 
 function handleTouchMove(e: TouchEvent) {
   if (!isDragging) return
-  currentX = e.touches[0].clientX
+  const touch = e.touches[0]
+  if (!touch) return
+  currentX = touch.clientX
 
   const drawer = drawerRef.value
   if (!drawer) return

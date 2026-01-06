@@ -12,7 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const store = useGameStore()
-const { teamTextClasses, teamBgClasses, teamBorderClasses } = useTeamColors()
+const { teamTextClasses, teamBgClasses } = useTeamColors()
 const newPlayer = ref('')
 const newPlayerInput = ref<HTMLInputElement | null>(null)
 

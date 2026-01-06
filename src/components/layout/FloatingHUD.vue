@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
 import { trackStartingTeamSet } from '@/plugins/analytics'
@@ -9,10 +9,6 @@ const { teamBgClasses, teamTextClasses } = useTeamColors()
 
 const isExpanded = ref(false)
 let autoCollapseTimer: ReturnType<typeof setTimeout> | null = null
-
-const hasAnyPlayers = computed(() =>
-  store.activeTeamColors.some(color => store.teams[color].players.length > 0)
-)
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
