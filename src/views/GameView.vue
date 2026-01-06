@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import type { GameMode } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { GameBoard } from '@/components/game'
+import { GameLayout } from '@/components/layout'
 import { BaseModal } from '@/components/ui'
 import { trackGameStart } from '@/plugins/analytics'
 
@@ -48,18 +48,18 @@ function handleNewGame(): void {
 <template>
   <!-- Restore Game Prompt -->
   <BaseModal v-if="showRestorePrompt" title="Saved Game Found">
-    <p class="text-gray-700 mb-6">
+    <p class="text-gray-600 mb-6">
       A previously saved game was found. Would you like to continue where you left off?
     </p>
     <div class="flex gap-3 justify-end">
       <button
-        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 font-bold rounded border-2 border-gray-400"
+        class="px-4 py-2.5 text-gray-700 font-medium rounded-lg hover:bg-gray-100 transition-colors"
         @click="handleNewGame"
       >
         Start Fresh
       </button>
       <button
-        class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-bold rounded border-2 border-green-700"
+        class="px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-sm transition-colors"
         @click="handleRestoreGame"
       >
         Continue Game
@@ -67,5 +67,5 @@ function handleNewGame(): void {
     </div>
   </BaseModal>
 
-  <GameBoard v-if="isReady" />
+  <GameLayout v-if="isReady" />
 </template>

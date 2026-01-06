@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { changelog } from '@/config'
 </script>
 
 <template>
   <div class="min-h-screen p-4 sm:p-8">
     <div class="max-w-4xl mx-auto">
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4">About</h1>
-        <p class="text-lg text-gray-600">
-          Codenames Pictures Online
-        </p>
+      <!-- Page Header -->
+      <div class="mb-6">
+        <RouterLink to="/" class="text-blue-600 hover:underline mb-4 inline-block">
+          <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
+        </RouterLink>
+        <h1 class="text-3xl sm:text-4xl font-bold">About</h1>
       </div>
 
       <!-- About Card -->
@@ -74,25 +75,10 @@ import { RouterLink } from 'vue-router'
       <div class="bg-white/80 border-2 border-gray-300 rounded-xl p-6 shadow-sm mb-6">
         <h2 class="text-2xl font-bold mb-4">Changelog</h2>
         <div class="space-y-4">
-          <div>
-            <h3 class="font-bold text-gray-800">January 2025</h3>
+          <div v-for="entry in changelog" :key="entry.date">
+            <h3 class="font-bold text-gray-800">{{ entry.date }}</h3>
             <ul class="list-disc list-inside text-gray-700 text-sm space-y-1 ml-2">
-              <li>Complete rewrite in Vue 3 + Vite + TypeScript</li>
-              <li>Mobile-first responsive design</li>
-              <li>Portrait and landscape layouts</li>
-              <li>Improved card color selection with arrow indicator</li>
-              <li>Added team setup modal with shuffle and spy master randomizer</li>
-              <li>Score tracking with increment/decrement</li>
-              <li>Spy master card lock mode with screen wake lock</li>
-              <li>Added About page</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-bold text-gray-800">Original Fork (2024)</h3>
-            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1 ml-2">
-              <li>Fixed mobile touch interactions</li>
-              <li>Improved card randomizer to avoid repeats</li>
-              <li>Basic bug fixes</li>
+              <li v-for="change in entry.changes" :key="change">{{ change }}</li>
             </ul>
           </div>
         </div>
@@ -151,10 +137,10 @@ import { RouterLink } from 'vue-router'
         </p>
       </div>
 
-      <!-- Back Link -->
-      <div class="text-center mt-8">
-        <RouterLink to="/" class="text-gray-600 hover:text-gray-900 underline">
-          &larr; Back to Rules
+      <!-- Bottom CTA -->
+      <div class="text-center">
+        <RouterLink to="/" class="btn btn-green text-xl px-8 py-4">
+          <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
         </RouterLink>
       </div>
     </div>

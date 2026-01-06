@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
-import { BaseBadge } from '@/components/ui'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 interface Props {
@@ -31,37 +30,42 @@ function handleBadgeClick(): void {
 </script>
 
 <template>
-  <div v-if="hasPlayers" class="bg-white/50 rounded-lg p-2 md:p-4">
-    <h3
-      class="text-sm md:text-xl font-bold flex items-center justify-between gap-1 md:gap-2 whitespace-nowrap"
-      :class="teamTextClasses[color]"
-    >
-      <span><span class="hidden md:inline">Team </span>{{ color }}</span>
-      <span class="flex items-center gap-1">
+  <div v-if="hasPlayers" class="bg-gray-50 rounded-xl p-3">
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <h3
+        class="text-sm font-bold capitalize"
+        :class="teamTextClasses[color]"
+      >
         <FontAwesomeIcon
           v-if="isStartingTeam"
           icon="star"
-          class="text-yellow-500 text-xs md:text-sm"
+          class="text-yellow-500 text-xs mr-1"
         />
-        <BaseBadge
-          :class="!store.isDuetMode ? 'cursor-pointer hover:opacity-80' : ''"
-          :title="!store.isDuetMode ? 'Click to set as starting team' : ''"
-          @click="handleBadgeClick"
-        >
-          {{ guessedCards }}<template v-if="store.startingTeam || store.isDuetMode">/{{ totalCards }}</template>
-        </BaseBadge>
-      </span>
-    </h3>
+        Team {{ color }}
+      </h3>
+      <button
+        :class="[
+          'px-2 py-0.5 text-xs font-bold rounded-md transition-colors',
+          !store.isDuetMode ? 'cursor-pointer hover:opacity-80' : '',
+          teamTextClasses[color],
+          'bg-white shadow-sm'
+        ]"
+        :title="!store.isDuetMode ? 'Click to set as starting team' : ''"
+        @click="handleBadgeClick"
+      >
+        {{ guessedCards }}<template v-if="store.startingTeam || store.isDuetMode">/{{ totalCards }}</template>
+      </button>
+    </div>
 
-    <ul class="mt-1 md:mt-2 space-y-1 text-xs md:text-base">
+    <ul class="space-y-0.5 text-xs">
       <li
         v-for="(player, index) in team.players"
         :key="index"
         class="truncate"
         :class="[
           index === 0 && !store.isDuetMode
-            ? ['font-bold', teamTextClasses[color]]
-            : 'text-gray-700',
+            ? ['font-semibold', teamTextClasses[color]]
+            : 'text-gray-600',
         ]"
       >
         <template v-if="index === 0 && !store.isDuetMode">&gt; </template>

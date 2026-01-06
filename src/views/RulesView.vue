@@ -6,33 +6,12 @@ const baseUrl = import.meta.env.BASE_URL
 
 <template>
   <div class="min-h-screen p-4 sm:p-8">
-    <!-- Hero Section -->
-    <div class="max-w-4xl mx-auto text-center mb-8">
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Codenames Pictures Online</h1>
-      <p class="text-lg mb-6">
-        The online version of Codenames Pictures by
-        <a
-          href="https://czechgames.com/en/codenames-pictures/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-blue-600 hover:underline font-bold"
-        >
-          czechgames
-        </a>
-      </p>
-
-      <!-- Quick Start Buttons -->
-      <div class="flex flex-wrap gap-3 justify-center">
-        <RouterLink to="/play" class="btn btn-green text-lg px-6 py-3">
-          <FontAwesomeIcon icon="play" class="mr-2" />Start Classic
-        </RouterLink>
-        <RouterLink to="/play-duet" class="btn border-2 border-green-600 text-green-700 bg-white hover:bg-green-50 text-lg px-6 py-3">
-          <FontAwesomeIcon icon="users" class="mr-2" />Start Duet
-        </RouterLink>
-        <RouterLink to="/spy-master" class="btn btn-blue text-lg px-6 py-3">
-          <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master
-        </RouterLink>
-      </div>
+    <!-- Page Header -->
+    <div class="max-w-4xl mx-auto mb-6">
+      <RouterLink to="/" class="text-blue-600 hover:underline mb-4 inline-block">
+        <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
+      </RouterLink>
+      <h1 class="text-3xl sm:text-4xl font-bold">Game Rules</h1>
     </div>
 
     <!-- Intro Card -->
@@ -51,8 +30,6 @@ const baseUrl = import.meta.env.BASE_URL
 
     <!-- Game Rules Section -->
     <div class="max-w-4xl mx-auto mb-6">
-      <h2 class="text-3xl font-bold mb-4 text-center">Game Rules</h2>
-
       <div class="grid gap-4 md:grid-cols-2">
         <!-- Spymaster Key Card -->
         <div class="bg-white/80 border-2 border-gray-300 rounded-xl p-5 shadow-sm">
@@ -250,17 +227,9 @@ const baseUrl = import.meta.env.BASE_URL
 
     <!-- Bottom CTA -->
     <div class="max-w-4xl mx-auto text-center">
-      <div class="flex flex-wrap gap-4 justify-center">
-        <RouterLink to="/play" class="btn btn-green text-xl px-8 py-4">
-          <FontAwesomeIcon icon="play" class="mr-2" />Start Classic!
-        </RouterLink>
-        <RouterLink to="/play-duet" class="btn border-2 border-green-600 text-green-700 bg-white hover:bg-green-50 text-xl px-8 py-4">
-          <FontAwesomeIcon icon="users" class="mr-2" />Start Duet!
-        </RouterLink>
-        <RouterLink to="/spy-master" class="btn btn-blue text-xl px-8 py-4">
-          <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master Cards
-        </RouterLink>
-      </div>
+      <RouterLink to="/" class="btn btn-green text-xl px-8 py-4">
+        <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
+      </RouterLink>
     </div>
   </div>
 </template>

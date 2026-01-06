@@ -11,10 +11,10 @@ export function useClickOutside(
   }
 
   onMounted(() => {
-    document.addEventListener('mousedown', handleClick, true)
+    document.addEventListener('mousedown', handleClick)
   })
 
   onUnmounted(() => {
-    document.removeEventListener('mousedown', handleClick, true)
+    document.removeEventListener('mousedown', handleClick)
   })
 }

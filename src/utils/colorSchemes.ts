@@ -25,11 +25,11 @@ export const cardOverlayClasses: Record<Exclude<CardColor, ''>, string> = {
 // Button styles for card color selection menu
 export const cardButtonClasses: Record<CardColor, string> = {
   '': '',
-  red: 'bg-red-500 text-white',
-  blue: 'bg-blue-500 text-white',
-  green: 'bg-green-500 text-white',
-  neutral: 'bg-yellow-400 text-black',
-  black: 'bg-gray-900 text-white',
+  red: 'bg-red-500 hover:bg-red-600 text-white',
+  blue: 'bg-blue-500 hover:bg-blue-600 text-white',
+  green: 'bg-green-500 hover:bg-green-600 text-white',
+  neutral: 'bg-yellow-400 hover:bg-yellow-500 text-gray-800',
+  black: 'bg-gray-800 hover:bg-gray-900 text-white',
 }
 
 // SpyCard cell gradient styles

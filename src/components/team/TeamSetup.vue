@@ -12,7 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const store = useGameStore()
-const { teamTextClasses, teamBgClasses, teamBorderClasses } = useTeamColors()
+const { teamTextClasses, teamBgClasses } = useTeamColors()
 const newPlayer = ref('')
 const newPlayerInput = ref<HTMLInputElement | null>(null)
 
@@ -40,13 +40,10 @@ function handleSetStartingTeam(): void {
 </script>
 
 <template>
-  <div
-    class="p-4 rounded-lg border-2 bg-amber-50 overflow-hidden"
-    :class="teamBorderClasses[color]"
-  >
+  <div class="p-4 rounded-xl bg-gray-50 overflow-hidden">
     <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
       <h3
-        class="text-xl font-bold whitespace-nowrap"
+        class="text-lg font-bold whitespace-nowrap"
         :class="teamTextClasses[color]"
       >
         Team {{ color }}
@@ -54,14 +51,14 @@ function handleSetStartingTeam(): void {
 
       <button
         type="button"
-        class="text-sm px-3 py-1 rounded-full border-2 transition-all"
+        class="text-xs px-3 py-1.5 rounded-lg transition-all"
         :class="store.startingTeam === color
-          ? [teamBgClasses[color], 'text-white border-current']
-          : 'border-gray-300 text-gray-500 hover:border-gray-400'"
+          ? [teamBgClasses[color], 'text-white shadow-sm']
+          : 'bg-gray-200 text-gray-600 hover:bg-gray-300'"
         @click="handleSetStartingTeam"
       >
-        <FontAwesomeIcon icon="star" :class="['mr-1', store.startingTeam === color ? 'text-yellow-500' : 'text-gray-300']" />
-        {{ store.startingTeam === color ? 'Starting team' : 'Set as starting' }}
+        <FontAwesomeIcon icon="star" :class="['mr-1', store.startingTeam === color ? 'text-yellow-300' : 'text-gray-400']" />
+        {{ store.startingTeam === color ? 'Starting' : 'Set starting' }}
       </button>
     </div>
 
@@ -74,12 +71,12 @@ function handleSetStartingTeam(): void {
         >
           <input
             :value="player"
-            class="input flex-1 min-w-0"
+            class="flex-1 min-w-0 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-shadow"
             @input="handleUpdatePlayer(index, ($event.target as HTMLInputElement).value)"
           />
           <button
             type="button"
-            class="w-8 h-8 shrink-0 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded text-gray-600"
+            class="w-9 h-9 shrink-0 flex items-center justify-center bg-white border border-gray-200 hover:bg-red-50 hover:border-red-200 hover:text-red-500 rounded-lg text-gray-400 transition-colors"
             @click="handleRemovePlayer(index)"
           >
             <FontAwesomeIcon icon="xmark" />
@@ -91,12 +88,12 @@ function handleSetStartingTeam(): void {
         <input
           ref="newPlayerInput"
           v-model="newPlayer"
-          class="input flex-1 min-w-0"
-          placeholder="Player name"
+          class="flex-1 min-w-0 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-shadow"
+          placeholder="Add player..."
         />
         <button
           type="submit"
-          class="px-3 py-2 shrink-0 flex items-center gap-1 bg-gray-200 hover:bg-gray-300 rounded text-gray-700 font-bold"
+          class="px-4 py-2 shrink-0 flex items-center gap-1.5 bg-green-500 hover:bg-green-600 rounded-lg text-white text-sm font-medium shadow-sm transition-colors"
         >
           <FontAwesomeIcon icon="plus" /> Add
         </button>

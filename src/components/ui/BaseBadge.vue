@@ -10,11 +10,11 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <span
-    class="inline-flex items-center justify-center min-w-6 h-6 px-1.5 text-sm font-bold rounded bg-white border-2 border-black"
+    class="inline-flex items-center justify-center min-w-6 h-6 px-2 text-xs font-bold rounded-md shadow-sm"
     :class="{
-      'bg-white': variant === 'default',
+      'bg-white/90 text-gray-700': variant === 'default',
       'bg-green-500 text-white': variant === 'success',
-      'bg-yellow-400': variant === 'warning',
+      'bg-yellow-400 text-gray-800': variant === 'warning',
       'bg-red-500 text-white': variant === 'danger',
     }"
   >

@@ -23,24 +23,26 @@ function handleDecrement(): void {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-1">
-    <h1
-      class="text-3xl md:text-4xl font-bold"
+  <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 bg-gray-50 rounded-xl px-3 py-2">
+    <!-- Score number -->
+    <div
+      class="text-2xl font-bold min-w-[2ch] text-center order-first sm:order-none"
       :class="teamTextClasses[color]"
     >
       {{ store.teams[color].score }}
-    </h1>
-    <div class="flex gap-1">
+    </div>
+    <!-- Buttons: below on mobile, sides on tablet+ -->
+    <div class="flex sm:contents gap-3">
       <button
         type="button"
-        class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded font-bold text-lg"
+        class="w-7 h-7 flex items-center justify-center bg-white hover:bg-gray-100 rounded-lg font-bold text-gray-600 shadow-sm transition-colors sm:order-first"
         @click="handleDecrement"
       >
         -
       </button>
       <button
         type="button"
-        class="w-8 h-8 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded font-bold text-lg"
+        class="w-7 h-7 flex items-center justify-center bg-white hover:bg-gray-100 rounded-lg font-bold text-gray-600 shadow-sm transition-colors"
         @click="handleIncrement"
       >
         +

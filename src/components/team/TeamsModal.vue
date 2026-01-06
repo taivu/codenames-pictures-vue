@@ -31,23 +31,24 @@ function handlePickSpyMasters(): void {
 <template>
   <BaseModal
     :title="`Setup your ${store.isDuetMode ? 'team' : 'teams'}`"
+    size="lg"
     @close="handleClose"
   >
     <template v-if="!store.isDuetMode" #header-actions>
-      <div class="inline-flex">
+      <div class="flex gap-1">
         <button
-          class="w-10 h-10 flex items-center justify-center font-bold border-2 border-black rounded-l bg-green-500 text-white hover:opacity-80"
+          class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 transition-colors"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
-          <FontAwesomeIcon icon="shuffle" class="text-lg" />
+          <FontAwesomeIcon icon="shuffle" />
         </button>
         <button
-          class="w-10 h-10 flex items-center justify-center font-bold border-2 border-l-0 border-black rounded-r bg-blue-500 text-white hover:opacity-80"
+          class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors"
           title="Pick spy masters"
           @click="handlePickSpyMasters"
         >
-          <FontAwesomeIcon icon="user-secret" class="text-lg" />
+          <FontAwesomeIcon icon="user-secret" />
         </button>
       </div>
     </template>
@@ -63,23 +64,23 @@ function handlePickSpyMasters(): void {
       />
     </div>
 
-    <div v-if="!store.isDuetMode" class="flex justify-center mt-6">
-      <div class="inline-flex">
+    <div v-if="!store.isDuetMode" class="flex justify-center mt-6 pt-4 border-t border-gray-100">
+      <div class="flex gap-2">
         <button
-          class="px-3 py-2 flex items-center justify-center font-bold border-2 border-black rounded-l bg-green-500 text-white hover:opacity-80"
+          class="px-4 py-2.5 flex items-center gap-2 font-medium rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors shadow-sm"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
           <FontAwesomeIcon icon="shuffle" />
-          <span class="hidden sm:inline ml-2">Shuffle teams</span>
+          <span class="hidden sm:inline">Shuffle teams</span>
         </button>
         <button
-          class="px-3 py-2 flex items-center justify-center font-bold border-2 border-l-0 border-black rounded-r bg-blue-500 text-white hover:opacity-80"
+          class="px-4 py-2.5 flex items-center gap-2 font-medium rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors shadow-sm"
           title="Randomize spy masters"
           @click="handlePickSpyMasters"
         >
           <FontAwesomeIcon icon="user-secret" />
-          <span class="hidden sm:inline ml-2">Randomize spy masters</span>
+          <span class="hidden sm:inline">Pick spymasters</span>
         </button>
       </div>
     </div>
