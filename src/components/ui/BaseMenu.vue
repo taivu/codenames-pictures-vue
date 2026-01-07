@@ -21,10 +21,10 @@ useClickOutside(menuRef, close)
     <!-- Dropdown content (above button) -->
     <div
       v-if="expanded"
-      class="absolute left-0 right-0 bottom-full w-full bg-white border-2 border-green-600 border-b-0 rounded-t z-50 overflow-hidden"
+      class="absolute right-0 bottom-full left-0 z-50 w-full overflow-hidden rounded-t border-2 border-b-0 border-green-600 bg-white"
       @click="close"
     >
-      <div class="whitespace-nowrap overflow-hidden text-ellipsis">
+      <div class="overflow-hidden text-ellipsis whitespace-nowrap">
         <slot />
       </div>
     </div>
@@ -32,8 +32,8 @@ useClickOutside(menuRef, close)
     <!-- Menu trigger button -->
     <button
       type="button"
-      class="btn border-2 border-green-600 bg-white min-w-20 md:min-w-28 w-full text-sm md:text-base py-1 md:py-2"
-      :class="expanded ? 'rounded-b rounded-t-none' : ''"
+      class="btn w-full min-w-20 border-2 border-green-600 bg-white py-1 text-sm md:min-w-28 md:py-2 md:text-base"
+      :class="expanded ? 'rounded-t-none rounded-b' : ''"
       @click="toggle"
     >
       Main Menu

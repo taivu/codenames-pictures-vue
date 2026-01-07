@@ -1,21 +1,13 @@
-import { onMounted, onUnmounted } from 'vue'
+import { useEventListener } from './useEventListener'
 
 /**
  * Composable to handle Escape key press.
  * Automatically manages event listener lifecycle.
  */
 export function useEscapeKey(callback: () => void): void {
-  function handleKeydown(e: KeyboardEvent): void {
+  useEventListener(document, 'keydown', (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       callback()
     }
-  }
-
-  onMounted(() => {
-    document.addEventListener('keydown', handleKeydown)
-  })
-
-  onUnmounted(() => {
-    document.removeEventListener('keydown', handleKeydown)
   })
 }

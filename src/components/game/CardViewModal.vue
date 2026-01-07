@@ -2,6 +2,7 @@
 import type { Card } from '@/types'
 import { ref, computed, onMounted } from 'vue'
 import { useEscapeKey } from '@/composables'
+import { getCardImagePath } from '@/utils'
 
 interface Props {
   card: Card
@@ -15,7 +16,7 @@ const emit = defineEmits<{
 
 const isVisible = ref(false)
 
-const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
+const imagePath = computed(() => getCardImagePath(props.card))
 
 function handleClose(): void {
   isVisible.value = false
@@ -38,24 +39,24 @@ useEscapeKey(handleClose)
       <div
         v-if="isVisible"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        @mousedown.stop
       >
         <!-- Backdrop -->
-        <div
-          class="absolute inset-0 bg-black/80 backdrop-blur-sm"
-          @click="handleClose"
-        />
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="handleClose" />
 
         <!-- Close button -->
         <button
           type="button"
-          class="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center text-white/80 hover:text-white text-xl hover:bg-white/10 rounded-xl transition-colors"
+          class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-xl text-xl text-white/80 transition-colors hover:bg-white/10 hover:text-white"
           @click="handleClose"
         >
           <FontAwesomeIcon icon="xmark" />
         </button>
 
         <!-- Card number -->
-        <div class="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm text-gray-800 font-bold px-3 py-1.5 rounded-lg text-sm shadow-lg">
+        <div
+          class="absolute top-4 left-4 z-10 rounded-lg bg-white/90 px-3 py-1.5 text-sm font-bold text-gray-800 shadow-lg backdrop-blur-sm"
+        >
           Card {{ card.id + 1 }}
         </div>
 
@@ -63,7 +64,7 @@ useEscapeKey(handleClose)
         <img
           :src="imagePath"
           :alt="`Card ${card.setId}-${card.imageIndex}`"
-          class="relative max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+          class="relative max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
         />
       </div>
     </Transition>
@@ -78,7 +79,9 @@ useEscapeKey(handleClose)
 
 .modal-enter-active img,
 .modal-leave-active img {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .modal-enter-from,

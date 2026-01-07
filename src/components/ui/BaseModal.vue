@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useClickOutside, useEscapeKey } from '@/composables'
+import IconButton from './IconButton.vue'
 
 interface Props {
   title?: string
+  icon?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 'md'
+  size: 'md',
 })
 
 const sizeClasses = computed(() => {
   switch (props.size) {
-    case 'sm': return 'max-w-sm'
-    case 'md': return 'max-w-md'
-    case 'lg': return 'max-w-2xl'
-    case 'xl': return 'max-w-4xl'
-    default: return 'max-w-md'
+    case 'sm':
+      return 'max-w-sm'
+    case 'md':
+      return 'max-w-md'
+    case 'lg':
+      return 'max-w-2xl'
+    case 'xl':
+      return 'max-w-4xl'
+    default:
+      return 'max-w-md'
   }
 })
 
@@ -54,30 +61,34 @@ onUnmounted(() => {
         <div
           ref="modalRef"
           :class="[
-            'relative flex flex-col bg-white rounded-xl shadow-2xl w-full mx-4 max-h-[90vh] overflow-hidden',
-            sizeClasses
+            'relative mx-4 flex max-h-[90vh] w-full flex-col overflow-hidden rounded-xl bg-white shadow-2xl',
+            sizeClasses,
           ]"
           @mousedown.stop
         >
           <!-- Header -->
-          <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 shrink-0">
-            <h3 v-if="title" class="text-xl font-bold text-gray-800">
+          <div
+            class="flex shrink-0 items-center justify-between border-b border-gray-100 px-5 py-4"
+          >
+            <h3 v-if="title" class="flex items-center gap-2 text-xl font-bold text-gray-800">
+              <FontAwesomeIcon v-if="icon" :icon="icon" class="text-gray-500" />
               {{ title }}
             </h3>
             <div class="flex items-center gap-2">
               <slot name="header-actions" />
-              <button
-                type="button"
-                class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              <IconButton
+                icon="xmark"
+                size="sm"
+                shape="square"
+                variant="subtle"
+                label="Close"
                 @click="handleClose"
-              >
-                <FontAwesomeIcon icon="xmark" />
-              </button>
+              />
             </div>
           </div>
 
           <!-- Content -->
-          <div class="px-5 py-4 overflow-y-auto">
+          <div class="overflow-y-auto px-5 py-4">
             <slot />
           </div>
         </div>
@@ -94,7 +105,9 @@ onUnmounted(() => {
 
 .modal-enter-active > div:last-child,
 .modal-leave-active > div:last-child {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .modal-enter-from,

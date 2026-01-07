@@ -5,6 +5,7 @@ import type { App } from 'vue'
 // Solid icons
 import {
   faArrowLeft,
+  faArrowRight,
   faBars,
   faBook,
   faCheck,
@@ -29,19 +30,18 @@ import {
   faSpinner,
   faStar,
   faStopwatch,
+  faTriangleExclamation,
   faUpRightFromSquare,
   faUserSecret,
   faUsers,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
-// Regular (outline) icons
-import { faGem } from '@fortawesome/free-regular-svg-icons'
-
 // Register icons
 library.add(
   // UI
   faArrowLeft,
+  faArrowRight,
   faBars,
   faCheck,
   faChevronDown,
@@ -69,12 +69,13 @@ library.add(
   faUsers,
   // Pressure mode
   faCircleExclamation,
-  faGem,
   faRotateRight,
   faSkullCrossbones,
   faStopwatch,
   // Settings
   faFloppyDisk,
+  // Warnings
+  faTriangleExclamation
 )
 
 export function setupFontAwesome(app: App): void {

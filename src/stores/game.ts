@@ -2,7 +2,14 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'
 import { gameConfig } from '@/config'
-import { shuffle, chunk, capitalize, loadFromStorage, saveToStorage, removeFromStorage } from '@/utils'
+import {
+  shuffle,
+  chunk,
+  capitalize,
+  loadFromStorage,
+  saveToStorage,
+  removeFromStorage,
+} from '@/utils'
 import { useSettingsStore } from './settings'
 
 interface CardPoolItem {
@@ -42,9 +49,7 @@ export const useGameStore = defineStore('game', () => {
   const isDuetMode = computed(() => mode.value === 'duet')
 
   const activeTeamColors = computed<TeamColor[]>(() =>
-    isDuetMode.value
-      ? [...gameConfig.teamColors.duet]
-      : [...gameConfig.teamColors.classic]
+    isDuetMode.value ? [...gameConfig.teamColors.duet] : [...gameConfig.teamColors.classic]
   )
 
   const gridSize = computed(() =>
@@ -156,7 +161,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function updatePlayer(teamColor: TeamColor, index: number, name: string): void {
-    teams.value[teamColor].players[index] = name
+    teams.value[teamColor].players[index] = name.trim()
   }
 
   function removePlayer(teamColor: TeamColor, index: number): void {
@@ -202,13 +207,22 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function newGame(): void {
+    if (teamsAreSetup.value) {
+      startingTeam.value = null
+    }
     generateCards()
   }
 
   // ===================
   // Persistence
   // ===================
-  const hasSavedGame = computed(() => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null)
+  const hasSavedGame = computed(
+    () => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null
+  )
+
+  function getSavedGamePreview(): PersistedGameState | null {
+    return loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)
+  }
 
   function persistGame(): void {
     saveToStorage<PersistedGameState>(GAME_STORAGE_KEY, {
@@ -264,6 +278,7 @@ export const useGameStore = defineStore('game', () => {
     cardColorOptions,
     teamsAreSetup,
     hasSavedGame,
+    getSavedGamePreview,
     // Actions
     initializeGame,
     generateCards,

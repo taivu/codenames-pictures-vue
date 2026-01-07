@@ -1,4 +1,5 @@
 export { shuffle, chunk } from './array'
 export { capitalize } from './string'
+export { getCardImagePath } from './card'
 export { loadFromStorage, saveToStorage, removeFromStorage } from './storage'
 export * from './colorSchemes'
