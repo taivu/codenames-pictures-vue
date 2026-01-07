@@ -2,9 +2,8 @@
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
-import { BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
+import { AppVersion, BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
-import { appConfig } from '@/config'
 
 const emit = defineEmits<{
   close: []
@@ -167,7 +166,7 @@ function handleAutoSaveToggle() {
         </button>
 
         <!-- Version -->
-        <div class="px-4 py-3 text-center text-xs text-gray-400">rev: {{ appConfig.version }}</div>
+        <AppVersion />
       </nav>
     </div>
     <!-- End Scrollable Content Area -->

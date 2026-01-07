@@ -12,6 +12,14 @@ function getGitCommitHash(): string {
   }
 }
 
+function getGitCommitDate(): string {
+  try {
+    return execSync('git log -1 --format=%cs').toString().trim()
+  } catch {
+    return ''
+  }
+}
+
 export default defineConfig({
   plugins: [
     vue(),
@@ -24,6 +32,7 @@ export default defineConfig({
   },
   define: {
     __APP_VERSION__: JSON.stringify(getGitCommitHash()),
+    __APP_BUILD_DATE__: JSON.stringify(getGitCommitDate()),
   },
   base: '/',
   server: {

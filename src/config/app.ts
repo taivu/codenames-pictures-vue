@@ -2,6 +2,7 @@ export const appConfig = {
   name: import.meta.env.VITE_APP_NAME ?? 'Codenames Pictures',
   url: import.meta.env.VITE_APP_URL ?? '',
   version: __APP_VERSION__,
+  buildDate: __APP_BUILD_DATE__,
   isProduction: import.meta.env.PROD,
   isDevelopment: import.meta.env.DEV,
   // Google Analytics 4 - env var takes priority, fallback to hardcoded value
