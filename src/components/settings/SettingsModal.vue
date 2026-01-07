@@ -24,6 +24,10 @@ function handleToggleAutoSave(): void {
   settingsStore.setAutoSave(newValue)
   trackAutoSaveToggled(newValue)
 }
+
+function handleTogglePressureMode(): void {
+  settingsStore.setPressureMode(!settingsStore.pressureModeEnabled)
+}
 </script>
 
 <template>
@@ -52,6 +56,35 @@ function handleToggleAutoSave(): void {
               :class="[
                 'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
                 settingsStore.autoSaveEnabled && 'translate-x-5'
+              ]"
+            />
+          </button>
+        </div>
+      </section>
+
+      <!-- Pressure Mode Section -->
+      <section class="p-4 bg-gray-50 rounded-xl">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h4 class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
+              <FontAwesomeIcon icon="stopwatch" class="text-gray-500" />
+              Pressure Mode
+            </h4>
+            <p class="text-sm text-gray-500">
+              Add a countdown timer. Time runs out = strike. 3 strikes = you lose!
+            </p>
+          </div>
+          <button
+            class="relative shrink-0 w-11 h-6 rounded-full transition-colors"
+            :class="settingsStore.pressureModeEnabled ? 'bg-orange-500' : 'bg-gray-300'"
+            role="switch"
+            :aria-checked="settingsStore.pressureModeEnabled"
+            @click="handleTogglePressureMode"
+          >
+            <span
+              :class="[
+                'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
+                settingsStore.pressureModeEnabled && 'translate-x-5'
               ]"
             />
           </button>

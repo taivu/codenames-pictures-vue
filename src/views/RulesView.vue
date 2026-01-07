@@ -193,7 +193,7 @@ const baseUrl = import.meta.env.BASE_URL
     </div>
 
     <!-- Online Actions -->
-    <div class="max-w-4xl mx-auto mb-8">
+    <div class="max-w-4xl mx-auto mb-6">
       <div class="bg-gray-100 border-2 border-gray-400 rounded-xl p-6">
         <h2 class="text-2xl font-bold mb-4">Online Actions</h2>
         <div class="grid gap-3 sm:grid-cols-2">
@@ -222,6 +222,45 @@ const baseUrl = import.meta.env.BASE_URL
             <p><strong>Setup teams:</strong> add players, shuffle teams, and randomize spy masters</p>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Pressure Mode -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-400 rounded-xl p-6 shadow-md">
+        <h2 class="text-2xl font-bold mb-3 text-orange-800">
+          <FontAwesomeIcon :icon="['far', 'gem']" class="mr-2" />Pressure Mode
+        </h2>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          Want to spice things up? Enable <strong>Pressure Mode</strong> in Settings to add a countdown timer that keeps everyone on their toes.
+        </p>
+
+        <div class="grid gap-4 md:grid-cols-2 mb-4">
+          <div class="bg-white/70 rounded-lg p-4 border border-orange-200">
+            <h4 class="font-bold text-orange-700 mb-2">How It Works</h4>
+            <ul class="text-sm text-gray-700 space-y-1">
+              <li><strong>Start:</strong> Tap "Add Pressure" in the HUD</li>
+              <li><strong>Timer:</strong> Counts down while you deliberate</li>
+              <li><strong>Reset:</strong> Marking any card with a color resets the timer</li>
+              <li><strong>Pause:</strong> Tap the timer to pause/resume</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/70 rounded-lg p-4 border border-orange-200">
+            <h4 class="font-bold text-orange-700 mb-2">Strike System</h4>
+            <ul class="text-sm text-gray-700 space-y-1">
+              <li><strong>0 strikes:</strong> 10 minute timer</li>
+              <li><strong>1 strike:</strong> 5 minute timer</li>
+              <li><strong>2 strikes:</strong> 1 minute timer</li>
+              <li><strong>3 strikes:</strong> Game over!</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-600 italic">
+          Time runs out without selecting a card? That's a strike! The timer gets shorter with each strike.
+          Three strikes and it's game over - unless you want to continue as a "scrub" and finish the game anyway.
+        </p>
       </div>
     </div>
 

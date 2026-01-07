@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useEdgeSwipe } from '@/composables'
+import { useEdgeSwipe, usePressureMode } from '@/composables'
 import { trackModalOpened } from '@/plugins/analytics'
 
 import { CardGrid } from '@/components/game'
 import { TeamsModal } from '@/components/team'
 import { SettingsModal } from '@/components/settings'
+import { StrikeModal, LossModal } from '@/components/ui'
 import FloatingHUD from './FloatingHUD.vue'
 import SlideDrawer from './SlideDrawer.vue'
 import { DrawerTrigger, DrawerContent } from '@/components/navigation'
+
+const pressureMode = usePressureMode()
 
 // UI State
 const isDrawerOpen = ref(false)
@@ -57,8 +60,8 @@ function closeSettingsModal() {
       <CardGrid />
     </div>
 
-    <!-- Floating HUD - Top Left -->
-    <FloatingHUD class="fixed top-2 left-2 sm:top-4 sm:left-4 z-30" />
+    <!-- Floating HUD - Top Left (z-45 to stay above card selection backdrop at z-40) -->
+    <FloatingHUD class="fixed top-2 left-2 sm:top-4 sm:left-4 z-45" />
 
     <!-- Drawer Trigger Button - Bottom Right -->
     <DrawerTrigger
@@ -88,6 +91,21 @@ function closeSettingsModal() {
     <SettingsModal
       v-if="showSettingsModal"
       @close="closeSettingsModal"
+    />
+
+    <!-- Pressure Mode: Strike Modal -->
+    <StrikeModal
+      v-if="pressureMode.showStrikeModal.value"
+      :strike-number="pressureMode.strikes.value"
+      :next-duration="pressureMode.formatDuration(pressureMode.currentDuration.value)"
+      @acknowledge="pressureMode.acknowledgeStrike"
+    />
+
+    <!-- Pressure Mode: Loss Modal -->
+    <LossModal
+      v-if="pressureMode.showLossModal.value"
+      @new-game="pressureMode.handleLoss"
+      @continue-as-scrub="pressureMode.continueAsScrub"
     />
   </div>
 </template>

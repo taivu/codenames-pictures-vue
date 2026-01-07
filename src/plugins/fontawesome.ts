@@ -1,34 +1,81 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import type { App } from 'vue'
+
+// Solid icons
 import {
-  faPlus,
-  faXmark,
-  faChevronUp,
+  faArrowLeft,
+  faBars,
+  faBook,
+  faCheck,
   faChevronDown,
-  faStar,
-  faShuffle,
-  faUserSecret,
+  faChevronUp,
+  faCircleExclamation,
+  faCircleInfo,
+  faDice,
+  faFloppyDisk,
+  faGear,
+  faImages,
   faLock,
   faLockOpen,
   faMagnifyingGlass,
-  faDice,
+  faPause,
   faPlay,
-  faUsers,
-  faSkullCrossbones,
-  faUpRightFromSquare,
-  faGear,
-  faFloppyDisk,
-  faCheck,
-  faImages,
-  faCircleInfo,
-  faBars,
+  faPlus,
   faRotate,
-  faBook,
+  faRotateRight,
+  faShuffle,
+  faSkullCrossbones,
+  faSpinner,
+  faStar,
+  faStopwatch,
+  faUpRightFromSquare,
+  faUserSecret,
+  faUsers,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
-import type { App } from 'vue'
 
-// Add only the icons we need (tree-shakable)
-library.add(faPlus, faXmark, faChevronUp, faChevronDown, faStar, faShuffle, faUserSecret, faLock, faLockOpen, faMagnifyingGlass, faDice, faPlay, faUsers, faSkullCrossbones, faUpRightFromSquare, faGear, faFloppyDisk, faCheck, faImages, faCircleInfo, faBars, faRotate, faBook)
+// Regular (outline) icons
+import { faGem } from '@fortawesome/free-regular-svg-icons'
+
+// Register icons
+library.add(
+  // UI
+  faArrowLeft,
+  faBars,
+  faCheck,
+  faChevronDown,
+  faChevronUp,
+  faPlus,
+  faSpinner,
+  faXmark,
+  // Navigation
+  faBook,
+  faCircleInfo,
+  faGear,
+  faUpRightFromSquare,
+  // Game
+  faDice,
+  faImages,
+  faLock,
+  faLockOpen,
+  faMagnifyingGlass,
+  faPause,
+  faPlay,
+  faRotate,
+  faShuffle,
+  faStar,
+  faUserSecret,
+  faUsers,
+  // Pressure mode
+  faCircleExclamation,
+  faGem,
+  faRotateRight,
+  faSkullCrossbones,
+  faStopwatch,
+  // Settings
+  faFloppyDisk,
+)
 
 export function setupFontAwesome(app: App): void {
   app.component('FontAwesomeIcon', FontAwesomeIcon)

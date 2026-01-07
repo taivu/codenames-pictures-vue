@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
+import { usePressureMode } from '@/composables'
 import { getCardRingClass, getCardOverlayClass } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
@@ -14,6 +15,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const store = useGameStore()
+const pressureMode = usePressureMode()
 const showMenu = ref(false)
 const showCardView = ref(false)
 
@@ -41,6 +43,7 @@ function handleColorSelect(color: CardColor): void {
   store.colorMenuOpen = false
   if (color) {
     trackCardMarked(color)
+    pressureMode.resetTimer()
   }
 }
 

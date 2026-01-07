@@ -9,6 +9,7 @@ const STORAGE_KEY = 'codenames-settings'
 interface PersistedSettings {
   enabledCardSetIds: string[]
   autoSaveEnabled?: boolean
+  pressureModeEnabled?: boolean
 }
 
 export const useSettingsStore = defineStore('settings', () => {
@@ -16,6 +17,7 @@ export const useSettingsStore = defineStore('settings', () => {
   const stored = loadFromStorage<PersistedSettings>(STORAGE_KEY)
   const enabledCardSetIds = ref<string[]>(stored?.enabledCardSetIds ?? getDefaultCardSetIds())
   const autoSaveEnabled = ref<boolean>(stored?.autoSaveEnabled ?? false)
+  const pressureModeEnabled = ref<boolean>(stored?.pressureModeEnabled ?? false)
 
   // Computed
   const enabledCardSets = computed<CardSet[]>(() =>
@@ -63,6 +65,7 @@ export const useSettingsStore = defineStore('settings', () => {
   function resetToDefaults(): void {
     enabledCardSetIds.value = getDefaultCardSetIds()
     autoSaveEnabled.value = false
+    pressureModeEnabled.value = false
     persist()
   }
 
@@ -71,10 +74,16 @@ export const useSettingsStore = defineStore('settings', () => {
     persist()
   }
 
+  function setPressureMode(enabled: boolean): void {
+    pressureModeEnabled.value = enabled
+    persist()
+  }
+
   function persist(): void {
     saveToStorage<PersistedSettings>(STORAGE_KEY, {
       enabledCardSetIds: enabledCardSetIds.value,
       autoSaveEnabled: autoSaveEnabled.value,
+      pressureModeEnabled: pressureModeEnabled.value,
     })
   }
 
@@ -82,6 +91,7 @@ export const useSettingsStore = defineStore('settings', () => {
     // State
     enabledCardSetIds,
     autoSaveEnabled,
+    pressureModeEnabled,
     // Computed
     enabledCardSets,
     totalEnabledCards,
@@ -92,5 +102,6 @@ export const useSettingsStore = defineStore('settings', () => {
     isCardSetEnabled,
     resetToDefaults,
     setAutoSave,
+    setPressureMode,
   }
 })

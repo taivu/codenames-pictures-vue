@@ -1,29 +1,19 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useGameStore } from '@/stores'
-import { useTeamColors } from '@/composables'
+import { ref } from 'vue'
+import { useGameStore, useSettingsStore } from '@/stores'
+import { useTeamColors, usePressureMode } from '@/composables'
+import { CircularTimer } from '@/components/ui'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 const store = useGameStore()
+const settingsStore = useSettingsStore()
 const { teamBgClasses, teamTextClasses } = useTeamColors()
+const pressureMode = usePressureMode()
 
 const isExpanded = ref(false)
-let autoCollapseTimer: ReturnType<typeof setTimeout> | null = null
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
-  resetAutoCollapse()
-}
-
-function resetAutoCollapse() {
-  if (autoCollapseTimer) {
-    clearTimeout(autoCollapseTimer)
-  }
-  if (isExpanded.value) {
-    autoCollapseTimer = setTimeout(() => {
-      isExpanded.value = false
-    }, 5000)
-  }
 }
 
 function handleSetStartingTeam(color: string) {
@@ -32,11 +22,6 @@ function handleSetStartingTeam(color: string) {
     trackStartingTeamSet(color as 'red' | 'blue' | 'green')
   }
 }
-
-// Cleanup timer on unmount
-watch(() => isExpanded.value, () => {
-  resetAutoCollapse()
-})
 </script>
 
 <template>
@@ -48,8 +33,30 @@ watch(() => isExpanded.value, () => {
     <Transition name="hud" mode="out-in">
       <div
         v-if="!isExpanded"
-        class="flex portrait:flex-row landscape:flex-col xl:flex-row gap-1.5 cursor-pointer"
+        class="flex portrait:flex-row landscape:flex-col xl:flex-row gap-1.5 cursor-pointer items-center"
       >
+        <!-- Pressure Mode Timer (collapsed view) -->
+        <div
+          v-if="pressureMode.isActive.value"
+          class="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/90 backdrop-blur-md shadow-lg"
+        >
+          <CircularTimer
+            :progress="pressureMode.progress.value"
+            :is-warning="pressureMode.isWarning.value"
+            :is-paused="pressureMode.isPaused.value"
+            :size="28"
+            :stroke-width="3"
+            show-play-pause
+          />
+          <span
+            :class="[
+              'font-bold text-sm',
+              pressureMode.isWarning.value ? 'text-red-600' : 'text-gray-700'
+            ]"
+          >
+            {{ pressureMode.formattedTime.value }}
+          </span>
+        </div>
         <div
           v-for="color in store.activeTeamColors"
           :key="color"
@@ -134,6 +141,61 @@ watch(() => isExpanded.value, () => {
           >
             No players yet
           </p>
+        </div>
+
+        <!-- Pressure Mode Controls -->
+        <div
+          v-if="settingsStore.pressureModeEnabled"
+          class="px-3 py-2 border-t border-gray-200"
+          @click.stop
+        >
+          <button
+            v-if="!pressureMode.isActive.value"
+            class="w-full px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2"
+            @click="pressureMode.startTimer"
+          >
+            <FontAwesomeIcon :icon="['far', 'gem']" />
+            Add Pressure
+          </button>
+          <button
+            v-else
+            class="flex items-center justify-center gap-2 w-full py-1 rounded-lg hover:bg-gray-100 transition-colors"
+            @click="pressureMode.togglePause"
+          >
+            <CircularTimer
+              :progress="pressureMode.progress.value"
+              :is-warning="pressureMode.isWarning.value"
+              :is-paused="pressureMode.isPaused.value"
+              :size="40"
+              :stroke-width="4"
+              show-play-pause
+            />
+            <div class="text-center">
+              <span v-if="pressureMode.isPaused.value" class="font-bold text-lg block text-gray-400">
+                PAUSED
+              </span>
+              <span
+                :class="[
+                  'block',
+                  pressureMode.isPaused.value ? 'text-sm text-gray-400' : 'font-bold text-lg',
+                  !pressureMode.isPaused.value && (pressureMode.isWarning.value ? 'text-red-600' : 'text-gray-700')
+                ]"
+              >
+                {{ pressureMode.formattedTime.value }}
+              </span>
+              <div class="flex justify-center gap-1">
+                <FontAwesomeIcon
+                  v-for="i in 3"
+                  :key="i"
+                  icon="skull-crossbones"
+                  :class="[
+                    'text-sm',
+                    i <= pressureMode.strikes.value ? 'text-gray-700' : 'text-gray-300'
+                  ]"
+                />
+              </div>
+            </div>
+          </button>
         </div>
 
         <!-- Tap to collapse hint -->

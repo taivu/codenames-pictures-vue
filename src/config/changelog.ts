@@ -5,6 +5,16 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    date: 'January 2025 (v3)',
+    changes: [
+      'New Pressure Mode with countdown timer',
+      'Strike system: 10min → 5min → 1min, 3 strikes = game over',
+      'Pause/resume timer by tapping in expanded HUD',
+      'Skull-crossbones strike indicators',
+      'Continue as scrub option after game over',
+    ],
+  },
+  {
     date: 'January 2025 (v2)',
     changes: [
       'New floating HUD with collapsible team scores',

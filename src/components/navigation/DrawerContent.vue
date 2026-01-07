@@ -4,6 +4,7 @@ import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
 import { BaseModal } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
+import { appConfig } from '@/config'
 
 const emit = defineEmits<{
   close: []
@@ -125,7 +126,7 @@ function handleAutoSaveToggle() {
         <div class="my-2 border-t border-gray-100" />
 
         <a
-          href="/"
+          href="/rules"
           target="_blank"
           class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 transition-colors"
         >
@@ -153,6 +154,11 @@ function handleAutoSaveToggle() {
           <FontAwesomeIcon icon="gear" class="text-gray-500 w-5" />
           <span class="font-medium">Settings</span>
         </button>
+
+        <!-- Version -->
+        <div class="px-4 py-3 text-center text-xs text-gray-400">
+          rev: {{ appConfig.version }}
+        </div>
       </nav>
     </div>
     <!-- End Scrollable Content Area -->
