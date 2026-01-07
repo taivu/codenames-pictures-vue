@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useClickOutside, useEscapeKey } from '@/composables'
+import IconButton from './IconButton.vue'
 
 interface Props {
   title?: string
@@ -75,13 +76,14 @@ onUnmounted(() => {
             </h3>
             <div class="flex items-center gap-2">
               <slot name="header-actions" />
-              <button
-                type="button"
-                class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+              <IconButton
+                icon="xmark"
+                size="sm"
+                shape="square"
+                variant="subtle"
+                label="Close"
                 @click="handleClose"
-              >
-                <FontAwesomeIcon icon="xmark" />
-              </button>
+              />
             </div>
           </div>
 

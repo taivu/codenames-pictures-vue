@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
-import { BaseModal, ToggleSwitch } from '@/components/ui'
+import { BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
 import { appConfig } from '@/config'
 
@@ -65,12 +65,14 @@ function handleAutoSaveToggle() {
     <!-- Header -->
     <div class="flex shrink-0 items-center justify-between border-b border-gray-200 px-4 py-3">
       <h2 class="text-xl font-bold text-gray-800">Menu</h2>
-      <button
-        class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+      <IconButton
+        icon="arrow-right"
+        size="sm"
+        shape="square"
+        variant="subtle"
+        label="Close menu"
         @click="emit('close')"
-      >
-        <FontAwesomeIcon icon="arrow-right" />
-      </button>
+      />
     </div>
 
     <!-- Scrollable Content Area -->

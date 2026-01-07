@@ -42,7 +42,8 @@ function handleTogglePressureMode(): void {
               Auto-Save
             </h4>
             <p class="text-sm text-gray-500">
-              Save your game automatically to recover from accidental refreshes.
+              Save your game automatically to recover from accidental refreshes. Saves teams,
+              scores, cards, and markings.
             </p>
           </div>
           <ToggleSwitch
@@ -61,7 +62,7 @@ function handleTogglePressureMode(): void {
               Pressure Mode
             </h4>
             <p class="text-sm text-gray-500">
-              Add a countdown timer. Time runs out = strike. 3 strikes = you lose!
+              Add a countdown timer. Running out of time earns a strike. 3 strikes and you lose!
             </p>
           </div>
           <ToggleSwitch

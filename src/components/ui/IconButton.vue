@@ -3,14 +3,16 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 interface Props {
   icon: string | string[] | IconDefinition
-  size?: 'sm' | 'md' | 'lg'
-  variant?: 'default' | 'primary' | 'ghost'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  shape?: 'round' | 'square'
+  variant?: 'default' | 'primary' | 'ghost' | 'subtle'
   label?: string
   disabled?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
   size: 'md',
+  shape: 'round',
   variant: 'default',
   disabled: false,
 })
@@ -20,9 +22,15 @@ defineEmits<{
 }>()
 
 const sizeClasses = {
+  xs: 'w-7 h-7 text-xs',
   sm: 'w-8 h-8 text-sm',
-  md: 'w-12 h-12 text-base',
-  lg: 'w-14 h-14 text-lg',
+  md: 'w-10 h-10 text-base',
+  lg: 'w-12 h-12 text-lg',
+}
+
+const shapeClasses = {
+  round: 'rounded-full',
+  square: 'rounded-lg',
 }
 
 const variantClasses = {
@@ -30,6 +38,7 @@ const variantClasses = {
   primary:
     'bg-white/90 backdrop-blur-md border border-gray-200 text-gray-700 hover:bg-white hover:border-gray-300 active:bg-gray-50',
   ghost: 'bg-transparent text-gray-700 hover:bg-black/10 active:bg-black/20',
+  subtle: 'bg-transparent text-gray-400 hover:bg-gray-100 hover:text-gray-600',
 }
 </script>
 
@@ -37,10 +46,12 @@ const variantClasses = {
   <button
     type="button"
     :class="[
-      'flex items-center justify-center rounded-full transition-all duration-150',
-      'shadow-md hover:shadow-lg active:scale-95',
+      'flex items-center justify-center transition-all duration-150',
+      variant !== 'subtle' && 'shadow-md hover:shadow-lg',
+      'active:scale-95',
       'focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:outline-none',
       sizeClasses[size],
+      shapeClasses[shape],
       variantClasses[variant],
       disabled && 'cursor-not-allowed opacity-50',
     ]"

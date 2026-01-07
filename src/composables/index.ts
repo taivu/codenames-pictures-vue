@@ -1,5 +1,6 @@
 export { useClickOutside } from './useClickOutside'
 export { useEscapeKey } from './useEscapeKey'
+export { useEventListener } from './useEventListener'
 export { usePositionedMenu } from './usePositionedMenu'
 export { usePressureMode } from './usePressureMode'
 export { useSwipeGesture, useEdgeSwipe } from './useSwipeGesture'

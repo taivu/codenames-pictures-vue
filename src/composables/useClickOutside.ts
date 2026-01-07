@@ -1,17 +1,10 @@
-import { onMounted, onUnmounted, type Ref } from 'vue'
+import type { Ref } from 'vue'
+import { useEventListener } from './useEventListener'
 
 export function useClickOutside(elementRef: Ref<HTMLElement | null>, callback: () => void): void {
-  function handleClick(event: MouseEvent): void {
+  useEventListener(document, 'mousedown', (event: MouseEvent) => {
     if (elementRef.value && !elementRef.value.contains(event.target as Node)) {
       callback()
     }
-  }
-
-  onMounted(() => {
-    document.addEventListener('mousedown', handleClick)
-  })
-
-  onUnmounted(() => {
-    document.removeEventListener('mousedown', handleClick)
   })
 }
