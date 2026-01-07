@@ -36,46 +36,46 @@ function getTimerColorClass(): string {
         :key="color"
         :class="['p-3', index > 0 && 'border-t border-gray-200']"
       >
-      <!-- Team Header -->
-      <div class="flex items-center justify-between gap-2 mb-1">
-        <h4 class="font-bold flex items-center gap-1" :class="teamTextClasses[color]">
-          <FontAwesomeIcon
-            v-if="store.startingTeam === color"
-            icon="star"
-            class="text-yellow-500 text-xs"
-          />
-          Team {{ color }}
-        </h4>
-        <button
-          :class="[
-            'px-2 py-0.5 rounded text-white text-xs font-bold',
-            'hover:opacity-80 transition-opacity',
-            teamBgClasses[color]
-          ]"
-          :title="!store.isDuetMode ? 'Click to set as starting team' : ''"
-          @click.stop="handleSetStartingTeam(color)"
-        >
-          {{ store.getGuessedCount(color) }}/{{ store.getTotalCards(color) }}
-        </button>
-      </div>
+        <!-- Team Header -->
+        <div class="flex items-center justify-between gap-2 mb-1">
+          <h4 class="font-bold flex items-center gap-1" :class="teamTextClasses[color]">
+            <FontAwesomeIcon
+              v-if="store.startingTeam === color"
+              icon="star"
+              class="text-yellow-500 text-xs"
+            />
+            Team {{ color }}
+          </h4>
+          <button
+            :class="[
+              'px-2 py-0.5 rounded text-white text-xs font-bold',
+              'hover:opacity-80 transition-opacity',
+              teamBgClasses[color]
+            ]"
+            :title="!store.isDuetMode ? 'Click to set as starting team' : ''"
+            @click.stop="handleSetStartingTeam(color)"
+          >
+            {{ store.getGuessedCount(color) }}/{{ store.getTotalCards(color) }}
+          </button>
+        </div>
 
-      <!-- Players List -->
-      <ul v-if="store.teams[color].players.length > 0" class="text-xs space-y-0.5">
-        <li
-          v-for="(player, playerIndex) in store.teams[color].players"
-          :key="playerIndex"
-          class="truncate"
-          :class="[
-            playerIndex === 0 && !store.isDuetMode
-              ? ['font-bold', teamTextClasses[color]]
-              : 'text-gray-600'
-          ]"
-        >
-          <template v-if="playerIndex === 0 && !store.isDuetMode">&gt; </template>
-          {{ player }}
-        </li>
-      </ul>
-      <p v-else class="text-xs text-gray-400 italic">No players yet</p>
+        <!-- Players List -->
+        <ul v-if="store.teams[color].players.length > 0" class="text-xs space-y-0.5">
+          <li
+            v-for="(player, playerIndex) in store.teams[color].players"
+            :key="playerIndex"
+            class="truncate"
+            :class="[
+              playerIndex === 0 && !store.isDuetMode
+                ? ['font-bold', teamTextClasses[color]]
+                : 'text-gray-600'
+            ]"
+          >
+            <template v-if="playerIndex === 0 && !store.isDuetMode">&gt; </template>
+            {{ player }}
+          </li>
+        </ul>
+        <p v-else class="text-xs text-gray-400 italic">No players yet</p>
       </div>
     </div>
 

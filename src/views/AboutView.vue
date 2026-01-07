@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 import changelogMd from '../../CHANGELOG.md?raw'
 
-// Parse markdown to HTML (skip the h1 title)
-const changelogHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
+// Parse markdown to HTML (skip the h1 title) and sanitize
+const rawHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
+const changelogHtml = DOMPurify.sanitize(rawHtml as string)
 </script>
 
 <template>
