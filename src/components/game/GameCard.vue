@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { usePressureMode } from '@/composables'
-import { getCardRingClass, getCardOverlayClass } from '@/utils'
+import { getCardRingClass, getCardOverlayClass, getCardImagePath } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
 import { trackModalOpened, trackCardMarked } from '@/plugins/analytics'
@@ -19,9 +19,7 @@ const showCardView = ref(false)
 const restoreMenuAfterCardView = ref(false)
 
 // Computed
-const imagePath = computed(() =>
-  `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`
-)
+const imagePath = computed(() => getCardImagePath(props.card))
 const hasColor = computed(() => props.card.color !== '')
 const isMenuActive = computed(() => showMenu.value || restoreMenuAfterCardView.value)
 const isElevated = computed(() =>

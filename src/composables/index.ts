@@ -1,5 +1,6 @@
 export { useClickOutside } from './useClickOutside'
 export { useEscapeKey } from './useEscapeKey'
-export { useTeamColors } from './useTeamColors'
-export { useSwipeGesture, useEdgeSwipe } from './useSwipeGesture'
+export { usePositionedMenu } from './usePositionedMenu'
 export { usePressureMode } from './usePressureMode'
+export { useSwipeGesture, useEdgeSwipe } from './useSwipeGesture'
+export { useTeamColors } from './useTeamColors'

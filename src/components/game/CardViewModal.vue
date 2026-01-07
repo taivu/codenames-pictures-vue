@@ -2,6 +2,7 @@
 import type { Card } from '@/types'
 import { ref, computed, onMounted } from 'vue'
 import { useEscapeKey } from '@/composables'
+import { getCardImagePath } from '@/utils'
 
 interface Props {
   card: Card
@@ -15,7 +16,7 @@ const emit = defineEmits<{
 
 const isVisible = ref(false)
 
-const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
+const imagePath = computed(() => getCardImagePath(props.card))
 
 function handleClose(): void {
   isVisible.value = false
