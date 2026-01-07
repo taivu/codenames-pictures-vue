@@ -8,59 +8,67 @@ import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
 import { trackModalOpened, trackCardMarked } from '@/plugins/analytics'
 
-interface Props {
-  card: Card
-}
-
-const props = defineProps<Props>()
+const props = defineProps<{ card: Card }>()
 
 const store = useGameStore()
 const pressureMode = usePressureMode()
+
+// UI state
 const showMenu = ref(false)
 const showCardView = ref(false)
+const restoreMenuAfterCardView = ref(false)
 
-const imagePath = computed(() => `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`)
-
+// Computed
+const imagePath = computed(() =>
+  `${import.meta.env.BASE_URL}images/cards/${props.card.setId}/card-${props.card.imageIndex}.jpg`
+)
 const hasColor = computed(() => props.card.color !== '')
-const overlayClasses = computed(() => getCardRingClass(props.card.color))
-const overlayBgClasses = computed(() => getCardOverlayClass(props.card.color))
+const isMenuActive = computed(() => showMenu.value || restoreMenuAfterCardView.value)
+const isElevated = computed(() =>
+  isMenuActive.value || (store.colorMenuOpen && hasColor.value)
+)
 
-function handleClick(event: MouseEvent): void {
+// Handlers
+function handleCardClick(event: MouseEvent) {
   event.preventDefault()
   if (hasColor.value) {
-    // Clear selection if card has a color
     store.resetCardColor(props.card.id)
   } else {
-    // Show menu if no color
     showMenu.value = true
     store.colorMenuOpen = true
   }
 }
 
-function handleColorSelect(color: CardColor): void {
+function handleColorSelect(color: CardColor) {
   store.setCardColor(props.card.id, color)
-  showMenu.value = false
-  store.colorMenuOpen = false
+  closeMenu()
   if (color) {
     trackCardMarked(color)
     pressureMode.resetTimer()
   }
 }
 
-function handleMenuClose(): void {
+function closeMenu() {
   showMenu.value = false
+  restoreMenuAfterCardView.value = false
   store.colorMenuOpen = false
 }
 
-function handleBadgeClick(event: MouseEvent): void {
+function handleBadgeClick(event: MouseEvent) {
   event.stopPropagation()
   event.preventDefault()
+  restoreMenuAfterCardView.value = showMenu.value
+  showMenu.value = false
   showCardView.value = true
   trackModalOpened('card_view')
 }
 
-function handleCardViewClose(): void {
+function handleCardViewClose() {
   showCardView.value = false
+  if (restoreMenuAfterCardView.value) {
+    showMenu.value = true
+    restoreMenuAfterCardView.value = false
+  }
 }
 </script>
 
@@ -68,20 +76,20 @@ function handleCardViewClose(): void {
   <div
     class="relative cursor-pointer rounded-lg overflow-hidden border border-black"
     :class="[
-      overlayClasses,
-      showMenu ? 'z-50 ring-4 ring-white scale-105' : '',
-      (store.colorMenuOpen && hasColor && !showMenu) ? 'z-50' : ''
+      getCardRingClass(card.color),
+      isMenuActive && 'z-50 ring-4 ring-white scale-105',
+      isElevated && !isMenuActive && 'z-50'
     ]"
-    @click="handleClick"
-    @contextmenu="handleClick"
+    @click="handleCardClick"
+    @contextmenu="handleCardClick"
   >
-    <!-- Dark overlay when menu is open -->
+    <!-- Backdrop -->
     <Teleport to="body">
       <Transition name="fade">
         <div
-          v-if="showMenu"
+          v-if="isMenuActive"
           class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-          @click="handleMenuClose"
+          @click="closeMenu"
         />
       </Transition>
     </Teleport>
@@ -89,6 +97,7 @@ function handleCardViewClose(): void {
     <!-- Card number badge -->
     <button
       class="absolute top-1 left-1 z-10 min-w-6 h-6 px-1.5 flex items-center justify-center text-sm font-bold rounded bg-white/90 backdrop-blur-sm text-gray-700 border border-gray-300 hover:bg-white hover:scale-110 transition-all"
+      @mousedown.stop
       @click="handleBadgeClick"
     >
       {{ card.id + 1 }}
@@ -104,7 +113,7 @@ function handleCardViewClose(): void {
     <div
       v-if="hasColor"
       class="absolute inset-0 pointer-events-none"
-      :class="overlayBgClasses"
+      :class="getCardOverlayClass(card.color)"
     />
 
     <!-- Duet mode neutral marker -->
@@ -118,10 +127,9 @@ function handleCardViewClose(): void {
     <CardContextMenu
       v-if="showMenu"
       @select="handleColorSelect"
-      @close="handleMenuClose"
+      @close="closeMenu"
     />
 
-    <!-- Full screen card view modal -->
     <CardViewModal
       v-if="showCardView"
       :card="card"

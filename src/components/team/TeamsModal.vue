@@ -31,6 +31,7 @@ function handlePickSpyMasters(): void {
 <template>
   <BaseModal
     :title="`Setup your ${store.isDuetMode ? 'team' : 'teams'}`"
+    icon="users"
     size="lg"
     @close="handleClose"
   >

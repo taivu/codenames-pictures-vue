@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { useTeamColors, usePressureMode } from '@/composables'
 import { CircularTimer } from '@/components/ui'
@@ -11,6 +11,13 @@ const { teamBgClasses, teamTextClasses } = useTeamColors()
 const pressureMode = usePressureMode()
 
 const isExpanded = ref(false)
+
+// Collapse HUD when color selection menu opens
+watch(() => store.colorMenuOpen, (isOpen) => {
+  if (isOpen) {
+    isExpanded.value = false
+  }
+})
 
 function toggleExpanded() {
   isExpanded.value = !isExpanded.value
@@ -33,30 +40,9 @@ function handleSetStartingTeam(color: string) {
     <Transition name="hud" mode="out-in">
       <div
         v-if="!isExpanded"
-        class="flex portrait:flex-row landscape:flex-col xl:flex-row gap-1.5 cursor-pointer items-center"
+        class="flex portrait:flex-row landscape:flex-col xl:flex-row gap-1.5 cursor-pointer items-center landscape:items-start xl:items-center"
       >
-        <!-- Pressure Mode Timer (collapsed view) -->
-        <div
-          v-if="pressureMode.isActive.value"
-          class="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/90 backdrop-blur-md shadow-lg"
-        >
-          <CircularTimer
-            :progress="pressureMode.progress.value"
-            :is-warning="pressureMode.isWarning.value"
-            :is-paused="pressureMode.isPaused.value"
-            :size="28"
-            :stroke-width="3"
-            show-play-pause
-          />
-          <span
-            :class="[
-              'font-bold text-sm',
-              pressureMode.isWarning.value ? 'text-red-600' : 'text-gray-700'
-            ]"
-          >
-            {{ pressureMode.formattedTime.value }}
-          </span>
-        </div>
+        <!-- Team score badges -->
         <div
           v-for="color in store.activeTeamColors"
           :key="color"
@@ -74,6 +60,31 @@ function handleSetStartingTeam(color: string) {
           />
           <span class="uppercase text-xs opacity-80">{{ color.slice(0, 3) }}</span>
           <span>{{ store.getGuessedCount(color) }}<template v-if="store.startingTeam || store.isDuetMode">/{{ store.getTotalCards(color) }}</template></span>
+        </div>
+        <!-- Pressure Mode Timer (collapsed view) -->
+        <div
+          v-if="pressureMode.isActive.value"
+          class="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/90 backdrop-blur-md shadow-lg landscape:order-first xl:order-last"
+        >
+          <CircularTimer
+            :progress="pressureMode.progress.value"
+            :is-caution="pressureMode.isCaution.value"
+            :is-warning="pressureMode.isWarning.value"
+            :is-paused="pressureMode.isPaused.value"
+            :size="28"
+            :stroke-width="3"
+            show-play-pause
+          />
+          <span
+            :class="[
+              'font-bold text-sm',
+              pressureMode.isWarning.value
+                ? 'text-red-600'
+                : pressureMode.isCaution.value ? 'text-orange-600' : 'text-green-600'
+            ]"
+          >
+            {{ pressureMode.formattedTime.value }}
+          </span>
         </div>
       </div>
 
@@ -154,7 +165,7 @@ function handleSetStartingTeam(color: string) {
             class="w-full px-3 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2"
             @click="pressureMode.startTimer"
           >
-            <FontAwesomeIcon :icon="['far', 'gem']" />
+            <FontAwesomeIcon icon="stopwatch" />
             Add Pressure
           </button>
           <button
@@ -164,6 +175,7 @@ function handleSetStartingTeam(color: string) {
           >
             <CircularTimer
               :progress="pressureMode.progress.value"
+              :is-caution="pressureMode.isCaution.value"
               :is-warning="pressureMode.isWarning.value"
               :is-paused="pressureMode.isPaused.value"
               :size="40"
@@ -171,17 +183,20 @@ function handleSetStartingTeam(color: string) {
               show-play-pause
             />
             <div class="text-center">
-              <span v-if="pressureMode.isPaused.value" class="font-bold text-lg block text-gray-400">
-                PAUSED
-              </span>
               <span
                 :class="[
-                  'block',
-                  pressureMode.isPaused.value ? 'text-sm text-gray-400' : 'font-bold text-lg',
-                  !pressureMode.isPaused.value && (pressureMode.isWarning.value ? 'text-red-600' : 'text-gray-700')
+                  'block font-bold text-lg leading-tight',
+                  pressureMode.isPaused.value
+                    ? 'text-gray-400'
+                    : pressureMode.isWarning.value
+                      ? 'text-red-600'
+                      : pressureMode.isCaution.value ? 'text-orange-600' : 'text-green-600'
                 ]"
               >
                 {{ pressureMode.formattedTime.value }}
+              </span>
+              <span v-if="pressureMode.isPaused.value" class="text-xs block text-gray-400 uppercase leading-tight">
+                Paused
               </span>
               <div class="flex justify-center gap-1">
                 <FontAwesomeIcon

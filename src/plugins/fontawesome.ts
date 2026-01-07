@@ -29,14 +29,13 @@ import {
   faSpinner,
   faStar,
   faStopwatch,
+  faTriangleExclamation,
   faUpRightFromSquare,
   faUserSecret,
   faUsers,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
-// Regular (outline) icons
-import { faGem } from '@fortawesome/free-regular-svg-icons'
 
 // Register icons
 library.add(
@@ -69,12 +68,13 @@ library.add(
   faUsers,
   // Pressure mode
   faCircleExclamation,
-  faGem,
   faRotateRight,
   faSkullCrossbones,
   faStopwatch,
   // Settings
   faFloppyDisk,
+  // Warnings
+  faTriangleExclamation,
 )
 
 export function setupFontAwesome(app: App): void {

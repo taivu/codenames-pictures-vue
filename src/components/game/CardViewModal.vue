@@ -38,10 +38,11 @@ useEscapeKey(handleClose)
       <div
         v-if="isVisible"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        @mousedown.stop
       >
         <!-- Backdrop -->
         <div
-          class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          class="absolute inset-0 bg-black/50 backdrop-blur-sm"
           @click="handleClose"
         />
 

@@ -18,6 +18,13 @@ const settingsStore = useSettingsStore()
 const showNewGameConfirm = ref(false)
 
 function handleNewGameClick() {
+  // Skip confirmation if no teams are set up - just start new game
+  if (!gameStore.teamsAreSetup) {
+    gameStore.newGame()
+    trackNewGame(gameStore.mode)
+    emit('close')
+    return
+  }
   showNewGameConfirm.value = true
 }
 
@@ -190,7 +197,7 @@ function handleAutoSaveToggle() {
     </div>
 
     <!-- New Game Confirmation Modal -->
-    <BaseModal v-if="showNewGameConfirm" title="Start New Game?" @close="cancelNewGame">
+    <BaseModal v-if="showNewGameConfirm" title="Start New Game?" icon="rotate" @close="cancelNewGame">
       <p class="text-gray-600 mb-6">
         This will shuffle and deal new cards. Teams and scores will be kept.
       </p>

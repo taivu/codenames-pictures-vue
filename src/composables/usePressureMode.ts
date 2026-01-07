@@ -4,6 +4,7 @@ import { useSettingsStore, useGameStore } from '@/stores'
 const CONFIG = {
   durations: [600, 300, 60] as const, // 10min, 5min, 1min in seconds
   maxStrikes: 3,
+  cautionThreshold: 0.5, // Orange at 50% remaining
   warningThreshold: 0.25, // Red at 25% remaining
 }
 
@@ -45,6 +46,9 @@ export function usePressureMode() {
 
   // Progress from 0 to 1 (1 = full, 0 = empty)
   const progress = computed(() => timeRemaining.value / currentDuration.value)
+
+  // Timer turns orange when <= 50% time remaining
+  const isCaution = computed(() => progress.value <= CONFIG.cautionThreshold)
 
   // Timer turns red when <= 25% time remaining
   const isWarning = computed(() => progress.value <= CONFIG.warningThreshold)
@@ -142,6 +146,7 @@ export function usePressureMode() {
     // Computed
     currentDuration,
     progress,
+    isCaution,
     isWarning,
     formattedTime,
     // Actions

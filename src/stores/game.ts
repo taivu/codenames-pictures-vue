@@ -156,7 +156,7 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function updatePlayer(teamColor: TeamColor, index: number, name: string): void {
-    teams.value[teamColor].players[index] = name
+    teams.value[teamColor].players[index] = name.trim()
   }
 
   function removePlayer(teamColor: TeamColor, index: number): void {
@@ -202,6 +202,9 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function newGame(): void {
+    if (teamsAreSetup.value) {
+      startingTeam.value = null
+    }
     generateCards()
   }
 
@@ -209,6 +212,10 @@ export const useGameStore = defineStore('game', () => {
   // Persistence
   // ===================
   const hasSavedGame = computed(() => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null)
+
+  function getSavedGamePreview(): PersistedGameState | null {
+    return loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)
+  }
 
   function persistGame(): void {
     saveToStorage<PersistedGameState>(GAME_STORAGE_KEY, {
@@ -264,6 +271,7 @@ export const useGameStore = defineStore('game', () => {
     cardColorOptions,
     teamsAreSetup,
     hasSavedGame,
+    getSavedGamePreview,
     // Actions
     initializeGame,
     generateCards,

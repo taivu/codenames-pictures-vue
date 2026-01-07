@@ -229,7 +229,7 @@ const baseUrl = import.meta.env.BASE_URL
     <div class="max-w-4xl mx-auto mb-8">
       <div class="bg-gradient-to-br from-orange-50 to-red-50 border-2 border-orange-400 rounded-xl p-6 shadow-md">
         <h2 class="text-2xl font-bold mb-3 text-orange-800">
-          <FontAwesomeIcon :icon="['far', 'gem']" class="mr-2" />Pressure Mode
+          <FontAwesomeIcon icon="stopwatch" class="mr-2" />Pressure Mode
         </h2>
         <p class="text-gray-700 leading-relaxed mb-4">
           Want to spice things up? Enable <strong>Pressure Mode</strong> in Settings to add a countdown timer that keeps everyone on their toes.

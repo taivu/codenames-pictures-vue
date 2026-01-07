@@ -31,7 +31,7 @@ function handleTogglePressureMode(): void {
 </script>
 
 <template>
-  <BaseModal title="Settings" size="md" @close="handleClose">
+  <BaseModal title="Settings" icon="gear" size="md" @close="handleClose">
     <div class="space-y-6">
       <!-- Auto-Save Section -->
       <section class="p-4 bg-gray-50 rounded-xl">
@@ -91,16 +91,20 @@ function handleTogglePressureMode(): void {
         </div>
       </section>
 
-      <!-- Card Sets Section (Coming Soon) -->
-      <section class="p-4 bg-gray-50 rounded-xl opacity-50">
+      <!-- Coming Soon Divider -->
+      <div class="flex items-center gap-3 text-gray-400">
+        <div class="flex-1 border-t border-gray-200" />
+        <span class="text-xs font-medium uppercase tracking-wide">Coming Soon</span>
+        <div class="flex-1 border-t border-gray-200" />
+      </div>
+
+      <!-- Card Sets Section -->
+      <section class="p-4 bg-gray-50 rounded-xl opacity-50 pointer-events-none">
         <div class="flex items-start justify-between gap-4 mb-3">
           <div>
             <h4 class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
               <FontAwesomeIcon icon="images" class="text-gray-500" />
               Card Sets
-              <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium uppercase tracking-wide">
-                Coming Soon
-              </span>
             </h4>
             <p class="text-sm text-gray-500">
               Choose which card sets to use. Changes apply to new games.

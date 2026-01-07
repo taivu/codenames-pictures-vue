@@ -4,6 +4,7 @@ import { useClickOutside, useEscapeKey } from '@/composables'
 
 interface Props {
   title?: string
+  icon?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
@@ -61,7 +62,8 @@ onUnmounted(() => {
         >
           <!-- Header -->
           <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 shrink-0">
-            <h3 v-if="title" class="text-xl font-bold text-gray-800">
+            <h3 v-if="title" class="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <FontAwesomeIcon v-if="icon" :icon="icon" class="text-gray-500" />
               {{ title }}
             </h3>
             <div class="flex items-center gap-2">
