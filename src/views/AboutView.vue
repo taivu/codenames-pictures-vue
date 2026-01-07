@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { changelog } from '@/config'
+import { marked } from 'marked'
+import changelogMd from '../../CHANGELOG.md?raw'
+
+// Parse markdown to HTML (skip the h1 title)
+const changelogHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
 </script>
 
 <template>
@@ -74,14 +78,7 @@ import { changelog } from '@/config'
       <!-- Changelog -->
       <div class="bg-white/80 border-2 border-gray-300 rounded-xl p-6 shadow-sm mb-6">
         <h2 class="text-2xl font-bold mb-4">Changelog</h2>
-        <div class="space-y-4">
-          <div v-for="entry in changelog" :key="entry.date">
-            <h3 class="font-bold text-gray-800">{{ entry.date }}</h3>
-            <ul class="list-disc list-inside text-gray-700 text-sm space-y-1 ml-2">
-              <li v-for="change in entry.changes" :key="change">{{ change }}</li>
-            </ul>
-          </div>
-        </div>
+        <div class="changelog-content" v-html="changelogHtml" />
       </div>
 
       <!-- Credits Card -->
@@ -146,3 +143,29 @@ import { changelog } from '@/config'
     </div>
   </div>
 </template>
+
+<style scoped>
+.changelog-content :deep(h2) {
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.changelog-content :deep(h2:first-child) {
+  margin-top: 0;
+}
+
+.changelog-content :deep(ul) {
+  list-style-type: disc;
+  list-style-position: inside;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.changelog-content :deep(li) {
+  margin-bottom: 0.25rem;
+}
+</style>
