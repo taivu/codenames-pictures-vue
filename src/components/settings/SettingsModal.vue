@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGameStore, useSettingsStore } from '@/stores'
-import { BaseModal } from '@/components/ui'
+import { BaseModal, ToggleSwitch } from '@/components/ui'
 import CardSetSelector from './CardSetSelector.vue'
 import { trackAutoSaveToggled } from '@/plugins/analytics'
 
@@ -45,20 +45,10 @@ function handleTogglePressureMode(): void {
               Save your game automatically to recover from accidental refreshes.
             </p>
           </div>
-          <button
-            class="relative shrink-0 w-11 h-6 rounded-full transition-colors"
-            :class="settingsStore.autoSaveEnabled ? 'bg-green-500' : 'bg-gray-300'"
-            role="switch"
-            :aria-checked="settingsStore.autoSaveEnabled"
-            @click="handleToggleAutoSave"
-          >
-            <span
-              :class="[
-                'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
-                settingsStore.autoSaveEnabled && 'translate-x-5'
-              ]"
-            />
-          </button>
+          <ToggleSwitch
+            :model-value="settingsStore.autoSaveEnabled"
+            @update:model-value="handleToggleAutoSave"
+          />
         </div>
       </section>
 
@@ -74,20 +64,11 @@ function handleTogglePressureMode(): void {
               Add a countdown timer. Time runs out = strike. 3 strikes = you lose!
             </p>
           </div>
-          <button
-            class="relative shrink-0 w-11 h-6 rounded-full transition-colors"
-            :class="settingsStore.pressureModeEnabled ? 'bg-orange-500' : 'bg-gray-300'"
-            role="switch"
-            :aria-checked="settingsStore.pressureModeEnabled"
-            @click="handleTogglePressureMode"
-          >
-            <span
-              :class="[
-                'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
-                settingsStore.pressureModeEnabled && 'translate-x-5'
-              ]"
-            />
-          </button>
+          <ToggleSwitch
+            :model-value="settingsStore.pressureModeEnabled"
+            active-color="orange"
+            @update:model-value="handleTogglePressureMode"
+          />
         </div>
       </section>
 

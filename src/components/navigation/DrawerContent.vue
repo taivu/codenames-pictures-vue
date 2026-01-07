@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
-import { BaseModal } from '@/components/ui'
+import { BaseModal, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
 import { appConfig } from '@/config'
 
@@ -177,22 +177,10 @@ function handleAutoSaveToggle() {
           <FontAwesomeIcon icon="floppy-disk" class="mr-2 text-gray-400" />
           Auto-save game
         </span>
-        <button
-          :class="[
-            'relative w-11 h-6 rounded-full transition-colors',
-            settingsStore.autoSaveEnabled ? 'bg-green-500' : 'bg-gray-300'
-          ]"
-          role="switch"
-          :aria-checked="settingsStore.autoSaveEnabled"
-          @click="handleAutoSaveToggle"
-        >
-          <span
-            :class="[
-              'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
-              settingsStore.autoSaveEnabled && 'translate-x-5'
-            ]"
-          />
-        </button>
+        <ToggleSwitch
+          :model-value="settingsStore.autoSaveEnabled"
+          @update:model-value="handleAutoSaveToggle"
+        />
       </label>
     </div>
 
