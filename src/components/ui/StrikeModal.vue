@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { pressureModeConfig } from '@/config'
 
 interface Props {
   strikeNumber: number
@@ -18,14 +19,8 @@ const canContinue = ref(false)
 onMounted(() => {
   setTimeout(() => {
     canContinue.value = true
-  }, 1500)
+  }, pressureModeConfig.strikeModalDelay)
 })
-
-const strikeMessages = [
-  "Time's up! You can do better than this.",
-  "Struggling, are we? One more and it's over.",
-  "This is your final warning..."
-]
 </script>
 
 <template>
@@ -40,7 +35,7 @@ const strikeMessages = [
           <!-- Strike Icons -->
           <div class="mb-4 flex justify-center gap-3">
             <FontAwesomeIcon
-              v-for="i in 3"
+              v-for="i in pressureModeConfig.maxStrikes"
               :key="i"
               icon="skull-crossbones"
               :class="[
@@ -57,7 +52,7 @@ const strikeMessages = [
 
           <!-- Shame Message -->
           <p class="text-red-300 text-lg mb-6">
-            {{ strikeMessages[strikeNumber - 1] }}
+            {{ pressureModeConfig.strikeMessages[strikeNumber - 1] }}
           </p>
 
           <!-- Next Round Info -->

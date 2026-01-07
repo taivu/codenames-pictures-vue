@@ -1,17 +1,11 @@
 import { ref, computed, watch } from 'vue'
 import { useSettingsStore, useGameStore } from '@/stores'
-
-const CONFIG = {
-  durations: [600, 300, 60] as const, // 10min, 5min, 1min in seconds
-  maxStrikes: 3,
-  cautionThreshold: 0.5, // Orange at 50% remaining
-  warningThreshold: 0.25, // Red at 25% remaining
-}
+import { pressureModeConfig } from '@/config'
 
 // Singleton state (shared across all component instances)
 const isActive = ref(false)
 const isPaused = ref(false)
-const timeRemaining = ref<number>(CONFIG.durations[0])
+const timeRemaining = ref<number>(pressureModeConfig.durations[0])
 const strikes = ref(0)
 const showStrikeModal = ref(false)
 const showLossModal = ref(false)
@@ -27,7 +21,7 @@ function clearTimer(): void {
 
 function startInterval(tickFn: () => void): void {
   clearTimer()
-  timerInterval = setInterval(tickFn, 1000)
+  timerInterval = setInterval(tickFn, pressureModeConfig.tickInterval)
 }
 
 /**
@@ -40,18 +34,18 @@ export function usePressureMode() {
 
   // Current duration based on strikes (10min -> 5min -> 1min)
   const currentDuration = computed(() => {
-    const index = Math.min(strikes.value, CONFIG.durations.length - 1)
-    return CONFIG.durations[index] ?? CONFIG.durations[0]
+    const index = Math.min(strikes.value, pressureModeConfig.durations.length - 1)
+    return pressureModeConfig.durations[index] ?? pressureModeConfig.durations[0]
   })
 
   // Progress from 0 to 1 (1 = full, 0 = empty)
   const progress = computed(() => timeRemaining.value / currentDuration.value)
 
   // Timer turns orange when <= 50% time remaining
-  const isCaution = computed(() => progress.value <= CONFIG.cautionThreshold)
+  const isCaution = computed(() => progress.value <= pressureModeConfig.cautionThreshold)
 
   // Timer turns red when <= 25% time remaining
-  const isWarning = computed(() => progress.value <= CONFIG.warningThreshold)
+  const isWarning = computed(() => progress.value <= pressureModeConfig.warningThreshold)
 
   // Format time as M:SS
   const formattedTime = computed(() => {
@@ -74,7 +68,7 @@ export function usePressureMode() {
       clearTimer()
       strikes.value++
 
-      if (strikes.value >= CONFIG.maxStrikes) {
+      if (strikes.value >= pressureModeConfig.maxStrikes) {
         showLossModal.value = true
         isActive.value = false
       } else {
@@ -87,7 +81,7 @@ export function usePressureMode() {
     if (!settingsStore.pressureModeEnabled) return
     strikes.value = 0
     isPaused.value = false
-    timeRemaining.value = CONFIG.durations[0]
+    timeRemaining.value = pressureModeConfig.durations[0]
     isActive.value = true
     startInterval(tick)
   }
@@ -114,7 +108,7 @@ export function usePressureMode() {
     isActive.value = false
     isPaused.value = false
     strikes.value = 0
-    timeRemaining.value = CONFIG.durations[0]
+    timeRemaining.value = pressureModeConfig.durations[0]
     showStrikeModal.value = false
     showLossModal.value = false
   }
@@ -159,6 +153,6 @@ export function usePressureMode() {
     continueAsScrub,
     formatDuration,
     // Config
-    config: CONFIG,
+    config: pressureModeConfig,
   }
 }

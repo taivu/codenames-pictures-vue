@@ -1,5 +1,7 @@
 export { appConfig } from './app'
 export { gameConfig } from './game'
+export { pressureModeConfig } from './pressureMode'
+export type { PressureModeConfig } from './pressureMode'
 export { cardSets, getCardSetById, getDefaultCardSets, getDefaultCardSetIds } from './cardSets'
 export type { CardSet } from './cardSets'
 export { changelog } from './changelog'
