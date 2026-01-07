@@ -19,7 +19,7 @@ const store = useGameStore()
       v-for="card in store.cards"
       :key="`${card.setId}-${card.imageIndex}`"
       :card="card"
-      class="aspect-square min-w-0 min-h-0"
+      class="aspect-square min-h-0 min-w-0"
     />
   </div>
 </template>

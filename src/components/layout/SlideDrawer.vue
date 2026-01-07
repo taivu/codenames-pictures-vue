@@ -10,7 +10,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   position: 'right',
-  width: '80vw'
+  width: '80vw',
 })
 
 const emit = defineEmits<{
@@ -94,13 +94,16 @@ function handleTouchEnd() {
 }
 
 // Lock body scroll when open
-watch(() => props.open, (isOpen) => {
-  if (isOpen) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
+watch(
+  () => props.open,
+  (isOpen) => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
   }
-})
+)
 
 onUnmounted(() => {
   document.body.style.overflow = ''
@@ -110,10 +113,7 @@ onUnmounted(() => {
 <template>
   <Teleport to="body">
     <Transition name="drawer">
-      <div
-        v-if="open"
-        class="fixed inset-0 z-50"
-      >
+      <div v-if="open" class="fixed inset-0 z-50">
         <!-- Backdrop -->
         <div
           ref="backdropRef"
@@ -128,7 +128,7 @@ onUnmounted(() => {
             'absolute top-0 bottom-0 bg-white shadow-2xl',
             'flex flex-col overflow-hidden',
             'transition-transform duration-300 ease-out',
-            position === 'right' ? 'right-0' : 'left-0'
+            position === 'right' ? 'right-0' : 'left-0',
           ]"
           :style="{ width, maxWidth: '360px' }"
           @touchstart="handleTouchStart"
@@ -170,8 +170,8 @@ onUnmounted(() => {
 }
 
 /* Left position variants */
-:deep(.drawer-enter-from > div[class*="left-0"]),
-:deep(.drawer-leave-to > div[class*="left-0"]) {
+:deep(.drawer-enter-from > div[class*='left-0']),
+:deep(.drawer-leave-to > div[class*='left-0']) {
   transform: translateX(-100%);
 }
 </style>

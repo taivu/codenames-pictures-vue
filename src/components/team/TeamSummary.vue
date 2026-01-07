@@ -30,30 +30,24 @@ function handleBadgeClick(): void {
 </script>
 
 <template>
-  <div v-if="hasPlayers" class="bg-gray-50 rounded-xl p-3">
-    <div class="flex items-center justify-between gap-2 mb-2">
-      <h3
-        class="text-sm font-bold capitalize"
-        :class="teamTextClasses[color]"
-      >
-        <FontAwesomeIcon
-          v-if="isStartingTeam"
-          icon="star"
-          class="text-yellow-500 text-xs mr-1"
-        />
+  <div v-if="hasPlayers" class="rounded-xl bg-gray-50 p-3">
+    <div class="mb-2 flex items-center justify-between gap-2">
+      <h3 class="text-sm font-bold capitalize" :class="teamTextClasses[color]">
+        <FontAwesomeIcon v-if="isStartingTeam" icon="star" class="mr-1 text-xs text-yellow-500" />
         Team {{ color }}
       </h3>
       <button
         :class="[
-          'px-2 py-0.5 text-xs font-bold rounded-md transition-colors',
+          'rounded-md px-2 py-0.5 text-xs font-bold transition-colors',
           !store.isDuetMode ? 'cursor-pointer hover:opacity-80' : '',
           teamTextClasses[color],
-          'bg-white shadow-sm'
+          'bg-white shadow-sm',
         ]"
         :title="!store.isDuetMode ? 'Click to set as starting team' : ''"
         @click="handleBadgeClick"
       >
-        {{ guessedCards }}<template v-if="store.startingTeam || store.isDuetMode">/{{ totalCards }}</template>
+        {{ guessedCards
+        }}<template v-if="store.startingTeam || store.isDuetMode">/{{ totalCards }}</template>
       </button>
     </div>
 

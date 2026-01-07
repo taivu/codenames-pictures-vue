@@ -25,9 +25,9 @@ defineEmits<{
       'btn-blue': variant === 'blue',
       'btn-green': variant === 'green',
       'btn-red': variant === 'red',
-      'bg-transparent border-0 text-blue-600 underline-offset-2 hover:underline':
+      'border-0 bg-transparent text-blue-600 underline-offset-2 hover:underline':
         variant === 'link',
-      'opacity-50 cursor-not-allowed': disabled,
+      'cursor-not-allowed opacity-50': disabled,
     }"
     @click="$emit('click', $event)"
   >

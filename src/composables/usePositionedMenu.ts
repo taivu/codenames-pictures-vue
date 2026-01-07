@@ -43,7 +43,13 @@ export function usePositionedMenu(
     const { height: menuHeight, width: menuWidth } = menuRect
     const viewportHeight = window.innerHeight
     const viewportWidth = window.innerWidth
-    const { gap, viewportPadding, arrowSize, arrowOffset: arrowCssOffset, arrowMinOffset } = MENU_CONFIG
+    const {
+      gap,
+      viewportPadding,
+      arrowSize,
+      arrowOffset: arrowCssOffset,
+      arrowMinOffset,
+    } = MENU_CONFIG
 
     let top = 0
     let left = 0
@@ -80,10 +86,16 @@ export function usePositionedMenu(
     // Calculate arrow offset to point to anchor center
     if (arrowPosition.value === 'left' || arrowPosition.value === 'right') {
       const anchorCenterY = anchorRect.top + anchorRect.height / 2
-      arrowOffset.value = Math.max(arrowMinOffset, Math.min(menuHeight - arrowMinOffset, anchorCenterY - top))
+      arrowOffset.value = Math.max(
+        arrowMinOffset,
+        Math.min(menuHeight - arrowMinOffset, anchorCenterY - top)
+      )
     } else {
       const anchorCenterX = anchorRect.left + anchorRect.width / 2
-      arrowOffset.value = Math.max(arrowMinOffset, Math.min(menuWidth - arrowMinOffset, anchorCenterX - left))
+      arrowOffset.value = Math.max(
+        arrowMinOffset,
+        Math.min(menuWidth - arrowMinOffset, anchorCenterX - left)
+      )
     }
 
     positionStyle.value = {

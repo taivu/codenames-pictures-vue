@@ -23,7 +23,8 @@ function handleSelect(color: CardColor): void {
 }
 
 function getButtonClasses(color: CardColor): string {
-  const baseClasses = 'w-full px-4 py-2.5 text-left text-base font-semibold transition-all cursor-pointer block'
+  const baseClasses =
+    'w-full px-4 py-2.5 text-left text-base font-semibold transition-all cursor-pointer block'
   return `${baseClasses} ${getCardButtonClass(color)}`
 }
 </script>
@@ -43,7 +44,7 @@ function getButtonClasses(color: CardColor): string {
       >
         <!-- Arrow pointing to card -->
         <div
-          class="absolute w-0 h-0 border-[10px] border-transparent"
+          class="absolute h-0 w-0 border-[10px] border-transparent"
           :class="{
             'border-r-white': arrowPosition === 'left',
             'border-l-white': arrowPosition === 'right',
@@ -54,19 +55,20 @@ function getButtonClasses(color: CardColor): string {
         />
 
         <!-- Menu content -->
-        <div class="bg-white rounded-lg overflow-hidden border-2 border-white min-w-[140px]">
+        <div class="min-w-[140px] overflow-hidden rounded-lg border-2 border-white bg-white">
           <button
             v-for="(option, index) in store.cardColorOptions"
             :key="option.value"
             type="button"
-            :class="[
-              getButtonClasses(option.value),
-              index > 0 && 'border-t border-gray-100'
-            ]"
+            :class="[getButtonClasses(option.value), index > 0 && 'border-t border-gray-100']"
             @click="handleSelect(option.value)"
           >
             {{ option.label }}
-            <FontAwesomeIcon v-if="option.value === 'black'" icon="skull-crossbones" class="ml-1.5 text-sm" />
+            <FontAwesomeIcon
+              v-if="option.value === 'black'"
+              icon="skull-crossbones"
+              class="ml-1.5 text-sm"
+            />
           </button>
         </div>
       </div>
@@ -77,7 +79,9 @@ function getButtonClasses(color: CardColor): string {
 <style scoped>
 .menu-enter-active,
 .menu-leave-active {
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
 }
 
 .menu-enter-from,

@@ -30,53 +30,50 @@ onMounted(() => {
       <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" />
 
       <!-- Modal -->
-      <div class="relative animate-shake">
-        <div class="bg-gradient-to-b from-red-900 to-gray-900 rounded-2xl p-8 text-center max-w-sm shadow-2xl border border-red-700">
+      <div class="animate-shake relative">
+        <div
+          class="max-w-sm rounded-2xl border border-red-700 bg-gradient-to-b from-red-900 to-gray-900 p-8 text-center shadow-2xl"
+        >
           <!-- Strike Icons -->
           <div class="mb-4 flex justify-center gap-3">
             <FontAwesomeIcon
               v-for="i in pressureModeConfig.maxStrikes"
               :key="i"
               icon="skull-crossbones"
-              :class="[
-                'text-5xl',
-                i <= strikeNumber ? 'text-white' : 'text-white/25'
-              ]"
+              :class="['text-5xl', i <= strikeNumber ? 'text-white' : 'text-white/25']"
             />
           </div>
 
           <!-- Strike Number -->
-          <h1 class="text-5xl font-black text-white mb-2 tracking-wider">
+          <h1 class="mb-2 text-5xl font-black tracking-wider text-white">
             STRIKE {{ strikeNumber }}
           </h1>
 
           <!-- Shame Message -->
-          <p class="text-red-300 text-lg mb-6">
+          <p class="mb-6 text-lg text-red-300">
             {{ pressureModeConfig.strikeMessages[strikeNumber - 1] }}
           </p>
 
           <!-- Next Round Info -->
-          <div class="bg-black/30 rounded-lg p-3 mb-6">
-            <p class="text-gray-400 text-sm">Next round</p>
-            <p class="text-white font-bold text-xl">{{ nextDuration }}</p>
+          <div class="mb-6 rounded-lg bg-black/30 p-3">
+            <p class="text-sm text-gray-400">Next round</p>
+            <p class="text-xl font-bold text-white">{{ nextDuration }}</p>
           </div>
 
           <!-- Continue Button -->
           <button
             :disabled="!canContinue"
             :class="[
-              'w-full py-3 px-6 rounded-lg font-bold text-lg transition-all',
+              'w-full rounded-lg px-6 py-3 text-lg font-bold transition-all',
               canContinue
-                ? 'bg-red-600 hover:bg-red-500 text-white cursor-pointer'
-                : 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                ? 'cursor-pointer bg-red-600 text-white hover:bg-red-500'
+                : 'cursor-not-allowed bg-gray-700 text-gray-500',
             ]"
             @click="canContinue && emit('acknowledge')"
           >
-            <template v-if="canContinue">
-              Continue
-            </template>
+            <template v-if="canContinue"> Continue </template>
             <template v-else>
-              <FontAwesomeIcon icon="spinner" class="animate-spin mr-2" />
+              <FontAwesomeIcon icon="spinner" class="mr-2 animate-spin" />
               Wait...
             </template>
           </button>
@@ -88,9 +85,23 @@ onMounted(() => {
 
 <style scoped>
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 .animate-shake {

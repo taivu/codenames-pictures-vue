@@ -17,7 +17,7 @@ function handleClose(): void {
 function handleShuffleTeams(): void {
   store.shuffleTeams()
   const teams = Object.fromEntries(
-    store.activeTeamColors.map(color => [color, store.teams[color].players])
+    store.activeTeamColors.map((color) => [color, store.teams[color].players])
   )
   trackTeamsShuffled(teams)
 }
@@ -38,14 +38,14 @@ function handlePickSpyMasters(): void {
     <template v-if="!store.isDuetMode" #header-actions>
       <div class="flex gap-1">
         <button
-          class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 transition-colors"
+          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-green-100 hover:text-green-600"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
           <FontAwesomeIcon icon="shuffle" />
         </button>
         <button
-          class="w-9 h-9 flex items-center justify-center rounded-lg bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors"
+          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600"
           title="Pick spy masters"
           @click="handlePickSpyMasters"
         >
@@ -58,17 +58,13 @@ function handlePickSpyMasters(): void {
       class="grid gap-6"
       :class="store.isDuetMode ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'"
     >
-      <TeamSetup
-        v-for="color in store.activeTeamColors"
-        :key="color"
-        :color="color"
-      />
+      <TeamSetup v-for="color in store.activeTeamColors" :key="color" :color="color" />
     </div>
 
-    <div v-if="!store.isDuetMode" class="flex justify-center mt-6 pt-4 border-t border-gray-100">
+    <div v-if="!store.isDuetMode" class="mt-6 flex justify-center border-t border-gray-100 pt-4">
       <div class="flex gap-2">
         <button
-          class="px-4 py-2.5 flex items-center gap-2 font-medium rounded-lg bg-green-500 hover:bg-green-600 text-white transition-colors shadow-sm"
+          class="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-green-600"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
@@ -76,7 +72,7 @@ function handlePickSpyMasters(): void {
           <span class="hidden sm:inline">Shuffle teams</span>
         </button>
         <button
-          class="px-4 py-2.5 flex items-center gap-2 font-medium rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors shadow-sm"
+          class="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-600"
           title="Randomize spy masters"
           @click="handlePickSpyMasters"
         >

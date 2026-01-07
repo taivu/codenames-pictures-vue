@@ -34,16 +34,16 @@ function handleClick(): void {
     :aria-checked="modelValue"
     :disabled="disabled"
     :class="[
-      'relative shrink-0 w-11 h-6 rounded-full transition-colors',
+      'relative h-6 w-11 shrink-0 rounded-full transition-colors',
       modelValue ? colorClasses[activeColor] : 'bg-gray-300',
-      disabled && 'opacity-50 cursor-not-allowed'
+      disabled && 'cursor-not-allowed opacity-50',
     ]"
     @click="handleClick"
   >
     <span
       :class="[
-        'absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform',
-        modelValue && 'translate-x-5'
+        'absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform',
+        modelValue && 'translate-x-5',
       ]"
     />
   </button>

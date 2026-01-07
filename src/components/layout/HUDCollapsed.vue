@@ -15,31 +15,38 @@ function getTimerColorClass(): string {
 </script>
 
 <template>
-  <div class="flex portrait:flex-row landscape:flex-col xl:flex-row gap-1.5 cursor-pointer items-center landscape:items-start xl:items-center">
+  <div
+    class="flex cursor-pointer items-center gap-1.5 xl:flex-row xl:items-center portrait:flex-row landscape:flex-col landscape:items-start"
+  >
     <!-- Team score badges -->
     <div
       v-for="color in store.activeTeamColors"
       :key="color"
       :class="[
-        'flex items-center gap-1 px-2 py-1 rounded-lg',
-        'text-white font-bold text-sm shadow-lg',
+        'flex items-center gap-1 rounded-lg px-2 py-1',
+        'text-sm font-bold text-white shadow-lg',
         'backdrop-blur-md',
-        teamBgClasses[color]
+        teamBgClasses[color],
       ]"
     >
       <FontAwesomeIcon
         v-if="store.startingTeam === color"
         icon="star"
-        class="text-yellow-300 text-xs"
+        class="text-xs text-yellow-300"
       />
-      <span class="uppercase text-xs opacity-80">{{ color.slice(0, 3) }}</span>
-      <span>{{ store.getGuessedCount(color) }}<template v-if="store.startingTeam || store.isDuetMode">/{{ store.getTotalCards(color) }}</template></span>
+      <span class="text-xs uppercase opacity-80">{{ color.slice(0, 3) }}</span>
+      <span
+        >{{ store.getGuessedCount(color)
+        }}<template v-if="store.startingTeam || store.isDuetMode"
+          >/{{ store.getTotalCards(color) }}</template
+        ></span
+      >
     </div>
 
     <!-- Pressure Mode Timer -->
     <div
       v-if="pressureMode.isActive.value"
-      class="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/90 backdrop-blur-md shadow-lg landscape:order-first xl:order-last"
+      class="flex items-center gap-1 rounded-lg bg-white/90 px-2 py-1 shadow-lg backdrop-blur-md xl:order-last landscape:order-first"
     >
       <CircularTimer
         :progress="pressureMode.progress.value"
@@ -50,7 +57,7 @@ function getTimerColorClass(): string {
         :stroke-width="3"
         show-play-pause
       />
-      <span :class="['font-bold text-sm', getTimerColorClass()]">
+      <span :class="['text-sm font-bold', getTimerColorClass()]">
         {{ pressureMode.formattedTime.value }}
       </span>
     </div>

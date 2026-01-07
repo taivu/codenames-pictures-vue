@@ -2,7 +2,14 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'
 import { gameConfig } from '@/config'
-import { shuffle, chunk, capitalize, loadFromStorage, saveToStorage, removeFromStorage } from '@/utils'
+import {
+  shuffle,
+  chunk,
+  capitalize,
+  loadFromStorage,
+  saveToStorage,
+  removeFromStorage,
+} from '@/utils'
 import { useSettingsStore } from './settings'
 
 interface CardPoolItem {
@@ -42,9 +49,7 @@ export const useGameStore = defineStore('game', () => {
   const isDuetMode = computed(() => mode.value === 'duet')
 
   const activeTeamColors = computed<TeamColor[]>(() =>
-    isDuetMode.value
-      ? [...gameConfig.teamColors.duet]
-      : [...gameConfig.teamColors.classic]
+    isDuetMode.value ? [...gameConfig.teamColors.duet] : [...gameConfig.teamColors.classic]
   )
 
   const gridSize = computed(() =>
@@ -211,7 +216,9 @@ export const useGameStore = defineStore('game', () => {
   // ===================
   // Persistence
   // ===================
-  const hasSavedGame = computed(() => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null)
+  const hasSavedGame = computed(
+    () => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null
+  )
 
   function getSavedGamePreview(): PersistedGameState | null {
     return loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)

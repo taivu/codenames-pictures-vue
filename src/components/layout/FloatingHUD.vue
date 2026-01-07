@@ -8,9 +8,12 @@ const store = useGameStore()
 const isExpanded = ref(false)
 
 // Collapse HUD when color selection menu opens
-watch(() => store.colorMenuOpen, (isOpen) => {
-  if (isOpen) isExpanded.value = false
-})
+watch(
+  () => store.colorMenuOpen,
+  (isOpen) => {
+    if (isOpen) isExpanded.value = false
+  }
+)
 
 function toggleExpanded(): void {
   isExpanded.value = !isExpanded.value
@@ -18,7 +21,7 @@ function toggleExpanded(): void {
 </script>
 
 <template>
-  <div class="select-none drop-shadow-lg" @click="toggleExpanded">
+  <div class="drop-shadow-lg select-none" @click="toggleExpanded">
     <Transition name="hud" mode="out-in">
       <HUDCollapsed v-if="!isExpanded" />
       <HUDExpanded v-else />

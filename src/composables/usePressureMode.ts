@@ -127,7 +127,9 @@ export function usePressureMode() {
   // Reset everything when pressure mode is disabled
   watch(
     () => settingsStore.pressureModeEnabled,
-    (enabled) => { if (!enabled) reset() }
+    (enabled) => {
+      if (!enabled) reset()
+    }
   )
 
   return {

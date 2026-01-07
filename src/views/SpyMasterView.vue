@@ -49,13 +49,15 @@ onMounted(async () => {
   }
 })
 
-
 // Update URL when card changes (but not on initial load from URL)
-watch(() => store.currentCardId, (newId, oldId) => {
-  if (oldId !== undefined && newId) {
-    router.replace({ name: 'spy-master', params: { cardId: newId } })
+watch(
+  () => store.currentCardId,
+  (newId, oldId) => {
+    if (oldId !== undefined && newId) {
+      router.replace({ name: 'spy-master', params: { cardId: newId } })
+    }
   }
-})
+)
 
 function handleSearch(event: Event): void {
   event.preventDefault()
@@ -116,11 +118,11 @@ function endPeek(): void {
 </script>
 
 <template>
-  <div class="min-h-screen p-4 sm:p-8 relative">
+  <div class="relative min-h-screen p-4 sm:p-8">
     <!-- Lock toggle switch (sticky, compact, above overlay) -->
-    <div v-if="store.currentCard" class="sticky top-2 z-40 flex justify-end mb-2">
+    <div v-if="store.currentCard" class="sticky top-2 z-40 mb-2 flex justify-end">
       <button
-        class="flex items-center gap-1.5 px-2 py-1 rounded-full shadow text-xs transition-colors"
+        class="flex items-center gap-1.5 rounded-full px-2 py-1 text-xs shadow transition-colors"
         :class="lockedIn ? 'bg-green-500 text-white' : 'bg-white/90 text-gray-600'"
         @click.stop="toggleLockIn"
       >
@@ -144,22 +146,25 @@ function endPeek(): void {
     <!-- Full screen black overlay (when locked and not peeking) -->
     <div
       v-if="lockedIn && !peeking"
-      class="fixed inset-0 bg-black z-20 flex flex-col items-center justify-center select-none px-8 pointer-events-none"
+      class="pointer-events-none fixed inset-0 z-20 flex flex-col items-center justify-center bg-black px-8 select-none"
     >
-      <span class="text-white text-xl font-medium mb-6">Hold anywhere to reveal</span>
-      <p v-if="currentPhrase" class="text-gray-400 text-center text-sm sm:text-base max-w-md italic">
+      <span class="mb-6 text-xl font-medium text-white">Hold anywhere to reveal</span>
+      <p
+        v-if="currentPhrase"
+        class="max-w-md text-center text-sm text-gray-400 italic sm:text-base"
+      >
         "{{ currentPhrase }}"
       </p>
     </div>
 
     <!-- Search form (hidden when locked) -->
-    <div v-if="!lockedIn" class="max-w-md mx-auto mb-4 sm:mb-8">
+    <div v-if="!lockedIn" class="mx-auto mb-4 max-w-md sm:mb-8">
       <form class="flex gap-2" @submit="handleSearch">
         <label for="card-id" class="sr-only">Looking for a card?</label>
         <input
           id="card-id"
           v-model="searchCardId"
-          class="input flex-1 min-w-0"
+          class="input min-w-0 flex-1"
           placeholder="Enter card ID"
           name="card-id"
         />
@@ -170,7 +175,7 @@ function endPeek(): void {
     </div>
 
     <!-- Random button (hidden when locked) -->
-    <div v-if="!lockedIn" class="text-center mb-4 sm:mb-8">
+    <div v-if="!lockedIn" class="mb-4 text-center sm:mb-8">
       <BaseButton variant="green" @click="handleRandomCard">
         <FontAwesomeIcon icon="dice" class="mr-1" /> Random Spy Master Card
       </BaseButton>
@@ -178,16 +183,14 @@ function endPeek(): void {
 
     <!-- Card display -->
     <div class="flex flex-col items-center">
-      <div v-if="store.isLoading" class="text-xl">
-        Loading...
-      </div>
+      <div v-if="store.isLoading" class="text-xl">Loading...</div>
 
       <div v-else-if="store.error" class="text-xl text-red-600">
         {{ store.error }}
       </div>
 
       <template v-else-if="store.currentCard">
-        <h1 class="text-xl sm:text-3xl font-bold mb-4 sm:mb-6">
+        <h1 class="mb-4 text-xl font-bold sm:mb-6 sm:text-3xl">
           Spy master card: {{ store.currentCardId }}
         </h1>
 
@@ -195,13 +198,13 @@ function endPeek(): void {
 
         <!-- Shareable URL (hidden when locked) -->
         <div v-if="!lockedIn" class="mt-6 text-center">
-          <p class="text-sm text-gray-600 mb-2">Share this card with your team leader:</p>
-          <div class="flex items-center justify-center gap-2 flex-wrap">
-            <code class="text-xs sm:text-sm bg-white px-3 py-1 rounded border break-all">
+          <p class="mb-2 text-sm text-gray-600">Share this card with your team leader:</p>
+          <div class="flex flex-wrap items-center justify-center gap-2">
+            <code class="rounded border bg-white px-3 py-1 text-xs break-all sm:text-sm">
               {{ shareableUrl }}
             </code>
             <button
-              class="px-3 py-1 text-sm rounded transition-colors"
+              class="rounded px-3 py-1 text-sm transition-colors"
               :class="copied ? 'bg-green-500 text-white' : 'bg-gray-200 hover:bg-gray-300'"
               @click="copyShareableUrl"
             >
@@ -211,7 +214,7 @@ function endPeek(): void {
         </div>
       </template>
 
-      <div v-else-if="store.isLoaded && !store.currentCard" class="text-xl text-center">
+      <div v-else-if="store.isLoaded && !store.currentCard" class="text-center text-xl">
         Spy master card "{{ store.currentCardId }}"
         <br />
         does not exist.
@@ -219,8 +222,8 @@ function endPeek(): void {
     </div>
 
     <!-- Return to rules link (hidden when locked) -->
-    <div v-if="!lockedIn" class="text-center mt-8 pt-4 border-t border-gray-300">
-      <RouterLink to="/" class="text-sm text-gray-600 hover:text-gray-900 underline">
+    <div v-if="!lockedIn" class="mt-8 border-t border-gray-300 pt-4 text-center">
+      <RouterLink to="/" class="text-sm text-gray-600 underline hover:text-gray-900">
         ← Return to rules
       </RouterLink>
     </div>

@@ -48,14 +48,11 @@ function track(eventName: string, params?: Record<string, unknown>): void {
 // Game Events
 // ===================
 
-export const trackGameStart = (mode: GameMode) =>
-  track('game_start', { game_mode: mode })
+export const trackGameStart = (mode: GameMode) => track('game_start', { game_mode: mode })
 
-export const trackNewGame = (mode: GameMode) =>
-  track('new_game', { game_mode: mode })
+export const trackNewGame = (mode: GameMode) => track('new_game', { game_mode: mode })
 
-export const trackCardMarked = (color: CardColor) =>
-  track('card_marked', { card_color: color })
+export const trackCardMarked = (color: CardColor) => track('card_marked', { card_color: color })
 
 export const trackStartingTeamSet = (color: TeamColor) =>
   track('starting_team_set', { team_color: color })
@@ -73,15 +70,13 @@ export const trackTeamsShuffled = (teams: Record<string, string[]>) =>
     teams,
   })
 
-export const trackSpymastersPicked = () =>
-  track('spymasters_picked')
+export const trackSpymastersPicked = () => track('spymasters_picked')
 
 // ===================
 // Settings Events
 // ===================
 
-export const trackAutoSaveToggled = (enabled: boolean) =>
-  track('auto_save_toggled', { enabled })
+export const trackAutoSaveToggled = (enabled: boolean) => track('auto_save_toggled', { enabled })
 
 // ===================
 // UI Events

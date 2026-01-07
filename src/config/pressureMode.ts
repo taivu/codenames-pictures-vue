@@ -25,7 +25,7 @@ export const pressureModeConfig = {
   strikeMessages: [
     "Time's up! You can do better than this.",
     "Struggling, are we? One more and it's over.",
-    "This is your final warning...",
+    'This is your final warning...',
   ] as const,
 } as const
 

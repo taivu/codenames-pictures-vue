@@ -23,7 +23,7 @@ useEdgeSwipe({
   edge: 'right',
   onSwipe: () => {
     isDrawerOpen.value = true
-  }
+  },
 })
 
 function openDrawer() {
@@ -54,26 +54,20 @@ function closeSettingsModal() {
 </script>
 
 <template>
-  <div class="h-dvh overflow-hidden relative bg-board">
+  <div class="bg-board relative h-dvh overflow-hidden">
     <!-- Full-screen Card Grid Container -->
     <div class="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
       <CardGrid />
     </div>
 
     <!-- Floating HUD - Top Left (z-45 to stay above card selection backdrop at z-40) -->
-    <FloatingHUD class="fixed top-2 left-2 sm:top-4 sm:left-4 z-45" />
+    <FloatingHUD class="fixed top-2 left-2 z-45 sm:top-4 sm:left-4" />
 
     <!-- Drawer Trigger Button - Bottom Right -->
-    <DrawerTrigger
-      class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40"
-      @click="openDrawer"
-    />
+    <DrawerTrigger class="fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6" @click="openDrawer" />
 
     <!-- Slide-out Drawer -->
-    <SlideDrawer
-      v-model:open="isDrawerOpen"
-      position="right"
-    >
+    <SlideDrawer v-model:open="isDrawerOpen" position="right">
       <DrawerContent
         @close="closeDrawer"
         @open-teams="openTeamsModal"
@@ -82,16 +76,10 @@ function closeSettingsModal() {
     </SlideDrawer>
 
     <!-- Teams Modal -->
-    <TeamsModal
-      v-if="showTeamsModal"
-      @close="closeTeamsModal"
-    />
+    <TeamsModal v-if="showTeamsModal" @close="closeTeamsModal" />
 
     <!-- Settings Modal -->
-    <SettingsModal
-      v-if="showSettingsModal"
-      @close="closeSettingsModal"
-    />
+    <SettingsModal v-if="showSettingsModal" @close="closeSettingsModal" />
 
     <!-- Pressure Mode: Strike Modal -->
     <StrikeModal

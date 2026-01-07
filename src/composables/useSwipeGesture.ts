@@ -15,17 +15,8 @@ interface SwipeState {
   startTime: number
 }
 
-export function useSwipeGesture(
-  targetRef: Ref<HTMLElement | null>,
-  options: SwipeOptions = {}
-) {
-  const {
-    threshold = 50,
-    onSwipeLeft,
-    onSwipeRight,
-    onSwipeUp,
-    onSwipeDown
-  } = options
+export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: SwipeOptions = {}) {
+  const { threshold = 50, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown } = options
 
   const isSwiping = ref(false)
   const swipeState = ref<SwipeState | null>(null)
@@ -36,7 +27,7 @@ export function useSwipeGesture(
     swipeState.value = {
       startX: touch.clientX,
       startY: touch.clientY,
-      startTime: Date.now()
+      startTime: Date.now(),
     }
     isSwiping.value = true
   }
@@ -105,7 +96,7 @@ export function useSwipeGesture(
   })
 
   return {
-    isSwiping
+    isSwiping,
   }
 }
 

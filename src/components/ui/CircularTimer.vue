@@ -45,11 +45,7 @@ const iconColorClass = computed(() => {
 
 <template>
   <div class="relative inline-flex items-center justify-center">
-    <svg
-      :width="size"
-      :height="size"
-      class="transform -rotate-90"
-    >
+    <svg :width="size" :height="size" class="-rotate-90 transform">
       <!-- Background circle -->
       <circle
         :cx="center"
@@ -86,8 +82,8 @@ const iconColorClass = computed(() => {
     <span
       v-else-if="showTime && formattedTime"
       :class="[
-        'absolute inset-0 flex items-center justify-center font-bold text-xs',
-        isWarning ? 'text-red-600' : 'text-gray-700'
+        'absolute inset-0 flex items-center justify-center text-xs font-bold',
+        isWarning ? 'text-red-600' : 'text-gray-700',
       ]"
     >
       {{ formattedTime }}

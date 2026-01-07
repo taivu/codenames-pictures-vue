@@ -37,7 +37,6 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 
-
 // Register icons
 library.add(
   // UI
@@ -76,7 +75,7 @@ library.add(
   // Settings
   faFloppyDisk,
   // Warnings
-  faTriangleExclamation,
+  faTriangleExclamation
 )
 
 export function setupFontAwesome(app: App): void {

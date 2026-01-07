@@ -34,10 +34,10 @@ function handleTogglePressureMode(): void {
   <BaseModal title="Settings" icon="gear" size="md" @close="handleClose">
     <div class="space-y-6">
       <!-- Auto-Save Section -->
-      <section class="p-4 bg-gray-50 rounded-xl">
+      <section class="rounded-xl bg-gray-50 p-4">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <h4 class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
+            <h4 class="mb-1 flex items-center gap-2 font-semibold text-gray-800">
               <FontAwesomeIcon icon="floppy-disk" class="text-gray-500" />
               Auto-Save
             </h4>
@@ -53,10 +53,10 @@ function handleTogglePressureMode(): void {
       </section>
 
       <!-- Pressure Mode Section -->
-      <section class="p-4 bg-gray-50 rounded-xl">
+      <section class="rounded-xl bg-gray-50 p-4">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <h4 class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
+            <h4 class="mb-1 flex items-center gap-2 font-semibold text-gray-800">
               <FontAwesomeIcon icon="stopwatch" class="text-gray-500" />
               Pressure Mode
             </h4>
@@ -75,15 +75,15 @@ function handleTogglePressureMode(): void {
       <!-- Coming Soon Divider -->
       <div class="flex items-center gap-3 text-gray-400">
         <div class="flex-1 border-t border-gray-200" />
-        <span class="text-xs font-medium uppercase tracking-wide">Coming Soon</span>
+        <span class="text-xs font-medium tracking-wide uppercase">Coming Soon</span>
         <div class="flex-1 border-t border-gray-200" />
       </div>
 
       <!-- Card Sets Section -->
-      <section class="p-4 bg-gray-50 rounded-xl opacity-50 pointer-events-none">
-        <div class="flex items-start justify-between gap-4 mb-3">
+      <section class="pointer-events-none rounded-xl bg-gray-50 p-4 opacity-50">
+        <div class="mb-3 flex items-start justify-between gap-4">
           <div>
-            <h4 class="font-semibold text-gray-800 flex items-center gap-2 mb-1">
+            <h4 class="mb-1 flex items-center gap-2 font-semibold text-gray-800">
               <FontAwesomeIcon icon="images" class="text-gray-500" />
               Card Sets
             </h4>
