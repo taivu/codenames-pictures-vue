@@ -77,7 +77,7 @@ function handleSetStartingTeam(): void {
           />
           <button
             type="button"
-            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-400 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-500"
+            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-400 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-500 [@media(hover:none)]:border-red-200 [@media(hover:none)]:bg-red-50 [@media(hover:none)]:text-red-500"
             @click="handleRemovePlayer(index)"
           >
             <FontAwesomeIcon icon="xmark" />

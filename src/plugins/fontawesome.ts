@@ -12,6 +12,7 @@ import {
   faChevronDown,
   faChevronUp,
   faCircleExclamation,
+  faCompass,
   faCircleInfo,
   faDice,
   faFloppyDisk,
@@ -52,6 +53,7 @@ library.add(
   // Navigation
   faBook,
   faCircleInfo,
+  faCompass,
   faGear,
   faUpRightFromSquare,
   // Game

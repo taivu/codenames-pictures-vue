@@ -38,14 +38,14 @@ function handlePickSpyMasters(): void {
     <template v-if="!store.isDuetMode" #header-actions>
       <div class="flex gap-1">
         <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-green-100 hover:text-green-600"
+          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-green-100 hover:text-green-600 [@media(hover:none)]:bg-green-100 [@media(hover:none)]:text-green-600"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
           <FontAwesomeIcon icon="shuffle" />
         </button>
         <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600"
+          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-blue-100 [@media(hover:none)]:text-blue-600"
           title="Pick spy masters"
           @click="handlePickSpyMasters"
         >

@@ -40,28 +40,33 @@ import { RouterLink } from 'vue-router'
               class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
               >1</span
             >
-            <span>Split into two teams and pick a spymaster for each</span>
+            <span
+              ><strong>Set up the game board</strong> — Open the site on a phone, tablet, or
+              computer. This is what everyone looks at. For bigger groups, mirror the screen to a TV
+              using AirPlay or Chromecast.</span
+            >
           </li>
           <li class="flex gap-3">
             <span
               class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
               >2</span
             >
-            <span>Spymasters open the <strong>Spy Master</strong> view to see the key card</span>
+            <span
+              ><strong>Spymasters get the key</strong> — Each spymaster opens the site on their own
+              device and navigates to the Spy Master view. Together, they pick which key card to
+              use.</span
+            >
           </li>
           <li class="flex gap-3">
             <span
               class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
               >3</span
             >
-            <span>Spymasters give one-word clues to help their team find their agents</span>
-          </li>
-          <li class="flex gap-3">
             <span
-              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
-              >4</span
+              ><strong>Play!</strong> — The game doesn't enforce turns or endings—it's designed to
+              get out of the way and let you play. Track guesses by tapping cards on the game board.
+              Enable Pressure Mode in settings if you want timed rounds.</span
             >
-            <span>First team to find all their agents wins! Avoid the assassin!</span>
           </li>
         </ol>
         <div class="text-center">
