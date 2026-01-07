@@ -25,8 +25,11 @@ function handleSubmit(): void {
   newPlayerInput.value?.focus()
 }
 
-function handleUpdatePlayer(index: number, value: string): void {
-  store.updatePlayer(props.color, index, value)
+function handleUpdatePlayer(index: number, event: Event): void {
+  const target = event.target
+  if (target instanceof HTMLInputElement) {
+    store.updatePlayer(props.color, index, target.value)
+  }
 }
 
 function handleRemovePlayer(index: number): void {
@@ -72,7 +75,7 @@ function handleSetStartingTeam(): void {
           <input
             :value="player"
             class="flex-1 min-w-0 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-shadow"
-            @input="handleUpdatePlayer(index, ($event.target as HTMLInputElement).value)"
+            @input="handleUpdatePlayer(index, $event)"
           />
           <button
             type="button"

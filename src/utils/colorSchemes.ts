@@ -32,8 +32,8 @@ export const cardButtonClasses: Record<CardColor, string> = {
   black: 'bg-gray-800 hover:bg-gray-900 text-white',
 }
 
-// SpyCard cell styles (radial gradient)
-export const spyCellClasses: Record<string, string> = {
+// Spy Master card cell styles (radial gradient)
+export const spyMasterCellClasses: Record<string, string> = {
   red: 'bg-radial-red',
   blue: 'bg-radial-blue',
   green: 'bg-radial-green',
@@ -70,8 +70,8 @@ export const teamBorderClasses: Record<TeamColor, string> = {
   green: 'border-green-500',
 }
 
-// Starting color indicator for SpyCard
-export const startingColorClasses: Record<string, string> = {
+// Spy Master starting team indicator
+export const spyMasterStartingClasses: Record<string, string> = {
   red: 'bg-red-500',
   blue: 'bg-blue-500',
   green: 'bg-green-500',
