@@ -63,8 +63,14 @@ function handleAutoSaveToggle() {
 <template>
   <div class="flex flex-col h-full">
     <!-- Header -->
-    <div class="shrink-0 px-4 py-3 border-b border-gray-200">
+    <div class="shrink-0 px-4 py-3 border-b border-gray-200 flex items-center justify-between">
       <h2 class="text-xl font-bold text-gray-800">Menu</h2>
+      <button
+        class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+        @click="emit('close')"
+      >
+        <FontAwesomeIcon icon="arrow-right" />
+      </button>
     </div>
 
     <!-- Scrollable Content Area -->

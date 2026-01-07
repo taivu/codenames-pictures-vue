@@ -18,7 +18,7 @@ function toggleExpanded(): void {
 </script>
 
 <template>
-  <div class="select-none" @click="toggleExpanded">
+  <div class="select-none drop-shadow-lg" @click="toggleExpanded">
     <Transition name="hud" mode="out-in">
       <HUDCollapsed v-if="!isExpanded" />
       <HUDExpanded v-else />

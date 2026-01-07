@@ -5,6 +5,7 @@ import type { App } from 'vue'
 // Solid icons
 import {
   faArrowLeft,
+  faArrowRight,
   faBars,
   faBook,
   faCheck,
@@ -41,6 +42,7 @@ import {
 library.add(
   // UI
   faArrowLeft,
+  faArrowRight,
   faBars,
   faCheck,
   faChevronDown,

@@ -27,13 +27,15 @@ function getTimerColorClass(): string {
 </script>
 
 <template>
-  <div class="bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-gray-200 overflow-hidden cursor-pointer min-w-[200px] max-w-[280px]">
-    <!-- Team Sections -->
-    <div
-      v-for="(color, index) in store.activeTeamColors"
-      :key="color"
-      :class="['p-3', index > 0 && 'border-t border-gray-200']"
-    >
+  <div class="bg-white/90 backdrop-blur-md rounded-xl shadow-xl border border-gray-200 overflow-hidden cursor-pointer min-w-[200px] max-w-[280px] max-h-[calc(100dvh-1rem)] flex flex-col">
+    <!-- Scrollable Content -->
+    <div class="flex-1 overflow-y-auto min-h-0">
+      <!-- Team Sections -->
+      <div
+        v-for="(color, index) in store.activeTeamColors"
+        :key="color"
+        :class="['p-3', index > 0 && 'border-t border-gray-200']"
+      >
       <!-- Team Header -->
       <div class="flex items-center justify-between gap-2 mb-1">
         <h4 class="font-bold flex items-center gap-1" :class="teamTextClasses[color]">
@@ -74,12 +76,13 @@ function getTimerColorClass(): string {
         </li>
       </ul>
       <p v-else class="text-xs text-gray-400 italic">No players yet</p>
+      </div>
     </div>
 
     <!-- Pressure Mode Controls -->
     <div
       v-if="settingsStore.pressureModeEnabled"
-      class="px-3 py-2 border-t border-gray-200"
+      class="shrink-0 px-3 py-2 border-t border-gray-200"
       @click.stop
     >
       <!-- Start Timer Button -->
@@ -127,8 +130,11 @@ function getTimerColorClass(): string {
     </div>
 
     <!-- Collapse Hint -->
-    <div class="px-3 py-1 bg-gray-100 text-center">
-      <span class="text-xs text-gray-400">tap to collapse</span>
+    <div class="shrink-0 px-3 py-1 bg-gray-100 text-center">
+      <span class="text-xs text-gray-400">
+        <FontAwesomeIcon icon="chevron-up" class="mr-1" />
+        tap to collapse
+      </span>
     </div>
   </div>
 </template>
