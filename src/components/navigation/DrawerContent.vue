@@ -1,14 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
-import { AppVersion, BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
+import { AppVersion, BaseButton, BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
+
+type Tab = 'game' | 'menu'
+
+const props = withDefaults(
+  defineProps<{
+    activeTab?: Tab
+  }>(),
+  {
+    activeTab: 'game',
+  }
+)
 
 const emit = defineEmits<{
   close: []
   openTeams: []
   openSettings: []
+  'update:activeTab': [Tab]
 }>()
 
 const gameStore = useGameStore()
@@ -17,12 +29,12 @@ const settingsStore = useSettingsStore()
 const showNewGameConfirm = ref(false)
 const showAutoSaveConfirm = ref(false)
 
-// Tab navigation
-type Tab = 'game' | 'menu'
-const activeTab = ref<Tab>('game')
+const currentTab = computed({
+  get: () => props.activeTab,
+  set: (value: Tab) => emit('update:activeTab', value),
+})
 
 function handleNewGameClick() {
-  // Skip confirmation if no teams are set up - just start new game
   if (!gameStore.teamsAreSetup) {
     gameStore.newGame()
     trackNewGame(gameStore.mode)
@@ -37,10 +49,6 @@ function confirmNewGame() {
   trackNewGame(gameStore.mode)
   showNewGameConfirm.value = false
   emit('close')
-}
-
-function cancelNewGame() {
-  showNewGameConfirm.value = false
 }
 
 function handleOpenTeams() {
@@ -69,10 +77,6 @@ function confirmDisableAutoSave() {
   gameStore.clearSavedGame()
   showAutoSaveConfirm.value = false
 }
-
-function cancelDisableAutoSave() {
-  showAutoSaveConfirm.value = false
-}
 </script>
 
 <template>
@@ -84,26 +88,26 @@ function cancelDisableAutoSave() {
       <!-- Tab icons -->
       <div class="flex gap-1">
         <button
-          :class="[
-            'flex h-9 w-9 items-center justify-center rounded-lg transition-colors',
-            activeTab === 'game'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 [@media(hover:none)]:bg-gray-200',
-          ]"
           title="Game Info"
-          @click="activeTab = 'game'"
+          class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
+          :class="
+            currentTab === 'game'
+              ? 'bg-green-100 text-green-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 [@media(hover:none)]:bg-gray-200'
+          "
+          @click="currentTab = 'game'"
         >
           <FontAwesomeIcon icon="dice" />
         </button>
         <button
-          :class="[
-            'flex h-9 w-9 items-center justify-center rounded-lg transition-colors',
-            activeTab === 'menu'
-              ? 'bg-blue-100 text-blue-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-gray-200',
-          ]"
           title="Menu"
-          @click="activeTab = 'menu'"
+          class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
+          :class="
+            currentTab === 'menu'
+              ? 'bg-blue-100 text-blue-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-gray-200'
+          "
+          @click="currentTab = 'menu'"
         >
           <FontAwesomeIcon icon="compass" />
         </button>
@@ -122,10 +126,24 @@ function cancelDisableAutoSave() {
     <!-- Scrollable Content Area -->
     <div class="min-h-0 flex-1 overflow-y-auto">
       <!-- Game Info Tab Content -->
-      <template v-if="activeTab === 'game'">
+      <template v-if="currentTab === 'game'">
         <!-- Team Summaries Section -->
         <div class="border-b border-gray-200 px-4 py-3">
-          <h3 class="mb-2 text-sm font-bold tracking-wide text-gray-500 uppercase">Teams</h3>
+          <div class="mb-2 flex items-center justify-between">
+            <button
+              class="text-sm font-bold tracking-wide text-gray-500 uppercase transition-colors hover:text-orange-500"
+              @click="handleOpenTeams"
+            >
+              Teams
+            </button>
+            <button
+              class="text-xs text-gray-400 transition-colors hover:text-orange-500"
+              title="Edit teams"
+              @click="handleOpenTeams"
+            >
+              <FontAwesomeIcon icon="gear" />
+            </button>
+          </div>
           <div class="space-y-2">
             <TeamSummary v-for="color in gameStore.activeTeamColors" :key="color" :color="color" />
             <div
@@ -143,7 +161,7 @@ function cancelDisableAutoSave() {
           </div>
         </div>
 
-        <!-- Scores Section (only in classic mode with teams) -->
+        <!-- Scores Section -->
         <div
           v-if="!gameStore.isDuetMode && gameStore.teamsAreSetup"
           class="border-b border-gray-200 px-4 py-3"
@@ -154,7 +172,7 @@ function cancelDisableAutoSave() {
       </template>
 
       <!-- Menu Tab Content -->
-      <nav v-show="activeTab === 'menu'" class="py-2">
+      <nav v-show="currentTab === 'menu'" class="py-2">
         <button
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleNewGameClick"
@@ -209,26 +227,25 @@ function cancelDisableAutoSave() {
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleOpenSettings"
         >
-          <FontAwesomeIcon icon="gear" class="w-5 text-gray-500 transition-colors group-hover:text-gray-900" />
+          <FontAwesomeIcon icon="sliders" class="w-5 text-gray-500 transition-colors group-hover:text-gray-900" />
           <span class="font-medium">Settings</span>
         </button>
 
         <div class="my-2 border-t border-gray-100" />
       </nav>
 
-      <!-- Version (always visible at bottom of scroll area) -->
       <AppVersion />
     </div>
     <!-- End Scrollable Content Area -->
 
     <!-- Footer -->
     <div class="shrink-0 border-t border-gray-200 bg-gray-50">
-      <!-- Auto-save toggle -->
       <label class="flex cursor-pointer items-center justify-between px-4 py-3">
         <span class="text-sm text-gray-600">
           <FontAwesomeIcon
             icon="floppy-disk"
-            :class="['mr-2', settingsStore.autoSaveEnabled ? 'text-green-500' : 'text-gray-400']"
+            class="mr-2"
+            :class="settingsStore.autoSaveEnabled ? 'text-green-500' : 'text-gray-400'"
           />
           Auto-save game
         </span>
@@ -239,56 +256,26 @@ function cancelDisableAutoSave() {
       </label>
     </div>
 
-    <!-- New Game Confirmation Modal -->
-    <BaseModal
-      v-if="showNewGameConfirm"
-      title="Start New Game?"
-      icon="rotate"
-      @close="cancelNewGame"
-    >
+    <!-- New Game Confirmation -->
+    <BaseModal v-if="showNewGameConfirm" title="Start New Game?" icon="rotate" @close="showNewGameConfirm = false">
       <p class="mb-6 text-gray-600">
         This will shuffle and deal new cards. Teams and scores will be kept.
       </p>
       <div class="flex justify-end gap-3">
-        <button
-          class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-          @click="cancelNewGame"
-        >
-          Cancel
-        </button>
-        <button
-          class="rounded-lg bg-green-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-green-600"
-          @click="confirmNewGame"
-        >
-          New Game
-        </button>
+        <BaseButton variant="ghost" @click="showNewGameConfirm = false">Cancel</BaseButton>
+        <BaseButton variant="green" @click="confirmNewGame">New Game</BaseButton>
       </div>
     </BaseModal>
 
-    <!-- Auto-Save Disable Confirmation Modal -->
-    <BaseModal
-      v-if="showAutoSaveConfirm"
-      title="Disable Auto-Save?"
-      icon="floppy-disk"
-      @close="cancelDisableAutoSave"
-    >
+    <!-- Auto-Save Confirmation -->
+    <BaseModal v-if="showAutoSaveConfirm" title="Disable Auto-Save?" icon="floppy-disk" @close="showAutoSaveConfirm = false">
       <p class="mb-6 text-gray-600">
         This will delete your saved game data. You won't be able to recover your current game if you
         refresh the page.
       </p>
       <div class="flex justify-end gap-3">
-        <button
-          class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-          @click="cancelDisableAutoSave"
-        >
-          Cancel
-        </button>
-        <button
-          class="rounded-lg bg-red-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-red-600"
-          @click="confirmDisableAutoSave"
-        >
-          Disable
-        </button>
+        <BaseButton variant="ghost" @click="showAutoSaveConfirm = false">Cancel</BaseButton>
+        <BaseButton variant="red" @click="confirmDisableAutoSave">Disable</BaseButton>
       </div>
     </BaseModal>
   </div>

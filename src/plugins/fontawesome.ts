@@ -7,6 +7,7 @@ import {
   faArrowLeft,
   faArrowRight,
   faBars,
+  faBolt,
   faBook,
   faCheck,
   faChevronDown,
@@ -28,10 +29,12 @@ import {
   faRotateRight,
   faShuffle,
   faSkullCrossbones,
+  faSliders,
   faSpinner,
   faStar,
   faStopwatch,
   faTriangleExclamation,
+  faTv,
   faUpRightFromSquare,
   faUserSecret,
   faUsers,
@@ -44,11 +47,13 @@ library.add(
   faArrowLeft,
   faArrowRight,
   faBars,
+  faBolt,
   faCheck,
   faChevronDown,
   faChevronUp,
   faPlus,
   faSpinner,
+  faTv,
   faXmark,
   // Navigation
   faBook,
@@ -76,6 +81,7 @@ library.add(
   faStopwatch,
   // Settings
   faFloppyDisk,
+  faSliders,
   // Warnings
   faTriangleExclamation
 )

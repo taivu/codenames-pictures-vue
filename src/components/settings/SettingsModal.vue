@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { BaseModal, ToggleSwitch } from '@/components/ui'
+import { BaseModal, ToggleSwitch, BaseButton } from '@/components/ui'
 import CardSetSelector from './CardSetSelector.vue'
 import { trackAutoSaveToggled } from '@/plugins/analytics'
 
@@ -126,18 +126,12 @@ function handleTogglePressureMode(): void {
             you refresh the page.
           </p>
           <div class="flex justify-end gap-3">
-            <button
-              class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-              @click="cancelDisableAutoSave"
-            >
+            <BaseButton variant="ghost" @click="cancelDisableAutoSave">
               Cancel
-            </button>
-            <button
-              class="rounded-lg bg-red-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-red-600"
-              @click="confirmDisableAutoSave"
-            >
+            </BaseButton>
+            <BaseButton variant="red" @click="confirmDisableAutoSave">
               Disable
-            </button>
+            </BaseButton>
           </div>
         </div>
       </div>

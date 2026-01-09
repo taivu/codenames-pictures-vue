@@ -3,6 +3,7 @@ import { RouterLink } from 'vue-router'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import changelogMd from '../../CHANGELOG.md?raw'
+import SiteLayout from '@/components/layout/SiteLayout.vue'
 
 // Parse markdown to HTML (skip the h1 title) and sanitize
 const rawHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
@@ -10,8 +11,9 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
 </script>
 
 <template>
-  <div class="min-h-screen p-4 sm:p-8">
-    <div class="mx-auto max-w-4xl">
+  <SiteLayout>
+    <div class="p-4 sm:p-8">
+      <div class="mx-auto max-w-4xl">
       <!-- Page Header -->
       <div class="mb-6">
         <RouterLink to="/" class="mb-4 inline-block text-blue-600 hover:underline">
@@ -154,8 +156,9 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
           <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
         </RouterLink>
       </div>
+      </div>
     </div>
-  </div>
+  </SiteLayout>
 </template>
 
 <style scoped>

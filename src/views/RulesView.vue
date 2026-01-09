@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import SiteLayout from '@/components/layout/SiteLayout.vue'
 
 const baseUrl = import.meta.env.BASE_URL
 </script>
 
 <template>
-  <div class="min-h-screen p-4 sm:p-8">
+  <SiteLayout>
+    <div class="p-4 sm:p-8">
     <!-- Page Header -->
     <div class="mx-auto mb-6 max-w-4xl">
       <RouterLink to="/" class="mb-4 inline-block text-blue-600 hover:underline">
@@ -301,12 +303,6 @@ const baseUrl = import.meta.env.BASE_URL
         </p>
       </div>
     </div>
-
-    <!-- Bottom CTA -->
-    <div class="mx-auto max-w-4xl text-center">
-      <RouterLink to="/" class="btn btn-green px-8 py-4 text-xl">
-        <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
-      </RouterLink>
     </div>
-  </div>
+  </SiteLayout>
 </template>
