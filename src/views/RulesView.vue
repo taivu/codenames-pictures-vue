@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 
 const baseUrl = import.meta.env.BASE_URL
