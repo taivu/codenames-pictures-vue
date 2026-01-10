@@ -8,9 +8,7 @@ const { teamBgClasses } = useTeamColors()
 const pressureMode = usePressureMode()
 
 function getTimerColorClass(): string {
-  if (pressureMode.isWarning.value) return 'text-red-600'
-  if (pressureMode.isCaution.value) return 'text-orange-600'
-  return 'text-green-600'
+  return 'text-gray-900'
 }
 </script>
 

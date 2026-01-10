@@ -20,9 +20,7 @@ function handleSetStartingTeam(color: TeamColor): void {
 
 function getTimerColorClass(): string {
   if (pressureMode.isPaused.value) return 'text-gray-400'
-  if (pressureMode.isWarning.value) return 'text-red-600'
-  if (pressureMode.isCaution.value) return 'text-orange-600'
-  return 'text-green-600'
+  return 'text-gray-900'
 }
 </script>
 
@@ -40,13 +38,13 @@ function getTimerColorClass(): string {
       >
         <!-- Team Header -->
         <div class="mb-1 flex items-center justify-between gap-2">
-          <h4 class="flex items-center gap-1 font-bold" :class="teamTextClasses[color]">
+          <h4 class="flex items-center gap-1 font-bold capitalize" :class="teamTextClasses[color]">
             <FontAwesomeIcon
               v-if="store.startingTeam === color"
               icon="star"
               class="text-xs text-yellow-500"
             />
-            Team {{ color }}
+            {{ color }} Team
           </h4>
           <button
             :class="[
@@ -82,15 +80,21 @@ function getTimerColorClass(): string {
     </div>
 
     <!-- Pressure Mode Controls -->
-    <div
-      v-if="settingsStore.pressureModeEnabled"
-      class="shrink-0 border-t border-gray-200 px-3 py-2"
-      @click.stop
-    >
+    <div class="shrink-0 border-t border-gray-200 px-3 py-2" @click.stop>
+      <!-- Enable Pressure Mode Button -->
+      <button
+        v-if="!settingsStore.pressureModeEnabled"
+        class="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-100 px-3 py-2 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-200"
+        @click="settingsStore.setPressureMode(true)"
+      >
+        <FontAwesomeIcon icon="stopwatch" />
+        Pressure Mode
+      </button>
+
       <!-- Start Timer Button -->
       <button
-        v-if="!pressureMode.isActive.value"
-        class="flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-orange-600"
+        v-else-if="!pressureMode.isActive.value"
+        class="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-100 px-3 py-2 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-200"
         @click="pressureMode.startTimer"
       >
         <FontAwesomeIcon icon="stopwatch" />

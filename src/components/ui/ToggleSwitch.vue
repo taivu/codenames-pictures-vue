@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   modelValue: boolean
-  activeColor?: 'green' | 'orange' | 'blue'
+  activeColor?: 'green' | 'orange' | 'blue' | 'purple'
   disabled?: boolean
 }
 
@@ -18,6 +18,7 @@ const colorClasses: Record<string, string> = {
   green: 'bg-green-500',
   orange: 'bg-orange-500',
   blue: 'bg-blue-500',
+  purple: 'bg-purple-500',
 }
 
 function handleClick(): void {

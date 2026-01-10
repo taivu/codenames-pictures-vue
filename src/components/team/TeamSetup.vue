@@ -45,8 +45,8 @@ function handleSetStartingTeam(): void {
 <template>
   <div class="overflow-hidden rounded-xl bg-gray-50 p-4">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
-      <h3 class="text-lg font-bold whitespace-nowrap" :class="teamTextClasses[color]">
-        Team {{ color }}
+      <h3 class="text-lg font-bold capitalize whitespace-nowrap" :class="teamTextClasses[color]">
+        {{ color }} Team
       </h3>
 
       <button
@@ -94,7 +94,7 @@ function handleSetStartingTeam(): void {
         />
         <button
           type="submit"
-          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-green-600"
+          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-600 transition-colors hover:bg-green-500 hover:text-white [@media(hover:none)]:bg-green-500 [@media(hover:none)]:text-white"
         >
           <FontAwesomeIcon icon="plus" /> Add
         </button>

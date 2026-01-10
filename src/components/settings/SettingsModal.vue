@@ -47,7 +47,7 @@ function handleTogglePressureMode(): void {
 </script>
 
 <template>
-  <BaseModal title="Settings" icon="gear" size="md" @close="handleClose">
+  <BaseModal title="Settings" icon="sliders" size="md" @close="handleClose">
     <div class="space-y-6">
       <!-- Auto-Save Section -->
       <section class="rounded-xl bg-gray-50 p-4">
@@ -77,7 +77,10 @@ function handleTogglePressureMode(): void {
         <div class="flex items-start justify-between gap-4">
           <div>
             <h4 class="mb-1 flex items-center gap-2 font-semibold text-gray-800">
-              <FontAwesomeIcon icon="stopwatch" class="text-gray-500" />
+              <FontAwesomeIcon
+                icon="stopwatch"
+                :class="settingsStore.pressureModeEnabled ? 'text-purple-500' : 'text-gray-500'"
+              />
               Pressure Mode
             </h4>
             <p class="text-sm text-gray-500">
@@ -86,7 +89,7 @@ function handleTogglePressureMode(): void {
           </div>
           <ToggleSwitch
             :model-value="settingsStore.pressureModeEnabled"
-            active-color="orange"
+            active-color="purple"
             @update:model-value="handleTogglePressureMode"
           />
         </div>

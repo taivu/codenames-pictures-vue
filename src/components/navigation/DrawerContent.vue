@@ -5,14 +5,14 @@ import { ScoreBoard, TeamSummary } from '@/components/team'
 import { AppVersion, BaseButton, BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
 
-type Tab = 'game' | 'menu'
+type Tab = 'teams' | 'nav'
 
 const props = withDefaults(
   defineProps<{
     activeTab?: Tab
   }>(),
   {
-    activeTab: 'game',
+    activeTab: 'teams',
   }
 )
 
@@ -85,31 +85,31 @@ function confirmDisableAutoSave() {
     <div class="flex shrink-0 items-center justify-between border-b border-gray-200 px-4 py-3">
       <h2 class="text-xl font-bold text-gray-800">Menu</h2>
 
-      <!-- Tab icons -->
+      <!-- Tab icons: Teams | App Nav -->
       <div class="flex gap-1">
         <button
-          title="Game Info"
+          title="Teams"
           class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
           :class="
-            currentTab === 'game'
-              ? 'bg-green-100 text-green-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 [@media(hover:none)]:bg-gray-200'
+            currentTab === 'teams'
+              ? 'bg-orange-100 text-orange-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-gray-200'
           "
-          @click="currentTab = 'game'"
+          @click="currentTab = 'teams'"
         >
-          <FontAwesomeIcon icon="dice" />
+          <FontAwesomeIcon icon="users" />
         </button>
         <button
-          title="Menu"
+          title="App Nav"
           class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
           :class="
-            currentTab === 'menu'
-              ? 'bg-blue-100 text-blue-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-gray-200'
+            currentTab === 'nav'
+              ? 'bg-indigo-100 text-indigo-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600 [@media(hover:none)]:bg-indigo-100 [@media(hover:none)]:text-indigo-600'
           "
-          @click="currentTab = 'menu'"
+          @click="currentTab = 'nav'"
         >
-          <FontAwesomeIcon icon="compass" />
+          <FontAwesomeIcon icon="sliders" />
         </button>
       </div>
 
@@ -125,8 +125,8 @@ function confirmDisableAutoSave() {
 
     <!-- Scrollable Content Area -->
     <div class="min-h-0 flex-1 overflow-y-auto">
-      <!-- Game Info Tab Content -->
-      <template v-if="currentTab === 'game'">
+      <!-- Teams Tab Content -->
+      <template v-if="currentTab === 'teams'">
         <!-- Team Summaries Section -->
         <div class="border-b border-gray-200 px-4 py-3">
           <div class="mb-2 flex items-center justify-between">
@@ -171,29 +171,31 @@ function confirmDisableAutoSave() {
         </div>
       </template>
 
-      <!-- Menu Tab Content -->
-      <nav v-show="currentTab === 'menu'" class="py-2">
+      <!-- App Nav Tab Content -->
+      <nav v-show="currentTab === 'nav'" class="py-2">
         <button
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleNewGameClick"
         >
           <FontAwesomeIcon
             icon="rotate"
-            class="w-5 text-gray-500 transition-colors group-hover:text-green-600"
+            class="w-5 text-gray-500 transition-colors group-hover:text-green-600 [@media(hover:none)]:text-green-600"
           />
           <span class="font-medium">New Game</span>
         </button>
 
         <button
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
-          @click="handleOpenTeams"
+          @click="handleOpenSettings"
         >
           <FontAwesomeIcon
-            icon="users"
-            class="w-5 text-gray-500 transition-colors group-hover:text-orange-500"
+            icon="sliders"
+            class="w-5 text-gray-500 transition-colors group-hover:text-indigo-500 [@media(hover:none)]:text-indigo-500"
           />
-          <span class="font-medium">Teams</span>
+          <span class="font-medium">Settings</span>
         </button>
+
+        <div class="my-2 border-t border-gray-200" />
 
         <a
           href="/spy-master"
@@ -202,13 +204,11 @@ function confirmDisableAutoSave() {
         >
           <FontAwesomeIcon
             icon="user-secret"
-            class="w-5 text-gray-500 transition-colors group-hover:text-blue-600"
+            class="w-5 text-gray-500 transition-colors group-hover:text-blue-600 [@media(hover:none)]:text-blue-600"
           />
           <span class="flex-1 font-medium">Spy Master</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
         </a>
-
-        <div class="my-2 border-t border-gray-100" />
 
         <a
           href="/rules"
@@ -217,7 +217,7 @@ function confirmDisableAutoSave() {
         >
           <FontAwesomeIcon
             icon="book"
-            class="w-5 text-gray-500 transition-colors group-hover:text-amber-700"
+            class="w-5 text-gray-500 transition-colors group-hover:text-amber-700 [@media(hover:none)]:text-amber-700"
           />
           <span class="flex-1 font-medium">Rules</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
@@ -230,26 +230,13 @@ function confirmDisableAutoSave() {
         >
           <FontAwesomeIcon
             icon="circle-info"
-            class="w-5 text-gray-500 transition-colors group-hover:text-blue-500"
+            class="w-5 text-gray-500 transition-colors group-hover:text-blue-400 [@media(hover:none)]:text-blue-400"
           />
           <span class="flex-1 font-medium">About</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
         </a>
 
-        <div class="my-2 border-t border-gray-100" />
-
-        <button
-          class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
-          @click="handleOpenSettings"
-        >
-          <FontAwesomeIcon
-            icon="sliders"
-            class="w-5 text-gray-500 transition-colors group-hover:text-gray-900"
-          />
-          <span class="font-medium">Settings</span>
-        </button>
-
-        <div class="my-2 border-t border-gray-100" />
+        <div class="my-2 border-t border-gray-200" />
       </nav>
 
       <AppVersion />

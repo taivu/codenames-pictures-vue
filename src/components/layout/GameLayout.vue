@@ -17,7 +17,7 @@ const pressureMode = usePressureMode()
 const isDrawerOpen = ref(false)
 const showTeamsModal = ref(false)
 const showSettingsModal = ref(false)
-const drawerTab = ref<'game' | 'menu'>('game')
+const drawerTab = ref<'teams' | 'nav'>('teams')
 
 // Open drawer on swipe from right edge
 useEdgeSwipe({

@@ -34,7 +34,7 @@ function handleBadgeClick(): void {
     <div class="mb-2 flex items-center justify-between gap-2">
       <h3 class="text-sm font-bold capitalize" :class="teamTextClasses[color]">
         <FontAwesomeIcon v-if="isStartingTeam" icon="star" class="mr-1 text-xs text-yellow-500" />
-        Team {{ color }}
+        {{ color }} Team
       </h3>
       <button
         :class="[

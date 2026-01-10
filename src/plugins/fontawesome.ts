@@ -43,6 +43,7 @@ import {
   faStopwatch,
   faToiletPaper,
   faTriangleExclamation,
+  faTrophy,
   faTv,
   faUpRightFromSquare,
   faUserSecret,
@@ -81,6 +82,7 @@ library.add(
   faRotate,
   faShuffle,
   faStar,
+  faTrophy,
   faUserSecret,
   faUsers,
   // Shit-talking icons
