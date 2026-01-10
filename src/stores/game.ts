@@ -17,7 +17,11 @@ interface CardPoolItem {
   imageIndex: number
 }
 
-const GAME_STORAGE_KEY = 'codenames-game'
+const GAME_STORAGE_KEY_PREFIX = 'codenames-game-'
+
+function getStorageKey(gameMode: GameMode): string {
+  return `${GAME_STORAGE_KEY_PREFIX}${gameMode}`
+}
 
 interface PersistedGameState {
   mode: GameMode
@@ -216,16 +220,16 @@ export const useGameStore = defineStore('game', () => {
   // ===================
   // Persistence
   // ===================
-  const hasSavedGame = computed(
-    () => loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY) !== null
-  )
+  function hasSavedGame(gameMode: GameMode): boolean {
+    return loadFromStorage<PersistedGameState>(getStorageKey(gameMode)) !== null
+  }
 
-  function getSavedGamePreview(): PersistedGameState | null {
-    return loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)
+  function getSavedGamePreview(gameMode: GameMode): PersistedGameState | null {
+    return loadFromStorage<PersistedGameState>(getStorageKey(gameMode))
   }
 
   function persistGame(): void {
-    saveToStorage<PersistedGameState>(GAME_STORAGE_KEY, {
+    saveToStorage<PersistedGameState>(getStorageKey(mode.value), {
       mode: mode.value,
       cards: cards.value,
       teams: teams.value,
@@ -234,8 +238,8 @@ export const useGameStore = defineStore('game', () => {
     })
   }
 
-  function restoreSavedGame(): boolean {
-    const saved = loadFromStorage<PersistedGameState>(GAME_STORAGE_KEY)
+  function restoreSavedGame(gameMode: GameMode): boolean {
+    const saved = loadFromStorage<PersistedGameState>(getStorageKey(gameMode))
     if (saved) {
       mode.value = saved.mode
       cards.value = saved.cards
@@ -247,8 +251,8 @@ export const useGameStore = defineStore('game', () => {
     return false
   }
 
-  function clearSavedGame(): void {
-    removeFromStorage(GAME_STORAGE_KEY)
+  function clearSavedGame(gameMode: GameMode = mode.value): void {
+    removeFromStorage(getStorageKey(gameMode))
   }
 
   // Watch for changes and auto-save (when enabled)
@@ -277,8 +281,6 @@ export const useGameStore = defineStore('game', () => {
     gridSize,
     cardColorOptions,
     teamsAreSetup,
-    hasSavedGame,
-    getSavedGamePreview,
     // Actions
     initializeGame,
     generateCards,
@@ -297,6 +299,8 @@ export const useGameStore = defineStore('game', () => {
     resetScores,
     newGame,
     // Persistence
+    hasSavedGame,
+    getSavedGamePreview,
     persistGame,
     restoreSavedGame,
     clearSavedGame,

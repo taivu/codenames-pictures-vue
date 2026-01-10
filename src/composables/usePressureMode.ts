@@ -32,7 +32,7 @@ export function usePressureMode() {
   const settingsStore = useSettingsStore()
   const gameStore = useGameStore()
 
-  // Current duration based on strikes (10min -> 5min -> 1min)
+  // Current duration based on strikes (5min -> 3min -> 1min)
   const currentDuration = computed(() => {
     const index = Math.min(strikes.value, pressureModeConfig.durations.length - 1)
     return pressureModeConfig.durations[index] ?? pressureModeConfig.durations[0]

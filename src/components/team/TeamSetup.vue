@@ -94,7 +94,7 @@ function handleSetStartingTeam(): void {
         />
         <button
           type="submit"
-          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-600 transition-colors hover:bg-green-500 hover:text-white [@media(hover:none)]:bg-green-500 [@media(hover:none)]:text-white"
+          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-600 transition-colors hover:bg-green-500 hover:text-white"
         >
           <FontAwesomeIcon icon="plus" /> Add
         </button>

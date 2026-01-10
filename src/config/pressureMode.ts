@@ -3,8 +3,8 @@
  * Timer countdown with strike system for added game tension
  */
 export const pressureModeConfig = {
-  /** Timer durations in seconds for each strike level (10min, 5min, 1min) */
-  durations: [600, 300, 60] as const,
+  /** Timer durations in seconds for each strike level (5min, 3min, 1min) */
+  durations: [300, 180, 60] as const,
 
   /** Maximum strikes before game over */
   maxStrikes: 3,

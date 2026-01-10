@@ -176,7 +176,7 @@ function copyShareableUrl(): void {
               {{ store.currentCard.startingColor }}
             </span>
           </div>
-          <h1 class="text-lg font-bold sm:text-xl">Card #{{ store.currentCardId }}</h1>
+          <h1 class="text-lg font-bold sm:text-xl">Key Card #{{ store.currentCardId }}</h1>
         </div>
 
         <SpyCard :card="store.currentCard" hide-starting-label />

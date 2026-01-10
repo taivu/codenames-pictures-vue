@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { marked } from 'marked'
-import DOMPurify from 'dompurify'
-import changelogMd from '../../CHANGELOG.md?raw'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
-
-// Parse markdown to HTML (skip the h1 title) and sanitize
-const rawHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
-const changelogHtml = DOMPurify.sanitize(rawHtml as string)
+import { ChangelogCard } from '@/components/ui'
 </script>
 
 <template>
@@ -16,17 +10,17 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
       <div class="mx-auto max-w-4xl">
         <!-- Page Header -->
         <div class="mb-6">
-          <h1 class="text-3xl font-bold sm:text-4xl">About</h1>
+          <h1>About</h1>
         </div>
 
         <!-- About Card -->
         <div class="mb-6 rounded-xl border-2 border-gray-300 bg-white/80 p-6 shadow-sm">
-          <h2 class="mb-4 text-2xl font-bold">What is this?</h2>
-          <p class="mb-4 leading-relaxed text-gray-700">
+          <h2 class="mb-4">What is this?</h2>
+          <p class="mb-4">
             This is an unofficial online version of Codenames Pictures, a party game designed by
             Vlaada Chvátil and published by Czech Games Edition.
           </p>
-          <p class="leading-relaxed text-gray-700">
+          <p>
             This web app allows you to play Codenames Pictures remotely with friends and family.
             Simply share your screen or send the spy master card link to play together!
           </p>
@@ -36,10 +30,10 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
         <div
           class="mb-6 rounded-xl border-2 border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 p-6 shadow-md"
         >
-          <h2 class="mb-4 text-2xl font-bold text-green-800">
+          <h2 class="mb-4 text-green-800">
             Uhh, why is this game on your site Tai?
           </h2>
-          <div class="space-y-4 leading-relaxed text-gray-700">
+          <div class="space-y-4">
             <p>
               Picture this: family trip in Florida, everyone's hyped to play Codenames: Pictures.
               There's just one problem &mdash; a hurricane is barreling toward us and
@@ -87,16 +81,13 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
         </div>
 
         <!-- Changelog -->
-        <div class="mb-6 rounded-xl border-2 border-gray-300 bg-white/80 p-6 shadow-sm">
-          <h2 class="mb-4 text-2xl font-bold">Changelog</h2>
-          <div class="changelog-content" v-html="changelogHtml" />
-        </div>
+        <ChangelogCard class="mb-6" />
 
         <!-- Credits Card -->
         <div
           class="mb-6 rounded-xl border-2 border-blue-300 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-md"
         >
-          <h2 class="mb-4 text-2xl font-bold text-blue-800">Credits</h2>
+          <h2 class="mb-4 text-blue-800">Credits</h2>
           <ul class="space-y-3 text-gray-700">
             <li>
               <strong>Original Game:</strong>
@@ -104,10 +95,9 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
                 href="https://czechgames.com/en/codenames-pictures/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="ml-1 text-blue-600 hover:underline"
+                class="external-link ml-1"
               >
                 Codenames Pictures by Czech Games Edition
-                <FontAwesomeIcon icon="up-right-from-square" class="ml-1 text-xs opacity-50" />
               </a>
             </li>
             <li><strong>Game Designer:</strong> Vlaada Chvátil</li>
@@ -117,10 +107,9 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
                 href="https://github.com/samdemaeyer/codenames-pictures"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="ml-1 text-blue-600 hover:underline"
+                class="external-link ml-1"
               >
                 samdemaeyer/codenames-pictures
-                <FontAwesomeIcon icon="up-right-from-square" class="ml-1 text-xs opacity-50" />
               </a>
             </li>
           </ul>
@@ -130,18 +119,17 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
         <div
           class="mb-6 rounded-xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-md"
         >
-          <h2 class="mb-4 text-2xl font-bold text-amber-800">Disclaimer</h2>
-          <p class="leading-relaxed text-gray-700">
+          <h2 class="mb-4 text-amber-800">Disclaimer</h2>
+          <p>
             This is a fan-made project and is not affiliated with or endorsed by Czech Games
             Edition. If you enjoy this game, please consider purchasing the official
             <a
               href="https://czechgames.com/en/codenames-pictures/"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-blue-600 hover:underline"
+              class="external-link"
             >
               physical version
-              <FontAwesomeIcon icon="up-right-from-square" class="ml-1 text-xs opacity-50" />
             </a>
             to support the creators!
           </p>
@@ -152,28 +140,3 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
   </SiteLayout>
 </template>
 
-<style scoped>
-.changelog-content :deep(h2) {
-  font-weight: 700;
-  color: #1f2937;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.changelog-content :deep(h2:first-child) {
-  margin-top: 0;
-}
-
-.changelog-content :deep(ul) {
-  list-style-type: disc;
-  list-style-position: inside;
-  color: #374151;
-  font-size: 0.875rem;
-  margin-left: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.changelog-content :deep(li) {
-  margin-bottom: 0.25rem;
-}
-</style>

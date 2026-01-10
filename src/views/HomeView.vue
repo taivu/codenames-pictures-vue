@@ -5,24 +5,24 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
 const howToPlaySteps = [
   {
     to: '/play',
-    icon: 'gamepad',
+    icon: 'tv',
     iconBg: 'bg-red-100 text-red-600',
-    title: 'Set up the game board',
-    description: 'Open the site on a shared screen and start a game. Everyone looks at this device together.',
+    title: 'Put the board on a big screen',
+    description: 'Cast to a TV or share your screen so everyone can see the picture grid together.',
   },
   {
     to: '/spy-master',
     icon: 'user-secret',
     iconBg: 'bg-blue-100 text-blue-600',
-    title: 'Spymasters get the key',
-    description: 'Each spymaster opens Spy Master view on their own device. Together, they agree on which key card to use.',
+    title: 'Spymasters grab their phones',
+    description: 'Each spymaster opens the Spy Master page on their own phone to see the secret key card.',
   },
   {
-    to: '/play',
-    icon: 'trophy',
+    to: '/rules',
+    icon: 'book',
     iconBg: 'bg-yellow-100 text-yellow-600',
-    title: 'Play!',
-    description: 'Tap cards to mark them. Enable Pressure Mode in settings for timed rounds.',
+    title: 'Give clues & guess!',
+    description: 'Spymasters give one-word clues. Everyone else guesses which pictures match. First team to find all their agents wins!',
   },
 ]
 </script>
@@ -38,15 +38,14 @@ const howToPlaySteps = [
           Codenames Pictures
         </h1>
         <p class="mx-auto mb-8 max-w-2xl text-lg text-gray-600 sm:text-xl">
-          Play the hit party game online with friends. Based on
+          The perfect party game for game night. Two teams, secret agents, and one-word clues.
+          Based on
           <a
             href="https://czechgames.com/en/codenames-pictures/"
             target="_blank"
             rel="noopener noreferrer"
-            class="font-semibold text-blue-600 underline decoration-blue-300 decoration-2 underline-offset-2 transition-colors hover:text-blue-700 hover:decoration-blue-500"
-          >
-            Codenames Pictures
-          </a>
+            class="external-link font-semibold"
+          >Codenames Pictures</a>
           by Czech Games.
         </p>
       </div>
@@ -61,10 +60,10 @@ const howToPlaySteps = [
             v-for="step in howToPlaySteps"
             :key="step.title"
             :to="step.to"
-            class="rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 px-3 py-5 shadow-sm transition-shadow hover:shadow-md"
+            class="group rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 px-3 py-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <div
-              class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl"
+              class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
               :class="step.iconBg"
             >
               <FontAwesomeIcon :icon="step.icon" class="text-xl" />
@@ -74,25 +73,23 @@ const howToPlaySteps = [
           </RouterLink>
         </div>
 
-        <!-- Full Rules Link -->
-        <div class="mx-auto mb-10 text-center">
+        <!-- Secondary Links -->
+        <div class="flex flex-wrap items-center justify-center gap-3">
           <RouterLink
             to="/rules"
-            class="inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-200"
+            class="inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-200"
           >
             <FontAwesomeIcon icon="book" />
             Read full rules
           </RouterLink>
+          <RouterLink
+            to="/play-duet"
+            class="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2.5 text-sm font-medium text-green-700 transition-all hover:border-green-300 hover:bg-green-100"
+          >
+            <FontAwesomeIcon icon="users" />
+            Try Duet Mode
+          </RouterLink>
         </div>
-
-        <!-- Secondary link -->
-        <RouterLink
-          to="/play-duet"
-          class="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-5 py-2.5 text-sm font-medium text-green-700 transition-all hover:border-green-300 hover:bg-green-100"
-        >
-          <FontAwesomeIcon icon="users" />
-          Try Duet Mode
-        </RouterLink>
       </div>
     </div>
   </SiteLayout>

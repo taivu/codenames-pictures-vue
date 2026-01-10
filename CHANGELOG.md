@@ -1,52 +1,38 @@
 # Changelog
 
-## January 2026 (Playtesting Revisions)
-
-- Redesigned site header with pill-style navigation buttons
-- Header background transitions from transparent to amber on scroll
-- Mobile-optimized header with centered Start Game + Spy Master buttons
-- Spymaster page header redesign with Home/Lock/New Card buttons
-- Touch prevention in spymaster lock mode (no OS UI interference)
-- Random icons and shit-talking quotes displayed in locked state
-- Card search with instructional label for finding other spymaster's card
-- Drawer tabs renamed to Teams and Nav for clarity
-- Pressure mode purple theming throughout the app
-- Team scores show RED/BLUE labels with trophy icon separator
-- Consistent team naming format ("Red Team" with capitalization)
-- Homepage feature cards with distinct colors (yellow/orange/cyan)
-- Footer now includes "How to Play" link to Rules page
-- Removed redundant "Back to Home" links from content pages
-- TeamsModal header with responsive layout
-- Refactored SpyMasterView into composable + CardSearch component
-
 ## January 2026
 
-- Complete rewrite in Vue 3 + Vite + TypeScript
-- Mobile-first responsive design with portrait and landscape layouts
-- New floating HUD with collapsible team scores
-- Slide-out drawer menu for game actions
-- Edge swipe to open drawer
-- Improved card color selection with arrow indicator
-- Card zoom modal with fade transitions
-- Team setup modal with shuffle and spy master randomizer
-- Score tracking with increment/decrement
-- Auto-save with immediate persist/clear on toggle
-- Spy master card lock mode with screen wake lock
-- New Pressure Mode with countdown timer
-- Strike system: 10min → 5min → 1min, 3 strikes = game over
-- Pause/resume timer by tapping in expanded HUD
-- Timer colors: green → orange (50%) → red (25%)
-- Skull-crossbones strike indicators
-- "Continue as scrub" option after game over
-- Saved game restore modal with team preview
-- Fresh start confirmation to prevent accidental data loss
-- Modal headers with icons
-- Card zoom works during color selection mode
-- HUD auto-collapses when color menu opens
-- Scrollable HUD for mobile landscape
-- Drawer close button in header
-- Separated homepage with quick start from full rules page
-- Added About page and Rules page
+### Complete Rebuild
+The app has been completely rebuilt from the ground up with a modern, mobile-first design that works great on phones, tablets, and desktops.
+
+### Gameplay
+- **Floating HUD** - See team scores at a glance, tap to expand for more details
+- **Quick card marking** - Tap any card to reveal color options with a handy arrow indicator
+- **Card zoom** - Long-press any card to see it up close
+- **Auto-save** - Your game is automatically saved so you can pick up where you left off
+- **Restore game** - See a preview of your saved game before deciding to continue or start fresh
+
+### Pressure Mode
+A new optional game mode that adds tension with a countdown timer:
+- Start with 5 minutes, then 3 minutes, then 1 minute as you get strikes
+- Timer changes color as time runs low (green → orange → red)
+- Three strikes and it's game over — or continue as a "scrub" if you want to finish anyway
+- Tap the timer to pause when you need a break
+
+### Team Management
+- **Easy setup** - Add players, shuffle teams randomly, and pick spy masters with one tap
+- **Score tracking** - Keep track of wins with simple +/- buttons
+- **Team summaries** - See who's on each team and who's the spy master
+
+### Spy Master View
+- **Lock mode** - Lock your screen to prevent accidental reveals (keeps your screen awake too)
+- **Trash talk** - Random taunting quotes and icons while locked, just for fun
+- **Card search** - Find the other spy master's card by searching the grid
+
+### Navigation
+- **Slide-out menu** - Swipe from the right edge or tap the menu button
+- **Quick access header** - Start Game and Spy Master buttons always visible
+- **Dedicated pages** - Rules, About, and Disclaimer pages for all the details
 
 ## Original Fork (2024)
 

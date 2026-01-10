@@ -102,10 +102,8 @@ onUnmounted(() => {
             href="https://czechgames.com/en/codenames-pictures/"
             target="_blank"
             rel="noopener noreferrer"
-            class="font-medium underline hover:text-amber-900"
-          >
-            Czech Games Edition
-          </a>
+            class="external-link !text-amber-800 font-medium hover:!text-amber-900"
+          >Czech Games Edition</a>
         </p>
         <div class="flex items-center justify-center gap-3">
           <RouterLink

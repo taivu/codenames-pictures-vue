@@ -92,8 +92,8 @@ function confirmDisableAutoSave() {
           class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
           :class="
             currentTab === 'teams'
-              ? 'bg-orange-100 text-orange-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-gray-200'
+              ? 'bg-amber-100 text-amber-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-amber-100 hover:text-amber-600 [@media(hover:none)]:bg-gray-200'
           "
           @click="currentTab = 'teams'"
         >
@@ -104,8 +104,8 @@ function confirmDisableAutoSave() {
           class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors"
           :class="
             currentTab === 'nav'
-              ? 'bg-indigo-100 text-indigo-600'
-              : 'bg-gray-100 text-gray-600 hover:bg-indigo-100 hover:text-indigo-600 [@media(hover:none)]:bg-indigo-100 [@media(hover:none)]:text-indigo-600'
+              ? 'bg-rose-100 text-rose-600'
+              : 'bg-gray-100 text-gray-600 hover:bg-rose-100 hover:text-rose-600 [@media(hover:none)]:bg-gray-200'
           "
           @click="currentTab = 'nav'"
         >
@@ -190,7 +190,7 @@ function confirmDisableAutoSave() {
         >
           <FontAwesomeIcon
             icon="sliders"
-            class="w-5 text-gray-500 transition-colors group-hover:text-indigo-500 [@media(hover:none)]:text-indigo-500"
+            class="w-5 text-gray-500 transition-colors group-hover:text-rose-500 [@media(hover:none)]:text-rose-500"
           />
           <span class="font-medium">Settings</span>
         </button>

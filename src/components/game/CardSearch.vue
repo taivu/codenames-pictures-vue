@@ -24,7 +24,7 @@ function handleSubmit(event: Event): void {
 <template>
   <div class="flex flex-col items-center gap-1">
     <label :for="inputId ?? 'card-search'" class="text-xs text-gray-500">
-      Enter other spymaster's card #
+      Enter other spymaster's key card #
     </label>
     <form class="flex" @submit="handleSubmit">
       <input
@@ -32,7 +32,7 @@ function handleSubmit(event: Event): void {
         v-model="searchValue"
         type="tel"
         class="h-11 w-28 rounded-l-lg rounded-r-none border border-r-0 border-gray-200 bg-white text-center text-lg focus:border-green-500 focus:outline-none"
-        placeholder="Card #"
+        placeholder="Key Card #"
         name="card-id"
         maxlength="3"
       />

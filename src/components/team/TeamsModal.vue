@@ -40,7 +40,7 @@ function handlePickSpyMasters(): void {
         <!-- Action buttons -->
         <div v-if="!store.isDuetMode" class="flex items-center gap-1">
           <button
-            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-orange-100 [@media(hover:none)]:text-orange-600"
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-amber-100 hover:text-amber-600 [@media(hover:none)]:bg-amber-100 [@media(hover:none)]:text-amber-600"
             title="Shuffle teams"
             @click="handleShuffleTeams"
           >
@@ -78,7 +78,7 @@ function handlePickSpyMasters(): void {
     >
       <div v-if="!store.isDuetMode" class="flex gap-2">
         <button
-          class="flex items-center gap-2 rounded-lg bg-orange-500 px-3 py-2.5 font-medium text-white transition-colors sm:bg-orange-100 sm:text-orange-600 sm:hover:bg-orange-500 sm:hover:text-white"
+          class="flex items-center gap-2 rounded-lg bg-amber-500 px-3 py-2.5 font-medium text-white transition-colors sm:bg-amber-100 sm:text-amber-600 sm:hover:bg-amber-500 sm:hover:text-white"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >

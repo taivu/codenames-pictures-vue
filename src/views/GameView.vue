@@ -20,7 +20,7 @@ const showRestorePrompt = ref(false)
 const showFreshStartConfirm = ref(false)
 const isReady = ref(false)
 
-const savedGamePreview = computed(() => gameStore.getSavedGamePreview())
+const savedGamePreview = computed(() => gameStore.getSavedGamePreview(props.mode))
 
 const savedTeamColors = computed((): TeamColor[] => {
   const preview = savedGamePreview.value
@@ -29,7 +29,7 @@ const savedTeamColors = computed((): TeamColor[] => {
 })
 
 onMounted(() => {
-  if (gameStore.hasSavedGame) {
+  if (gameStore.hasSavedGame(props.mode)) {
     showRestorePrompt.value = true
   } else {
     gameStore.initializeGame(props.mode)
@@ -39,7 +39,7 @@ onMounted(() => {
 })
 
 function handleRestoreGame(): void {
-  gameStore.restoreSavedGame()
+  gameStore.restoreSavedGame(props.mode)
   trackGameStart(gameStore.mode)
   showRestorePrompt.value = false
   isReady.value = true
@@ -55,7 +55,7 @@ function handleFreshStartCancel(): void {
 
 function handleFreshStartConfirm(): void {
   // Reset to defaults: clear saved game and disable auto-save
-  gameStore.clearSavedGame()
+  gameStore.clearSavedGame(props.mode)
   settingsStore.setAutoSave(false)
   gameStore.initializeGame(props.mode)
   trackGameStart(props.mode)

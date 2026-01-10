@@ -42,6 +42,36 @@
   button {
     cursor: pointer;
   }
+
+  /* Typography scale */
+  h1 {
+    @apply text-4xl font-bold sm:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl font-bold sm:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl font-bold sm:text-2xl;
+  }
+
+  h4 {
+    @apply text-lg font-bold sm:text-xl;
+  }
+
+  h5 {
+    @apply text-base font-bold sm:text-lg;
+  }
+
+  h6 {
+    @apply text-sm font-bold sm:text-base;
+  }
+
+  /* Body text */
+  p {
+    @apply leading-relaxed text-gray-700;
+  }
 }
 
 @layer utilities {
@@ -100,5 +130,23 @@
     border: 2px dashed #9ca3af;
     border-radius: 0.25rem;
     background-color: white;
+  }
+
+  .external-link {
+    @apply text-blue-600 hover:underline;
+  }
+
+  .external-link::after {
+    content: '';
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin-left: 0.25em;
+    opacity: 0.5;
+    vertical-align: baseline;
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
   }
 }
