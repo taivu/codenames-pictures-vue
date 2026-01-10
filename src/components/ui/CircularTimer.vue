@@ -29,17 +29,17 @@ const circumference = computed(() => 2 * Math.PI * radius.value)
 const offset = computed(() => circumference.value * (1 - props.progress))
 const center = computed(() => props.size / 2)
 
-// Color: green -> orange -> red
+// Color: purple -> orange -> red
 const colorClass = computed(() => {
   if (props.isWarning) return 'stroke-red-500'
   if (props.isCaution) return 'stroke-orange-500'
-  return 'stroke-green-500'
+  return 'stroke-purple-500'
 })
 
 const iconColorClass = computed(() => {
   if (props.isWarning) return 'text-red-500'
   if (props.isCaution) return 'text-orange-500'
-  return 'text-green-500'
+  return 'text-purple-500'
 })
 </script>
 

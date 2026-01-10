@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useGameStore } from '@/stores'
-import { BaseModal } from '@/components/ui'
+import { BaseModal, BaseButton } from '@/components/ui'
 import TeamSetup from './TeamSetup.vue'
 import { trackTeamsShuffled, trackSpymastersPicked } from '@/plugins/analytics'
 
@@ -29,27 +29,38 @@ function handlePickSpyMasters(): void {
 </script>
 
 <template>
-  <BaseModal
-    :title="`Setup your ${store.isDuetMode ? 'team' : 'teams'}`"
-    icon="users"
-    size="lg"
-    @close="handleClose"
-  >
-    <template v-if="!store.isDuetMode" #header-actions>
-      <div class="flex gap-1">
+  <BaseModal size="lg" @close="handleClose">
+    <template #header="{ close }">
+      <div class="flex flex-wrap-reverse items-center gap-2">
+        <!-- Icon + Title -->
+        <h3 class="flex items-center gap-2 text-xl font-bold text-gray-800">
+          <FontAwesomeIcon icon="users" class="text-gray-500" />
+          <span>Setup your {{ store.isDuetMode ? 'team' : 'teams' }}</span>
+        </h3>
+        <!-- Action buttons -->
+        <div v-if="!store.isDuetMode" class="flex items-center gap-1">
+          <button
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-orange-100 [@media(hover:none)]:text-orange-600"
+            title="Shuffle teams"
+            @click="handleShuffleTeams"
+          >
+            <FontAwesomeIcon icon="shuffle" />
+          </button>
+          <button
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-blue-100 [@media(hover:none)]:text-blue-600"
+            title="Pick spy masters"
+            @click="handlePickSpyMasters"
+          >
+            <FontAwesomeIcon icon="user-secret" />
+          </button>
+        </div>
+        <!-- Close button (far right) -->
         <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-green-100 hover:text-green-600 [@media(hover:none)]:bg-green-100 [@media(hover:none)]:text-green-600"
-          title="Shuffle teams"
-          @click="handleShuffleTeams"
+          class="ml-auto flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+          title="Close"
+          @click="close"
         >
-          <FontAwesomeIcon icon="shuffle" />
-        </button>
-        <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-blue-100 [@media(hover:none)]:text-blue-600"
-          title="Pick spy masters"
-          @click="handlePickSpyMasters"
-        >
-          <FontAwesomeIcon icon="user-secret" />
+          <FontAwesomeIcon icon="xmark" class="text-lg" />
         </button>
       </div>
     </template>
@@ -61,10 +72,13 @@ function handlePickSpyMasters(): void {
       <TeamSetup v-for="color in store.activeTeamColors" :key="color" :color="color" />
     </div>
 
-    <div v-if="!store.isDuetMode" class="mt-6 flex justify-center border-t border-gray-100 pt-4">
-      <div class="flex gap-2">
+    <div
+      class="mt-6 flex border-t border-gray-100 pt-4"
+      :class="store.isDuetMode ? 'justify-center' : 'justify-between'"
+    >
+      <div v-if="!store.isDuetMode" class="flex gap-2">
         <button
-          class="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-green-600"
+          class="flex items-center gap-2 rounded-lg bg-orange-500 px-3 py-2.5 font-medium text-white transition-colors sm:bg-orange-100 sm:text-orange-600 sm:hover:bg-orange-500 sm:hover:text-white"
           title="Shuffle teams"
           @click="handleShuffleTeams"
         >
@@ -72,7 +86,7 @@ function handlePickSpyMasters(): void {
           <span class="hidden sm:inline">Shuffle teams</span>
         </button>
         <button
-          class="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-600"
+          class="flex items-center gap-2 rounded-lg bg-blue-500 px-3 py-2.5 font-medium text-white transition-colors sm:bg-blue-100 sm:text-blue-600 sm:hover:bg-blue-500 sm:hover:text-white"
           title="Randomize spy masters"
           @click="handlePickSpyMasters"
         >
@@ -80,6 +94,10 @@ function handlePickSpyMasters(): void {
           <span class="hidden sm:inline">Pick spymasters</span>
         </button>
       </div>
+      <BaseButton variant="green" title="Play" @click="handleClose">
+        <FontAwesomeIcon icon="play" />
+        <span>Play</span>
+      </BaseButton>
     </div>
   </BaseModal>
 </template>

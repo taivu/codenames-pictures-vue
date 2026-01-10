@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { BaseModal, ToggleSwitch } from '@/components/ui'
+import { BaseModal, ToggleSwitch, BaseButton } from '@/components/ui'
 import CardSetSelector from './CardSetSelector.vue'
 import { trackAutoSaveToggled } from '@/plugins/analytics'
 
@@ -47,7 +47,7 @@ function handleTogglePressureMode(): void {
 </script>
 
 <template>
-  <BaseModal title="Settings" icon="gear" size="md" @close="handleClose">
+  <BaseModal title="Settings" icon="sliders" size="md" @close="handleClose">
     <div class="space-y-6">
       <!-- Auto-Save Section -->
       <section class="rounded-xl bg-gray-50 p-4">
@@ -77,7 +77,10 @@ function handleTogglePressureMode(): void {
         <div class="flex items-start justify-between gap-4">
           <div>
             <h4 class="mb-1 flex items-center gap-2 font-semibold text-gray-800">
-              <FontAwesomeIcon icon="stopwatch" class="text-gray-500" />
+              <FontAwesomeIcon
+                icon="stopwatch"
+                :class="settingsStore.pressureModeEnabled ? 'text-purple-500' : 'text-gray-500'"
+              />
               Pressure Mode
             </h4>
             <p class="text-sm text-gray-500">
@@ -86,7 +89,7 @@ function handleTogglePressureMode(): void {
           </div>
           <ToggleSwitch
             :model-value="settingsStore.pressureModeEnabled"
-            active-color="orange"
+            active-color="purple"
             @update:model-value="handleTogglePressureMode"
           />
         </div>
@@ -126,18 +129,8 @@ function handleTogglePressureMode(): void {
             you refresh the page.
           </p>
           <div class="flex justify-end gap-3">
-            <button
-              class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-              @click="cancelDisableAutoSave"
-            >
-              Cancel
-            </button>
-            <button
-              class="rounded-lg bg-red-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-red-600"
-              @click="confirmDisableAutoSave"
-            >
-              Disable
-            </button>
+            <BaseButton variant="ghost" @click="cancelDisableAutoSave"> Cancel </BaseButton>
+            <BaseButton variant="red" @click="confirmDisableAutoSave"> Disable </BaseButton>
           </div>
         </div>
       </div>

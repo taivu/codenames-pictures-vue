@@ -9,7 +9,10 @@ const shouldShow = computed(() => store.teamsAreSetup && !store.isDuetMode)
 </script>
 
 <template>
-  <div v-if="shouldShow" class="flex justify-center gap-3">
-    <TeamScore v-for="color in store.activeTeamColors" :key="color" :color="color" />
+  <div v-if="shouldShow" class="flex items-center justify-center gap-4">
+    <template v-for="(color, index) in store.activeTeamColors" :key="color">
+      <FontAwesomeIcon v-if="index > 0" icon="trophy" class="text-lg text-yellow-500" />
+      <TeamScore :color="color" />
+    </template>
   </div>
 </template>

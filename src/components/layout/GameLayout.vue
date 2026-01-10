@@ -17,6 +17,7 @@ const pressureMode = usePressureMode()
 const isDrawerOpen = ref(false)
 const showTeamsModal = ref(false)
 const showSettingsModal = ref(false)
+const drawerTab = ref<'teams' | 'nav'>('teams')
 
 // Open drawer on swipe from right edge
 useEdgeSwipe({
@@ -69,6 +70,7 @@ function closeSettingsModal() {
     <!-- Slide-out Drawer -->
     <SlideDrawer v-model:open="isDrawerOpen" position="right">
       <DrawerContent
+        v-model:active-tab="drawerTab"
         @close="closeDrawer"
         @open-teams="openTeamsModal"
         @open-settings="openSettingsModal"

@@ -1,95 +1,99 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import SiteLayout from '@/components/layout/SiteLayout.vue'
+
+const howToPlaySteps = [
+  {
+    to: '/play',
+    icon: 'gamepad',
+    iconBg: 'bg-red-100 text-red-600',
+    title: 'Set up the game board',
+    description: 'Open the site on a shared screen and start a game. Everyone looks at this device together.',
+  },
+  {
+    to: '/spy-master',
+    icon: 'user-secret',
+    iconBg: 'bg-blue-100 text-blue-600',
+    title: 'Spymasters get the key',
+    description: 'Each spymaster opens Spy Master view on their own device. Together, they agree on which key card to use.',
+  },
+  {
+    to: '/play',
+    icon: 'trophy',
+    iconBg: 'bg-yellow-100 text-yellow-600',
+    title: 'Play!',
+    description: 'Tap cards to mark them. Enable Pressure Mode in settings for timed rounds.',
+  },
+]
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col p-4 sm:p-8">
+  <SiteLayout>
     <!-- Hero Section -->
-    <div class="mx-auto flex max-w-4xl flex-1 flex-col justify-center text-center">
-      <h1 class="mb-4 text-4xl font-bold sm:text-5xl">Codenames Pictures Online</h1>
-      <p class="mb-6 text-lg">
-        The online version of Codenames Pictures by
-        <a
-          href="https://czechgames.com/en/codenames-pictures/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="font-bold text-blue-600 hover:underline"
+    <div class="px-4 pt-8 sm:px-8 sm:pt-12">
+      <div class="mx-auto max-w-4xl text-center">
+        <h1
+          class="mb-4 bg-gradient-to-r from-green-600 via-emerald-500 to-teal-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl"
         >
-          czechgames
-        </a>
-      </p>
-
-      <!-- Top Play Buttons -->
-      <div class="mb-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <RouterLink to="/play" class="btn btn-green w-full px-8 py-4 text-xl sm:w-auto">
-          <FontAwesomeIcon icon="play" class="mr-2" />Start Game
-        </RouterLink>
-        <RouterLink to="/spy-master" class="btn btn-blue w-full px-8 py-4 text-xl sm:w-auto">
-          <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master
-        </RouterLink>
+          Codenames Pictures
+        </h1>
+        <p class="mx-auto mb-8 max-w-2xl text-lg text-gray-600 sm:text-xl">
+          Play the hit party game online with friends. Based on
+          <a
+            href="https://czechgames.com/en/codenames-pictures/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-blue-600 underline decoration-blue-300 decoration-2 underline-offset-2 transition-colors hover:text-blue-700 hover:decoration-blue-500"
+          >
+            Codenames Pictures
+          </a>
+          by Czech Games.
+        </p>
       </div>
+    </div>
 
-      <!-- Quick Start -->
-      <div
-        class="mx-auto mb-8 max-w-xl rounded-xl border-2 border-gray-200 bg-white/80 p-6 text-left"
-      >
-        <h2 class="mb-4 text-center text-xl font-bold">Quick Start</h2>
-        <ol class="mb-4 space-y-3 text-gray-700">
-          <li class="flex gap-3">
-            <span
-              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
-              >1</span
+    <!-- Main Content -->
+    <div class="px-4 pb-12 sm:px-8 sm:pb-16">
+      <div class="mx-auto max-w-4xl text-center">
+        <!-- How to Play Cards -->
+        <div class="mx-auto mb-10 grid max-w-3xl gap-4 sm:grid-cols-3">
+          <RouterLink
+            v-for="step in howToPlaySteps"
+            :key="step.title"
+            :to="step.to"
+            class="rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 px-3 py-5 shadow-sm transition-shadow hover:shadow-md"
+          >
+            <div
+              class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl"
+              :class="step.iconBg"
             >
-            <span
-              ><strong>Set up the game board</strong> — Open the site on a phone, tablet, or
-              computer. This is what everyone looks at. For bigger groups, mirror the screen to a TV
-              using AirPlay or Chromecast.</span
-            >
-          </li>
-          <li class="flex gap-3">
-            <span
-              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
-              >2</span
-            >
-            <span
-              ><strong>Spymasters get the key</strong> — Each spymaster opens the site on their own
-              device and navigates to the Spy Master view. Together, they pick which key card to
-              use.</span
-            >
-          </li>
-          <li class="flex gap-3">
-            <span
-              class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500 text-sm font-bold text-white"
-              >3</span
-            >
-            <span
-              ><strong>Play!</strong> — The game doesn't enforce turns or endings—it's designed to
-              get out of the way and let you play. Track guesses by tapping cards on the game board.
-              Enable Pressure Mode in settings if you want timed rounds.</span
-            >
-          </li>
-        </ol>
-        <div class="text-center">
-          <RouterLink to="/rules" class="text-sm font-medium text-blue-600 hover:underline">
-            <FontAwesomeIcon icon="book" class="mr-1" />Read full rules
+              <FontAwesomeIcon :icon="step.icon" class="text-xl" />
+            </div>
+            <h3 class="mb-4 font-semibold text-gray-900">{{ step.title }}</h3>
+            <p class="text-sm text-gray-500">{{ step.description }}</p>
           </RouterLink>
         </div>
-      </div>
 
-      <!-- Bottom Play Buttons -->
-      <div class="mb-4 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <RouterLink to="/play" class="btn btn-green w-full px-8 py-4 text-xl sm:w-auto">
-          <FontAwesomeIcon icon="play" class="mr-2" />Start Game
-        </RouterLink>
-        <RouterLink to="/spy-master" class="btn btn-blue w-full px-8 py-4 text-xl sm:w-auto">
-          <FontAwesomeIcon icon="user-secret" class="mr-2" />Spy Master
+        <!-- Full Rules Link -->
+        <div class="mx-auto mb-10 text-center">
+          <RouterLink
+            to="/rules"
+            class="inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-200"
+          >
+            <FontAwesomeIcon icon="book" />
+            Read full rules
+          </RouterLink>
+        </div>
+
+        <!-- Secondary link -->
+        <RouterLink
+          to="/play-duet"
+          class="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-5 py-2.5 text-sm font-medium text-green-700 transition-all hover:border-green-300 hover:bg-green-100"
+        >
+          <FontAwesomeIcon icon="users" />
+          Try Duet Mode
         </RouterLink>
       </div>
-
-      <!-- Secondary link -->
-      <RouterLink to="/play-duet" class="text-sm font-medium text-green-700 hover:underline">
-        <FontAwesomeIcon icon="users" class="mr-1" />Play Duet Mode
-      </RouterLink>
     </div>
-  </div>
+  </SiteLayout>
 </template>

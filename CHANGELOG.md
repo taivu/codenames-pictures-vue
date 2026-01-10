@@ -1,5 +1,24 @@
 # Changelog
 
+## January 2026 (Playtesting Revisions)
+
+- Redesigned site header with pill-style navigation buttons
+- Header background transitions from transparent to amber on scroll
+- Mobile-optimized header with centered Start Game + Spy Master buttons
+- Spymaster page header redesign with Home/Lock/New Card buttons
+- Touch prevention in spymaster lock mode (no OS UI interference)
+- Random icons and shit-talking quotes displayed in locked state
+- Card search with instructional label for finding other spymaster's card
+- Drawer tabs renamed to Teams and Nav for clarity
+- Pressure mode purple theming throughout the app
+- Team scores show RED/BLUE labels with trophy icon separator
+- Consistent team naming format ("Red Team" with capitalization)
+- Homepage feature cards with distinct colors (yellow/orange/cyan)
+- Footer now includes "How to Play" link to Rules page
+- Removed redundant "Back to Home" links from content pages
+- TeamsModal header with responsive layout
+- Refactored SpyMasterView into composable + CardSearch component
+
 ## January 2026
 
 - Complete rewrite in Vue 3 + Vite + TypeScript

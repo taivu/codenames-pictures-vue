@@ -23,14 +23,17 @@ function handleDecrement(): void {
 
 <template>
   <div
-    class="flex flex-col items-center gap-1 rounded-xl bg-gray-50 px-3 py-2 sm:flex-row sm:gap-2"
+    class="flex flex-col items-center gap-1 sm:flex-row sm:gap-2"
   >
     <!-- Score number -->
-    <div
-      class="order-first min-w-[2ch] text-center text-2xl font-bold sm:order-none"
-      :class="teamTextClasses[color]"
-    >
-      {{ store.teams[color].score }}
+    <div class="order-first flex flex-col items-center sm:order-none">
+      <span class="text-xs font-bold uppercase" :class="teamTextClasses[color]">{{ color }}</span>
+      <div
+        class="min-w-[2ch] text-center text-2xl font-bold"
+        :class="teamTextClasses[color]"
+      >
+        {{ store.teams[color].score }}
+      </div>
     </div>
     <!-- Buttons: below on mobile, sides on tablet+ -->
     <div class="flex gap-3 sm:contents">
