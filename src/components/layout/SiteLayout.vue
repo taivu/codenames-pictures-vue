@@ -17,8 +17,11 @@ let observer: IntersectionObserver | null = null
 onMounted(() => {
   if (stickyRef.value) {
     observer = new IntersectionObserver(
-      ([entry]) => {
-        isSticky.value = entry.intersectionRatio < 1
+      (entries) => {
+        const entry = entries[0]
+        if (entry) {
+          isSticky.value = entry.intersectionRatio < 1
+        }
       },
       { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
     )
