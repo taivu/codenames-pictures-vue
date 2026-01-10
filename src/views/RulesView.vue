@@ -10,9 +10,6 @@ const baseUrl = import.meta.env.BASE_URL
     <div class="p-4 sm:p-8">
       <!-- Page Header -->
       <div class="mx-auto mb-6 max-w-4xl">
-        <RouterLink to="/" class="mb-4 inline-block text-blue-600 hover:underline">
-          <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
-        </RouterLink>
         <h1 class="text-3xl font-bold sm:text-4xl">Game Rules</h1>
       </div>
 
@@ -244,17 +241,7 @@ const baseUrl = import.meta.env.BASE_URL
             </div>
             <div class="rounded-lg border border-gray-200 bg-white p-3">
               <p>
-                <strong>Spy master key:</strong> open from menu, share URL with the other spymaster
-              </p>
-            </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-3">
-              <p>
                 <strong>Lock spy master screen:</strong> tap lock button to hide card, hold to peek
-              </p>
-            </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-3">
-              <p>
-                <strong>Setup teams:</strong> add players, shuffle teams, and randomize spy masters
               </p>
             </div>
           </div>

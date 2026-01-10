@@ -20,6 +20,7 @@ import {
   faFaceLaughSquint,
   faFire,
   faFloppyDisk,
+  faGamepad,
   faGear,
   faGhost,
   faHandPointRight,
@@ -73,6 +74,7 @@ library.add(
   faUpRightFromSquare,
   // Game
   faDice,
+  faGamepad,
   faImages,
   faLock,
   faLockOpen,

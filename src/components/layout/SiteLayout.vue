@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 
 interface Props {
   hideActionButtons?: boolean
@@ -9,56 +9,84 @@ interface Props {
 
 defineProps<Props>()
 
-const isSticky = ref(false)
-const stickyRef = ref<HTMLElement | null>(null)
+const route = useRoute()
+const isHomePage = computed(() => route.path === '/')
 
-let observer: IntersectionObserver | null = null
+const isSticky = ref(false)
+
+function handleScroll(): void {
+  isSticky.value = window.scrollY > 10
+}
 
 onMounted(() => {
-  if (stickyRef.value) {
-    observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
-        if (entry) {
-          isSticky.value = entry.intersectionRatio < 1
-        }
-      },
-      { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
-    )
-    observer.observe(stickyRef.value)
-  }
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  handleScroll()
 })
 
 onUnmounted(() => {
-  observer?.disconnect()
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <!-- Optional content above action buttons (e.g., homepage hero) -->
-    <slot name="hero" />
-
     <!-- Sticky Action Buttons -->
     <div
       v-if="!hideActionButtons"
-      ref="stickyRef"
       class="sticky top-0 z-50 mb-8 px-4 py-3 transition-colors duration-200"
-      :class="isSticky ? 'border-b border-gray-200/50 bg-white/80 backdrop-blur-md' : ''"
+      :class="isSticky ? 'border-b border-amber-300 bg-amber-100/50 backdrop-blur-md' : ''"
     >
-      <div class="flex items-center justify-center gap-2">
+      <!-- Mobile: centered buttons -->
+      <div class="flex items-center justify-center gap-2 sm:hidden">
         <RouterLink
           to="/play"
-          class="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-green-600"
+          class="flex items-center gap-1.5 rounded-full bg-green-500 px-4 py-2 text-sm font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-green-600"
         >
-          <FontAwesomeIcon icon="play" />Start Game
+          <FontAwesomeIcon icon="play" />
+          <span>Start Game</span>
         </RouterLink>
         <RouterLink
           to="/spy-master"
-          class="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2.5 font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-600"
+          class="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-2 text-sm font-medium whitespace-nowrap text-blue-600 shadow-sm transition-colors hover:bg-blue-500 hover:text-white"
         >
-          <FontAwesomeIcon icon="user-secret" />Spy Master
+          <FontAwesomeIcon icon="user-secret" />
+          <span>Spy Master</span>
         </RouterLink>
+      </div>
+
+      <!-- Desktop: three-column layout -->
+      <div class="hidden items-center sm:flex">
+        <!-- Left: Back (hidden on homepage) -->
+        <div class="flex flex-1 justify-start">
+          <RouterLink
+            v-if="!isHomePage"
+            to="/"
+            class="flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:bg-gray-100"
+          >
+            <FontAwesomeIcon icon="arrow-left" />
+            <span>Home</span>
+          </RouterLink>
+        </div>
+
+        <!-- Center: Start Game -->
+        <RouterLink
+          to="/play"
+          class="flex items-center gap-1.5 rounded-full bg-green-500 px-4 py-2 text-sm font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-green-600"
+        >
+          <FontAwesomeIcon icon="play" />
+          <span>Start Game</span>
+        </RouterLink>
+
+        <!-- Right: Spy Master -->
+        <div class="flex flex-1 justify-end">
+          <RouterLink
+            to="/spy-master"
+            class="flex items-center gap-1.5 rounded-full bg-blue-100 px-3 py-2 text-sm font-medium whitespace-nowrap text-blue-600 shadow-sm transition-colors hover:bg-blue-500 hover:text-white"
+          >
+            <FontAwesomeIcon icon="user-secret" />
+            <span>Spy Master</span>
+          </RouterLink>
+        </div>
       </div>
     </div>
 
@@ -80,6 +108,13 @@ onUnmounted(() => {
           </a>
         </p>
         <div class="flex items-center justify-center gap-3">
+          <RouterLink
+            to="/rules"
+            class="text-amber-700 transition-colors hover:text-amber-900 hover:underline"
+          >
+            How to Play
+          </RouterLink>
+          <span class="text-amber-400">|</span>
           <RouterLink
             to="/disclaimer"
             class="text-amber-700 transition-colors hover:text-amber-900 hover:underline"

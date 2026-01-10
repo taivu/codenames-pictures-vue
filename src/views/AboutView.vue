@@ -16,9 +16,6 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
       <div class="mx-auto max-w-4xl">
         <!-- Page Header -->
         <div class="mb-6">
-          <RouterLink to="/" class="mb-4 inline-block text-blue-600 hover:underline">
-            <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
-          </RouterLink>
           <h1 class="text-3xl font-bold sm:text-4xl">About</h1>
         </div>
 
@@ -150,12 +147,6 @@ const changelogHtml = DOMPurify.sanitize(rawHtml as string)
           </p>
         </div>
 
-        <!-- Bottom CTA -->
-        <div class="text-center">
-          <RouterLink to="/" class="btn btn-green px-8 py-4 text-xl">
-            <FontAwesomeIcon icon="play" class="mr-2" />Ready to Play!
-          </RouterLink>
-        </div>
       </div>
     </div>
   </SiteLayout>

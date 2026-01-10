@@ -99,7 +99,7 @@ function copyShareableUrl(): void {
         class="flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-2 text-sm font-medium text-green-600 shadow-sm transition-colors hover:bg-green-500 hover:text-white"
         @click="handleRandomCard"
       >
-        <FontAwesomeIcon icon="dice" />
+        <FontAwesomeIcon icon="shuffle" />
         <span>New Card</span>
       </button>
     </div>
@@ -159,7 +159,7 @@ function copyShareableUrl(): void {
           does not exist.
         </p>
         <BaseButton variant="green" @click="handleRandomCard">
-          <FontAwesomeIcon icon="dice" />New Card
+          <FontAwesomeIcon icon="shuffle" />New Card
         </BaseButton>
       </div>
 

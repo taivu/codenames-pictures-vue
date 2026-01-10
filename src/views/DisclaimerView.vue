@@ -9,9 +9,6 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
       <div class="mx-auto max-w-4xl">
         <!-- Page Header -->
         <div class="mb-6">
-          <RouterLink to="/" class="mb-4 inline-block text-blue-600 hover:underline">
-            <FontAwesomeIcon icon="arrow-left" class="mr-1" />Back to Home
-          </RouterLink>
           <h1 class="text-3xl font-bold sm:text-4xl">Disclaimer</h1>
         </div>
 
