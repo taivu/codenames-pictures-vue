@@ -29,27 +29,38 @@ function handlePickSpyMasters(): void {
 </script>
 
 <template>
-  <BaseModal
-    :title="`Setup your ${store.isDuetMode ? 'team' : 'teams'}`"
-    icon="users"
-    size="lg"
-    @close="handleClose"
-  >
-    <template v-if="!store.isDuetMode" #header-actions>
-      <div class="hidden gap-1 sm:flex">
+  <BaseModal size="lg" @close="handleClose">
+    <template #header="{ close }">
+      <div class="flex flex-wrap-reverse items-center gap-2">
+        <!-- Icon + Title -->
+        <h3 class="flex items-center gap-2 text-xl font-bold text-gray-800">
+          <FontAwesomeIcon icon="users" class="text-gray-500" />
+          <span>Setup your {{ store.isDuetMode ? 'team' : 'teams' }}</span>
+        </h3>
+        <!-- Action buttons -->
+        <div v-if="!store.isDuetMode" class="flex items-center gap-1">
+          <button
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-orange-100 [@media(hover:none)]:text-orange-600"
+            title="Shuffle teams"
+            @click="handleShuffleTeams"
+          >
+            <FontAwesomeIcon icon="shuffle" />
+          </button>
+          <button
+            class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-blue-100 [@media(hover:none)]:text-blue-600"
+            title="Pick spy masters"
+            @click="handlePickSpyMasters"
+          >
+            <FontAwesomeIcon icon="user-secret" />
+          </button>
+        </div>
+        <!-- Close button (far right) -->
         <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-orange-100 hover:text-orange-600 [@media(hover:none)]:bg-orange-100 [@media(hover:none)]:text-orange-600"
-          title="Shuffle teams"
-          @click="handleShuffleTeams"
+          class="ml-auto flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+          title="Close"
+          @click="close"
         >
-          <FontAwesomeIcon icon="shuffle" />
-        </button>
-        <button
-          class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 [@media(hover:none)]:bg-blue-100 [@media(hover:none)]:text-blue-600"
-          title="Pick spy masters"
-          @click="handlePickSpyMasters"
-        >
-          <FontAwesomeIcon icon="user-secret" />
+          <FontAwesomeIcon icon="xmark" class="text-lg" />
         </button>
       </div>
     </template>

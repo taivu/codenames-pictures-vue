@@ -86,7 +86,8 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
               <div class="text-left">
                 <strong class="text-gray-900">Set up the game board</strong>
                 <p class="mt-1 text-sm text-gray-600">
-                  Open the site on a shared screen and start a game. Everyone looks at this device together.
+                  Open the site on a shared screen and start a game. Everyone looks at this device
+                  together.
                 </p>
               </div>
             </li>
@@ -98,7 +99,8 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
               <div class="text-left">
                 <strong class="text-gray-900">Spymasters get the key</strong>
                 <p class="mt-1 text-sm text-gray-600">
-                  Each spymaster opens Spy Master view on their own device. Together, they agree on which key card to use.
+                  Each spymaster opens Spy Master view on their own device. Together, they agree on
+                  which key card to use.
                 </p>
               </div>
             </li>
@@ -134,7 +136,6 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
           <FontAwesomeIcon icon="users" />
           Try Duet Mode
         </RouterLink>
-
       </div>
     </div>
   </SiteLayout>

@@ -177,7 +177,10 @@ function confirmDisableAutoSave() {
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleNewGameClick"
         >
-          <FontAwesomeIcon icon="rotate" class="w-5 text-gray-500 transition-colors group-hover:text-green-600" />
+          <FontAwesomeIcon
+            icon="rotate"
+            class="w-5 text-gray-500 transition-colors group-hover:text-green-600"
+          />
           <span class="font-medium">New Game</span>
         </button>
 
@@ -185,7 +188,10 @@ function confirmDisableAutoSave() {
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleOpenTeams"
         >
-          <FontAwesomeIcon icon="users" class="w-5 text-gray-500 transition-colors group-hover:text-orange-500" />
+          <FontAwesomeIcon
+            icon="users"
+            class="w-5 text-gray-500 transition-colors group-hover:text-orange-500"
+          />
           <span class="font-medium">Teams</span>
         </button>
 
@@ -194,7 +200,10 @@ function confirmDisableAutoSave() {
           target="_blank"
           class="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-100"
         >
-          <FontAwesomeIcon icon="user-secret" class="w-5 text-gray-500 transition-colors group-hover:text-blue-600" />
+          <FontAwesomeIcon
+            icon="user-secret"
+            class="w-5 text-gray-500 transition-colors group-hover:text-blue-600"
+          />
           <span class="flex-1 font-medium">Spy Master</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
         </a>
@@ -206,7 +215,10 @@ function confirmDisableAutoSave() {
           target="_blank"
           class="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-100"
         >
-          <FontAwesomeIcon icon="book" class="w-5 text-gray-500 transition-colors group-hover:text-amber-700" />
+          <FontAwesomeIcon
+            icon="book"
+            class="w-5 text-gray-500 transition-colors group-hover:text-amber-700"
+          />
           <span class="flex-1 font-medium">Rules</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
         </a>
@@ -216,7 +228,10 @@ function confirmDisableAutoSave() {
           target="_blank"
           class="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-gray-100"
         >
-          <FontAwesomeIcon icon="circle-info" class="w-5 text-gray-500 transition-colors group-hover:text-blue-500" />
+          <FontAwesomeIcon
+            icon="circle-info"
+            class="w-5 text-gray-500 transition-colors group-hover:text-blue-500"
+          />
           <span class="flex-1 font-medium">About</span>
           <FontAwesomeIcon icon="up-right-from-square" class="text-xs text-gray-400" />
         </a>
@@ -227,7 +242,10 @@ function confirmDisableAutoSave() {
           class="group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-gray-100"
           @click="handleOpenSettings"
         >
-          <FontAwesomeIcon icon="sliders" class="w-5 text-gray-500 transition-colors group-hover:text-gray-900" />
+          <FontAwesomeIcon
+            icon="sliders"
+            class="w-5 text-gray-500 transition-colors group-hover:text-gray-900"
+          />
           <span class="font-medium">Settings</span>
         </button>
 
@@ -257,7 +275,12 @@ function confirmDisableAutoSave() {
     </div>
 
     <!-- New Game Confirmation -->
-    <BaseModal v-if="showNewGameConfirm" title="Start New Game?" icon="rotate" @close="showNewGameConfirm = false">
+    <BaseModal
+      v-if="showNewGameConfirm"
+      title="Start New Game?"
+      icon="rotate"
+      @close="showNewGameConfirm = false"
+    >
       <p class="mb-6 text-gray-600">
         This will shuffle and deal new cards. Teams and scores will be kept.
       </p>
@@ -268,7 +291,12 @@ function confirmDisableAutoSave() {
     </BaseModal>
 
     <!-- Auto-Save Confirmation -->
-    <BaseModal v-if="showAutoSaveConfirm" title="Disable Auto-Save?" icon="floppy-disk" @close="showAutoSaveConfirm = false">
+    <BaseModal
+      v-if="showAutoSaveConfirm"
+      title="Disable Auto-Save?"
+      icon="floppy-disk"
+      @close="showAutoSaveConfirm = false"
+    >
       <p class="mb-6 text-gray-600">
         This will delete your saved game data. You won't be able to recover your current game if you
         refresh the page.

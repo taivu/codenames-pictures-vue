@@ -20,16 +20,37 @@ const peeking = ref(false)
 const wakeLock = ref<WakeLockSentinel | null>(null)
 const humblePhrases = ref<string[]>([])
 const currentPhrase = ref('')
+const currentIcon = ref('')
+
+const shitTalkIcons = [
+  'fire',
+  'bomb',
+  'skull',
+  'ghost',
+  'poo',
+  'pepper-hot',
+  'toilet-paper',
+  'face-laugh-squint',
+  'hand-point-right',
+  'bolt',
+  'skull-crossbones',
+]
 
 const shareableUrl = computed(() => {
   if (!store.currentCardId) return ''
   return `${window.location.origin}/spy-master/${store.currentCardId}`
 })
 
+function pickRandomIcon(): void {
+  const randomIndex = Math.floor(Math.random() * shitTalkIcons.length)
+  currentIcon.value = shitTalkIcons[randomIndex] ?? 'fire'
+}
+
 function pickRandomPhrase(): void {
   if (humblePhrases.value.length > 0) {
     const randomIndex = Math.floor(Math.random() * humblePhrases.value.length)
     currentPhrase.value = humblePhrases.value[randomIndex] ?? ''
+    pickRandomIcon()
   }
 }
 
@@ -125,7 +146,7 @@ function endPeek(): void {
     <div
       v-if="store.currentCard && !(lockedIn && peeking)"
       class="z-60 flex justify-center"
-      :class="lockedIn ? 'fixed left-0 right-0 top-4' : 'py-4'"
+      :class="lockedIn ? 'fixed top-4 right-0 left-0' : 'py-4'"
     >
       <button
         class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-colors"
@@ -159,12 +180,14 @@ function endPeek(): void {
       class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center bg-black px-8 select-none"
     >
       <span class="mb-6 text-xl font-medium text-white">Hold anywhere to reveal</span>
-      <p
-        v-if="currentPhrase"
-        class="max-w-md text-center text-sm text-gray-400 italic sm:text-base"
-      >
-        "{{ currentPhrase }}"
-      </p>
+      <div v-if="currentPhrase" class="flex max-w-md flex-col items-center gap-3">
+        <FontAwesomeIcon
+          v-if="currentIcon"
+          :icon="currentIcon"
+          class="text-3xl text-yellow-400 sm:text-4xl"
+        />
+        <p class="text-center text-sm text-gray-400 italic sm:text-base">"{{ currentPhrase }}"</p>
+      </div>
     </div>
 
     <!-- Main content area -->
@@ -234,7 +257,6 @@ function endPeek(): void {
         <!-- The spy card -->
         <SpyCard :card="store.currentCard" hide-starting-label />
 
-
         <!-- Controls toolbar (hidden when locked) -->
         <div
           v-if="!lockedIn"
@@ -268,7 +290,7 @@ function endPeek(): void {
           v-if="!lockedIn"
           class="mx-4 mt-6 w-full max-w-md rounded-lg border border-gray-200 bg-white/80 px-4 py-3 text-center"
         >
-          <p class="mb-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+          <p class="mb-2 text-xs font-medium tracking-wide text-gray-500 uppercase">
             Share with other spymaster
           </p>
           <div class="flex flex-col items-center justify-center gap-2 sm:flex-row">
@@ -278,9 +300,7 @@ function endPeek(): void {
             <button
               class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
               :class="
-                copied
-                  ? 'bg-green-500 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                copied ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               "
               @click="copyShareableUrl"
             >
@@ -290,6 +310,5 @@ function endPeek(): void {
         </div>
       </template>
     </div>
-
   </SiteLayout>
 </template>

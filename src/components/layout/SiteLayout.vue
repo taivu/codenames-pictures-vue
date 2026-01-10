@@ -46,13 +46,13 @@ onUnmounted(() => {
       <div class="flex items-center justify-center gap-2">
         <RouterLink
           to="/play"
-          class="flex items-center gap-2 whitespace-nowrap rounded-lg bg-green-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-green-600"
+          class="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-green-600"
         >
           <FontAwesomeIcon icon="play" />Start Game
         </RouterLink>
         <RouterLink
           to="/spy-master"
-          class="flex items-center gap-2 whitespace-nowrap rounded-lg bg-blue-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-blue-600"
+          class="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2.5 font-medium whitespace-nowrap text-white shadow-sm transition-colors hover:bg-blue-600"
         >
           <FontAwesomeIcon icon="user-secret" />Spy Master
         </RouterLink>

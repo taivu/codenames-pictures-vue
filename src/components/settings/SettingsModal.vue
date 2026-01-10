@@ -126,12 +126,8 @@ function handleTogglePressureMode(): void {
             you refresh the page.
           </p>
           <div class="flex justify-end gap-3">
-            <BaseButton variant="ghost" @click="cancelDisableAutoSave">
-              Cancel
-            </BaseButton>
-            <BaseButton variant="red" @click="confirmDisableAutoSave">
-              Disable
-            </BaseButton>
+            <BaseButton variant="ghost" @click="cancelDisableAutoSave"> Cancel </BaseButton>
+            <BaseButton variant="red" @click="confirmDisableAutoSave"> Disable </BaseButton>
           </div>
         </div>
       </div>

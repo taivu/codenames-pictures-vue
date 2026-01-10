@@ -67,24 +67,26 @@ onUnmounted(() => {
           @mousedown.stop
         >
           <!-- Header -->
-          <div
-            class="flex shrink-0 items-center justify-between border-b border-gray-100 px-5 py-4"
-          >
-            <h3 v-if="title" class="flex items-center gap-2 text-xl font-bold text-gray-800">
-              <FontAwesomeIcon v-if="icon" :icon="icon" class="text-gray-500" />
-              {{ title }}
-            </h3>
-            <div class="flex items-center gap-2">
-              <slot name="header-actions" />
-              <IconButton
-                icon="xmark"
-                size="sm"
-                shape="square"
-                variant="subtle"
-                label="Close"
-                @click="handleClose"
-              />
-            </div>
+          <div class="relative z-10 shrink-0 border-b border-gray-100 px-5 py-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+            <slot name="header" :close="handleClose">
+              <div class="flex items-center justify-between">
+                <h3 v-if="title" class="flex items-center gap-2 text-xl font-bold text-gray-800">
+                  <FontAwesomeIcon v-if="icon" :icon="icon" class="text-gray-500" />
+                  {{ title }}
+                </h3>
+                <div class="flex items-center gap-2">
+                  <slot name="header-actions" />
+                  <IconButton
+                    icon="xmark"
+                    size="sm"
+                    shape="square"
+                    variant="subtle"
+                    label="Close"
+                    @click="handleClose"
+                  />
+                </div>
+              </div>
+            </slot>
           </div>
 
           <!-- Content -->
