@@ -5,9 +5,8 @@
  */
 import type { GameMode, TeamColor, Card, Team } from '@/types'
 import { computed } from 'vue'
-import { useTeamColors } from '@/composables'
 import { BaseModal, IconButton } from '@/components/ui'
-import { getCardImagePath, getCardOverlayClass } from '@/utils'
+import { getCardImagePath, cardOverlayClasses, teamTextClasses } from '@/utils'
 
 interface SavedGameData {
   mode: GameMode
@@ -26,19 +25,13 @@ defineEmits<{
   freshStart: []
 }>()
 
-const { teamTextClasses } = useTeamColors()
-
 const teamColors = computed((): TeamColor[] => {
   return props.savedGame.mode === 'duet' ? ['green'] : ['red', 'blue']
 })
 </script>
 
 <template>
-  <BaseModal
-    title="Saved Game Found"
-    icon="floppy-disk"
-    @close="$emit('restore')"
-  >
+  <BaseModal title="Saved Game Found" icon="floppy-disk" @close="$emit('restore')">
     <p class="mb-4 text-gray-600">
       A previously saved game was found. Would you like to continue where you left off?
     </p>
@@ -79,16 +72,17 @@ const teamColors = computed((): TeamColor[] => {
           :alt="`Card ${card.id + 1}`"
           class="h-full w-full object-cover"
         />
-        <div
-          v-if="card.color"
-          class="absolute inset-0"
-          :class="getCardOverlayClass(card.color)"
-        />
+        <div v-if="card.color" class="absolute inset-0" :class="cardOverlayClasses[card.color]" />
       </div>
     </div>
 
     <div class="flex justify-end gap-3">
-      <IconButton icon="rotate-right" variant="ghost" label="Start Fresh" @click="$emit('freshStart')">
+      <IconButton
+        icon="rotate-right"
+        variant="ghost"
+        label="Start Fresh"
+        @click="$emit('freshStart')"
+      >
         Start Fresh
       </IconButton>
       <IconButton icon="play" color="green" label="Continue" @click="$emit('restore')">

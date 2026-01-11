@@ -1,71 +1,54 @@
 /**
- * Swipe Gesture Detection - Touch swipe handlers for elements.
- * Supports directional swipes with configurable thresholds.
+ * Swipe gesture detection for touch devices.
  */
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 
-interface SwipeOptions {
-  threshold?: number
-  edgeSize?: number
-  onSwipeLeft?: () => void
-  onSwipeRight?: () => void
-  onSwipeUp?: () => void
-  onSwipeDown?: () => void
-}
-
-interface SwipeState {
-  startX: number
-  startY: number
-  startTime: number
-}
-
-// Swipe validation constants
-const MAX_SWIPE_DURATION_MS = 500
-const MIN_DISTANCE_MULTIPLIER = 2
-
 /**
- * Detect swipe gestures on an element.
+ * Detect swipe gestures on an element. Pass a ref to the element and
+ * callbacks for each direction you care about.
  */
-export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: SwipeOptions = {}) {
+export function useSwipeGesture(
+  targetRef: Ref<HTMLElement | null>,
+  options: {
+    threshold?: number
+    onSwipeLeft?: () => void
+    onSwipeRight?: () => void
+    onSwipeUp?: () => void
+    onSwipeDown?: () => void
+  } = {}
+) {
   const { threshold = 50, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown } = options
 
   const isSwiping = ref(false)
-  const swipeState = ref<SwipeState | null>(null)
+  let startX = 0
+  let startY = 0
+  let startTime = 0
 
   function handleTouchStart(e: TouchEvent) {
     const touch = e.touches[0]
     if (!touch) return
-
-    swipeState.value = {
-      startX: touch.clientX,
-      startY: touch.clientY,
-      startTime: Date.now(),
-    }
+    startX = touch.clientX
+    startY = touch.clientY
+    startTime = Date.now()
     isSwiping.value = true
   }
 
   function handleTouchEnd(e: TouchEvent) {
-    if (!swipeState.value || !isSwiping.value) return
+    if (!isSwiping.value) return
 
     const touch = e.changedTouches[0]
     if (!touch) return
 
-    const deltaX = touch.clientX - swipeState.value.startX
-    const deltaY = touch.clientY - swipeState.value.startY
-    const deltaTime = Date.now() - swipeState.value.startTime
+    const deltaX = touch.clientX - startX
+    const deltaY = touch.clientY - startY
+    const deltaTime = Date.now() - startTime
 
-    // Reject slow, short movements (likely not intentional swipes)
-    const isTooSlow = deltaTime > MAX_SWIPE_DURATION_MS
-    const isTooShort =
-      Math.abs(deltaX) < threshold * MIN_DISTANCE_MULTIPLIER &&
-      Math.abs(deltaY) < threshold * MIN_DISTANCE_MULTIPLIER
-
-    if (isTooSlow && isTooShort) {
-      reset()
+    // Ignore slow drags (> 500ms) that are also short
+    if (deltaTime > 500 && Math.abs(deltaX) < threshold * 2 && Math.abs(deltaY) < threshold * 2) {
+      isSwiping.value = false
       return
     }
 
-    // Determine swipe direction (horizontal vs vertical)
     const absX = Math.abs(deltaX)
     const absY = Math.abs(deltaY)
     const isHorizontal = absX > absY
@@ -76,43 +59,29 @@ export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: Swi
       deltaY > 0 ? onSwipeDown?.() : onSwipeUp?.()
     }
 
-    reset()
-  }
-
-  function handleTouchCancel() {
-    reset()
-  }
-
-  function reset() {
     isSwiping.value = false
-    swipeState.value = null
   }
 
   onMounted(() => {
     const el = targetRef.value
     if (!el) return
-
     el.addEventListener('touchstart', handleTouchStart, { passive: true })
     el.addEventListener('touchend', handleTouchEnd, { passive: true })
-    el.addEventListener('touchcancel', handleTouchCancel, { passive: true })
   })
 
   onUnmounted(() => {
     const el = targetRef.value
     if (!el) return
-
     el.removeEventListener('touchstart', handleTouchStart)
     el.removeEventListener('touchend', handleTouchEnd)
-    el.removeEventListener('touchcancel', handleTouchCancel)
   })
 
-  return {
-    isSwiping,
-  }
+  return { isSwiping }
 }
 
 /**
- * Detect swipes from screen edge (useful for opening drawers).
+ * Detect swipes from the edge of the screen. Useful for opening drawers
+ * with a swipe-in gesture.
  */
 export function useEdgeSwipe(options: {
   edge: 'left' | 'right'
@@ -153,13 +122,10 @@ export function useEdgeSwipe(options: {
     const absX = Math.abs(deltaX)
     const absY = Math.abs(deltaY)
 
-    // Must be primarily horizontal and exceed threshold
     if (absX > absY && absX > threshold) {
       if (edge === 'right' && deltaX < 0) {
-        // Swipe left from right edge
         onSwipe()
       } else if (edge === 'left' && deltaX > 0) {
-        // Swipe right from left edge
         onSwipe()
       }
     }

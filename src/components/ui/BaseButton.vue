@@ -92,11 +92,15 @@ const subtleClasses: Record<ButtonColor, string> = {
 // Outline variant: bordered with light background
 const outlineClasses: Record<ButtonColor, string> = {
   blue: 'border border-blue-200 bg-blue-50 text-blue-700 hover:border-blue-300 hover:bg-blue-100',
-  green: 'border border-green-200 bg-green-50 text-green-700 hover:border-green-300 hover:bg-green-100',
+  green:
+    'border border-green-200 bg-green-50 text-green-700 hover:border-green-300 hover:bg-green-100',
   red: 'border border-red-200 bg-red-50 text-red-700 hover:border-red-300 hover:bg-red-100',
-  orange: 'border border-orange-200 bg-orange-50 text-orange-700 hover:border-orange-300 hover:bg-orange-100',
-  amber: 'border border-amber-200 bg-amber-50 text-amber-700 hover:border-amber-300 hover:bg-amber-100',
-  purple: 'border border-purple-200 bg-purple-50 text-purple-700 hover:border-purple-300 hover:bg-purple-100',
+  orange:
+    'border border-orange-200 bg-orange-50 text-orange-700 hover:border-orange-300 hover:bg-orange-100',
+  amber:
+    'border border-amber-200 bg-amber-50 text-amber-700 hover:border-amber-300 hover:bg-amber-100',
+  purple:
+    'border border-purple-200 bg-purple-50 text-purple-700 hover:border-purple-300 hover:bg-purple-100',
   rose: 'border border-rose-200 bg-rose-50 text-rose-700 hover:border-rose-300 hover:bg-rose-100',
   gray: 'border border-gray-300 bg-gray-100 text-gray-800 hover:bg-gray-200',
 }
@@ -104,11 +108,15 @@ const outlineClasses: Record<ButtonColor, string> = {
 // Glass variant: frosted glass with border
 const glassClasses: Record<ButtonColor, string> = {
   blue: 'bg-white/90 backdrop-blur-md border border-gray-200 text-blue-600 hover:bg-white hover:border-blue-300',
-  green: 'bg-white/90 backdrop-blur-md border border-gray-200 text-green-600 hover:bg-white hover:border-green-300',
+  green:
+    'bg-white/90 backdrop-blur-md border border-gray-200 text-green-600 hover:bg-white hover:border-green-300',
   red: 'bg-white/90 backdrop-blur-md border border-gray-200 text-red-600 hover:bg-white hover:border-red-300',
-  orange: 'bg-white/90 backdrop-blur-md border border-gray-200 text-orange-600 hover:bg-white hover:border-orange-300',
-  amber: 'bg-white/90 backdrop-blur-md border border-gray-200 text-amber-600 hover:bg-white hover:border-amber-300',
-  purple: 'bg-white/90 backdrop-blur-md border border-gray-200 text-purple-600 hover:bg-white hover:border-purple-300',
+  orange:
+    'bg-white/90 backdrop-blur-md border border-gray-200 text-orange-600 hover:bg-white hover:border-orange-300',
+  amber:
+    'bg-white/90 backdrop-blur-md border border-gray-200 text-amber-600 hover:bg-white hover:border-amber-300',
+  purple:
+    'bg-white/90 backdrop-blur-md border border-gray-200 text-purple-600 hover:bg-white hover:border-purple-300',
   rose: 'bg-white/90 backdrop-blur-md border border-gray-200 text-rose-600 hover:bg-white hover:border-rose-300',
   gray: 'bg-white/90 backdrop-blur-md border border-gray-200 text-gray-700 hover:bg-white hover:border-gray-300',
 }

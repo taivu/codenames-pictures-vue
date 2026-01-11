@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /**
- * CardGrid - Responsive grid layout for the game board cards.
+ * The game board. 5x4 for classic mode, 5x5 for duet.
+ * Keeps its aspect ratio and fills whatever space you give it.
  */
 import { useGameStore } from '@/stores'
 import GameCard from './GameCard.vue'

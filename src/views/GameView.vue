@@ -85,6 +85,11 @@ function handleFreshStartConfirm(): void {
   startNewGame()
 }
 
+function handleLeaveCancel(): void {
+  showLeaveConfirm.value = false
+  pendingNavigation.value = null
+}
+
 function handleLeaveConfirm(): void {
   showLeaveConfirm.value = false
   if (pendingNavigation.value) {
@@ -122,7 +127,7 @@ function handleLeaveConfirm(): void {
       confirm-text="Leave Game"
       cancel-text="Stay"
       @confirm="handleLeaveConfirm"
-      @cancel="showLeaveConfirm = false; pendingNavigation = null"
+      @cancel="handleLeaveCancel"
     />
 
     <GameLayout v-if="isReady" />

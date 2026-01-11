@@ -25,8 +25,9 @@ function startInterval(tickFn: () => void): void {
 }
 
 /**
- * Composable to manage pressure mode timer and strike system.
- * Singleton pattern - state is shared across all component instances.
+ * Adds a countdown timer to make things spicy. You get 5 minutes for
+ * the first round, 3 for the second, 1 for the third. Run out of time
+ * 3 times and it's game over - unless you want to continue as a "scrub".
  */
 export function usePressureMode() {
   const settingsStore = useSettingsStore()

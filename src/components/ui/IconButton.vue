@@ -5,7 +5,12 @@
 import { useSlots } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import BaseButton, { type ButtonColor, type ButtonSize, type ButtonVariant, type ButtonRounded } from './BaseButton.vue'
+import BaseButton, {
+  type ButtonColor,
+  type ButtonSize,
+  type ButtonVariant,
+  type ButtonRounded,
+} from './BaseButton.vue'
 
 interface Props {
   icon: string | string[] | IconDefinition

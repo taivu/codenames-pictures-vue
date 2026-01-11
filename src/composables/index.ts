@@ -1,8 +1,6 @@
 export { useClickOutside } from './useClickOutside'
 export { useEscapeKey } from './useEscapeKey'
-export { useEventListener } from './useEventListener'
 export { usePositionedMenu } from './usePositionedMenu'
 export { usePressureMode } from './usePressureMode'
 export { useSpyMasterLock } from './useSpyMasterLock'
 export { useSwipeGesture, useEdgeSwipe } from './useSwipeGesture'
-export { useTeamColors } from './useTeamColors'

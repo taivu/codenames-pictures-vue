@@ -76,17 +76,20 @@ function copyShareableUrl(): void {
 </script>
 
 <template>
-  <SiteLayout
-    :show-header="showHeader"
-    :show-footer="!isLocked"
-    :fixed-header="isLocked"
-  >
+  <SiteLayout :show-header="showHeader" :show-footer="!isLocked" :fixed-header="isLocked">
     <!-- Custom header: Home | Lock | New Card -->
     <template #action-buttons>
       <div class="flex items-center" :class="isLocked ? 'justify-center' : ''">
         <!-- Left: Home (hidden when locked) -->
         <div v-if="!isLocked" class="flex flex-1 justify-start">
-          <IconButton icon="arrow-left" to="/" variant="secondary" size="sm" rounded="full" class="shadow-sm">
+          <IconButton
+            icon="arrow-left"
+            to="/"
+            variant="secondary"
+            size="sm"
+            rounded="full"
+            class="shadow-sm"
+          >
             Home
           </IconButton>
         </div>
@@ -106,7 +109,15 @@ function copyShareableUrl(): void {
 
         <!-- Right: New Card (hidden when locked) -->
         <div v-if="!isLocked" class="flex flex-1 justify-end">
-          <IconButton icon="shuffle" color="green" variant="secondary" size="sm" rounded="full" class="shadow-sm" @click="handleRandomCard">
+          <IconButton
+            icon="shuffle"
+            color="green"
+            variant="secondary"
+            size="sm"
+            rounded="full"
+            class="shadow-sm"
+            @click="handleRandomCard"
+          >
             New Card
           </IconButton>
         </div>
@@ -123,7 +134,7 @@ function copyShareableUrl(): void {
     <template v-if="isLocked">
       <!-- Touch capture: intercepts all touches for peek behavior -->
       <div
-        class="fixed inset-0 z-50 select-none touch-none [-webkit-touch-callout:none] [-webkit-user-select:none]"
+        class="fixed inset-0 z-50 touch-none select-none [-webkit-touch-callout:none] [-webkit-user-select:none]"
         @mousedown="lock.startPeek"
         @mouseup="lock.endPeek"
         @mouseleave="lock.endPeek"

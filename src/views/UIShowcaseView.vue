@@ -26,11 +26,18 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-600">Variants</h3>
           <div class="flex flex-wrap gap-2">
-            <BaseButton v-for="variant in buttonVariants" :key="variant" :variant="variant" color="blue">
+            <BaseButton
+              v-for="variant in buttonVariants"
+              :key="variant"
+              :variant="variant"
+              color="blue"
+            >
               {{ variant }}
             </BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton variant="primary|secondary|ghost|subtle|outline|glass" color="blue"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton variant="primary|secondary|ghost|subtle|outline|glass" color="blue"&gt;</pre
+          >
         </div>
 
         <!-- Colors -->
@@ -51,7 +58,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
               {{ color }}
             </BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton color="blue|green|red|orange|amber|purple|gray"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton color="blue|green|red|orange|amber|purple|gray"&gt;</pre
+          >
         </div>
 
         <!-- Sizes -->
@@ -62,7 +71,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
               {{ size }}
             </BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton size="xs|sm|md|lg"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton size="xs|sm|md|lg"&gt;</pre
+          >
         </div>
 
         <!-- Rounded -->
@@ -72,7 +83,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
             <BaseButton rounded="lg" color="purple">rounded-lg</BaseButton>
             <BaseButton rounded="full" color="purple">rounded-full</BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton rounded="lg|full"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton rounded="lg|full"&gt;</pre
+          >
         </div>
 
         <!-- With Icons -->
@@ -107,7 +120,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
               Home
             </BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton to="/rules" variant="outline"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton to="/rules" variant="outline"&gt;</pre
+          >
         </div>
 
         <!-- Disabled -->
@@ -118,7 +133,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
             <BaseButton color="green" variant="secondary" disabled>Disabled</BaseButton>
             <BaseButton color="red" variant="outline" disabled>Disabled</BaseButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseButton disabled&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseButton disabled&gt;</pre
+          >
         </div>
       </section>
 
@@ -130,27 +147,52 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-600">Variants</h3>
           <div class="flex flex-wrap gap-2">
-            <IconButton v-for="variant in iconButtonVariants" :key="variant" icon="gear" :variant="variant" color="blue" />
+            <IconButton
+              v-for="variant in iconButtonVariants"
+              :key="variant"
+              icon="gear"
+              :variant="variant"
+              color="blue"
+            />
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;IconButton icon="gear" variant="primary|secondary|ghost|subtle|glass"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;IconButton icon="gear" variant="primary|secondary|ghost|subtle|glass"&gt;</pre
+          >
         </div>
 
         <!-- Colors -->
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-600">Colors (secondary variant)</h3>
           <div class="flex flex-wrap gap-2">
-            <IconButton v-for="color in colors" :key="color" icon="star" :color="color" variant="secondary" />
+            <IconButton
+              v-for="color in colors"
+              :key="color"
+              icon="star"
+              :color="color"
+              variant="secondary"
+            />
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;IconButton icon="star" color="..." variant="secondary"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;IconButton icon="star" color="..." variant="secondary"&gt;</pre
+          >
         </div>
 
         <!-- Sizes -->
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-600">Sizes</h3>
           <div class="flex flex-wrap items-center gap-2">
-            <IconButton v-for="size in sizes" :key="size" icon="plus" :size="size" color="green" variant="primary" />
+            <IconButton
+              v-for="size in sizes"
+              :key="size"
+              icon="plus"
+              :size="size"
+              color="green"
+              variant="primary"
+            />
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;IconButton size="xs|sm|md|lg"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;IconButton size="xs|sm|md|lg"&gt;</pre
+          >
         </div>
 
         <!-- Common Icons -->
@@ -175,7 +217,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
             <IconButton icon="gear" variant="ghost">Settings</IconButton>
             <IconButton icon="shuffle" color="amber" variant="primary">Shuffle</IconButton>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;IconButton icon="play" color="green"&gt;Play&lt;/IconButton&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;IconButton icon="play" color="green"&gt;Play&lt;/IconButton&gt;</pre
+          >
         </div>
       </section>
 
@@ -191,7 +235,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
               <span class="text-sm text-gray-600">{{ color }}</span>
             </div>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;ToggleSwitch v-model="value" active-color="green|orange|blue|purple"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;ToggleSwitch v-model="value" active-color="green|orange|blue|purple"&gt;</pre
+          >
         </div>
 
         <div class="space-y-3">
@@ -200,7 +246,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
             <ToggleSwitch :model-value="true" disabled />
             <ToggleSwitch :model-value="false" disabled />
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;ToggleSwitch disabled&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;ToggleSwitch disabled&gt;</pre
+          >
         </div>
       </section>
 
@@ -215,7 +263,9 @@ const badgeVariants = ['default', 'success', 'warning', 'danger'] as const
               {{ variant }}
             </BaseBadge>
           </div>
-          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">&lt;BaseBadge variant="default|success|warning|danger"&gt;</pre>
+          <pre class="rounded-lg bg-gray-100 p-3 text-sm text-gray-700">
+&lt;BaseBadge variant="default|success|warning|danger"&gt;</pre
+          >
         </div>
 
         <div class="space-y-3">
