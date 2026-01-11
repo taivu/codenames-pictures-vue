@@ -21,7 +21,7 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   color: 'gray',
-  variant: 'ghost',
+  variant: 'primary',
   size: 'md',
   rounded: 'lg',
   disabled: false,

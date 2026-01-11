@@ -3,11 +3,12 @@
  * GameView - Main game entry point with save/restore prompt and game layout.
  */
 import { ref, computed, onMounted } from 'vue'
-import type { GameMode, TeamColor } from '@/types'
+import { onBeforeRouteLeave } from 'vue-router'
+import type { GameMode } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { useTeamColors } from '@/composables'
 import { GameLayout } from '@/components/layout'
-import { BaseButton, BaseModal } from '@/components/ui'
+import { RestoreGameModal } from '@/components/game'
+import { ConfirmModal } from '@/components/ui'
 import { trackGameStart } from '@/plugins/analytics'
 
 interface Props {
@@ -18,28 +19,55 @@ const props = defineProps<Props>()
 
 const gameStore = useGameStore()
 const settingsStore = useSettingsStore()
-const { teamTextClasses } = useTeamColors()
+
+// ===================
+// UI State
+// ===================
+
 const showRestorePrompt = ref(false)
 const showFreshStartConfirm = ref(false)
+const showLeaveConfirm = ref(false)
+const pendingNavigation = ref<(() => void) | null>(null)
 const isReady = ref(false)
+
+// ===================
+// Computed
+// ===================
 
 const savedGamePreview = computed(() => gameStore.getSavedGamePreview(props.mode))
 
-const savedTeamColors = computed((): TeamColor[] => {
-  const preview = savedGamePreview.value
-  if (!preview) return []
-  return preview.mode === 'duet' ? ['green'] : ['red', 'blue']
-})
+// ===================
+// Lifecycle
+// ===================
 
 onMounted(() => {
   if (gameStore.hasSavedGame(props.mode)) {
     showRestorePrompt.value = true
   } else {
-    gameStore.initializeGame(props.mode)
-    trackGameStart(props.mode)
-    isReady.value = true
+    startNewGame()
   }
 })
+
+// Warn user before leaving if auto-save is disabled
+onBeforeRouteLeave((_to, _from, next) => {
+  if (isReady.value && !settingsStore.autoSaveEnabled) {
+    showLeaveConfirm.value = true
+    pendingNavigation.value = () => next()
+    next(false)
+  } else {
+    next()
+  }
+})
+
+// ===================
+// Actions
+// ===================
+
+function startNewGame(): void {
+  gameStore.initializeGame(props.mode)
+  trackGameStart(props.mode)
+  isReady.value = true
+}
 
 function handleRestoreGame(): void {
   gameStore.restoreSavedGame(props.mode)
@@ -48,92 +76,55 @@ function handleRestoreGame(): void {
   isReady.value = true
 }
 
-function handleFreshStartClick(): void {
-  showFreshStartConfirm.value = true
-}
-
-function handleFreshStartCancel(): void {
-  showFreshStartConfirm.value = false
-}
-
 function handleFreshStartConfirm(): void {
   // Reset to defaults: clear saved game and disable auto-save
   gameStore.clearSavedGame(props.mode)
   settingsStore.setAutoSave(false)
-  gameStore.initializeGame(props.mode)
-  trackGameStart(props.mode)
   showFreshStartConfirm.value = false
   showRestorePrompt.value = false
-  isReady.value = true
+  startNewGame()
+}
+
+function handleLeaveConfirm(): void {
+  showLeaveConfirm.value = false
+  if (pendingNavigation.value) {
+    pendingNavigation.value()
+    pendingNavigation.value = null
+  }
 }
 </script>
 
 <template>
-  <!-- Restore Game Prompt -->
-  <BaseModal
-    v-if="showRestorePrompt"
-    title="Saved Game Found"
-    icon="floppy-disk"
-    @close="handleRestoreGame"
-  >
-    <p class="mb-4 text-gray-600">
-      A previously saved game was found. Would you like to continue where you left off?
-    </p>
+  <main>
+    <!-- Restore Game Prompt -->
+    <RestoreGameModal
+      v-if="showRestorePrompt && savedGamePreview"
+      :saved-game="savedGamePreview"
+      @restore="handleRestoreGame"
+      @fresh-start="showFreshStartConfirm = true"
+    />
 
-    <!-- Team Preview -->
-    <div v-if="savedGamePreview" class="mb-6 grid gap-2 sm:grid-cols-2">
-      <div
-        v-for="color in savedTeamColors"
-        :key="color"
-        class="flex items-center justify-between gap-3 rounded-lg bg-gray-50 p-3 sm:flex-col sm:items-start sm:justify-start sm:gap-1"
-      >
-        <div class="shrink-0 sm:contents">
-          <div :class="['font-bold whitespace-nowrap capitalize', teamTextClasses[color]]">
-            {{ color }} Team
-          </div>
-          <div class="text-sm whitespace-nowrap text-gray-600">
-            Score: <span class="font-bold">{{ savedGamePreview.teams[color].score }}</span>
-          </div>
-        </div>
-        <div class="text-right text-sm text-gray-500 sm:text-left">
-          <template v-if="savedGamePreview.teams[color].players.length > 0">
-            {{ savedGamePreview.teams[color].players.join(', ') }}
-          </template>
-          <template v-else> No players </template>
-        </div>
-      </div>
-    </div>
+    <!-- Fresh Start Confirmation -->
+    <ConfirmModal
+      v-if="showFreshStartConfirm"
+      title="Start Fresh?"
+      message="This will discard your saved game including teams and scores. Are you sure?"
+      confirm-text="Start Fresh"
+      @confirm="handleFreshStartConfirm"
+      @cancel="showFreshStartConfirm = false"
+    />
 
-    <div class="flex justify-end gap-3">
-      <BaseButton variant="ghost" @click="handleFreshStartClick">
-        Start Fresh
-      </BaseButton>
-      <BaseButton color="green" @click="handleRestoreGame">
-        <FontAwesomeIcon icon="play" />
-        Continue Game
-      </BaseButton>
-    </div>
-  </BaseModal>
+    <!-- Leave Game Confirmation -->
+    <ConfirmModal
+      v-if="showLeaveConfirm"
+      title="Leave Game?"
+      message="Auto-save is off. Your current game will be lost if you leave. Are you sure?"
+      confirm-text="Leave Game"
+      cancel-text="Stay"
+      @confirm="handleLeaveConfirm"
+      @cancel="showLeaveConfirm = false; pendingNavigation = null"
+    />
 
-  <!-- Fresh Start Confirmation -->
-  <BaseModal
-    v-if="showFreshStartConfirm"
-    title="Start Fresh?"
-    icon="triangle-exclamation"
-    @close="handleFreshStartCancel"
-  >
-    <p class="mb-6 text-gray-600">
-      This will discard your saved game including teams and scores. Are you sure?
-    </p>
-    <div class="flex justify-end gap-3">
-      <BaseButton variant="ghost" @click="handleFreshStartCancel">
-        Cancel
-      </BaseButton>
-      <BaseButton color="red" @click="handleFreshStartConfirm">
-        Start Fresh
-      </BaseButton>
-    </div>
-  </BaseModal>
-
-  <GameLayout v-if="isReady" />
+    <GameLayout v-if="isReady" />
+  </main>
 </template>

@@ -5,6 +5,11 @@
 ### Complete Rebuild
 The app has been completely rebuilt from the ground up with a modern, mobile-first design that works great on phones, tablets, and desktops.
 
+### UI Polish
+- **Page transitions** - Smooth fade animations when navigating between pages
+- **Leave game warning** - Prompts to confirm when leaving a game with auto-save disabled
+- **Board preview** - Saved game modal now shows a mini preview of the board state
+
 ### Gameplay
 - **Floating HUD** - See team scores at a glance, tap to expand for more details
 - **Quick card marking** - Tap any card to reveal color options with a handy arrow indicator

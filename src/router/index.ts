@@ -61,6 +61,11 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior() {
-    return { top: 0 }
+    // Delay scroll until after page transition completes (200ms)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ top: 0 })
+      }, 200)
+    })
   },
 })

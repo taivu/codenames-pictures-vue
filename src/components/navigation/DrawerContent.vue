@@ -5,7 +5,7 @@
 import { ref, computed } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'
-import { AppVersion, BaseButton, BaseModal, IconButton, ToggleSwitch } from '@/components/ui'
+import { AppVersion, BaseButton, ConfirmModal, IconButton, ToggleSwitch } from '@/components/ui'
 import { trackNewGame } from '@/plugins/analytics'
 
 type Tab = 'teams' | 'nav'
@@ -150,7 +150,7 @@ function confirmDisableAutoSave() {
             <TeamSummary v-for="color in gameStore.activeTeamColors" :key="color" :color="color" />
             <div
               v-if="!gameStore.teamsAreSetup"
-              class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-center"
+              class="flex flex-col items-center rounded-lg border border-amber-200 bg-amber-50 p-3"
             >
               <p class="mb-2 text-xs text-amber-700">No teams set up yet</p>
               <BaseButton color="amber" size="sm" @click="handleOpenTeams">
@@ -261,38 +261,26 @@ function confirmDisableAutoSave() {
     </div>
 
     <!-- New Game Confirmation -->
-    <BaseModal
+    <ConfirmModal
       v-if="showNewGameConfirm"
       title="Start New Game?"
+      message="This will shuffle and deal new cards. Teams and scores will be kept."
       icon="rotate"
-      @close="showNewGameConfirm = false"
-    >
-      <p class="mb-6 text-gray-600">
-        This will shuffle and deal new cards. Teams and scores will be kept.
-      </p>
-      <div class="flex justify-end gap-3">
-        <BaseButton variant="ghost" @click="showNewGameConfirm = false">Cancel</BaseButton>
-        <BaseButton color="green" @click="confirmNewGame">New Game</BaseButton>
-      </div>
-    </BaseModal>
+      confirm-text="New Game"
+      confirm-color="green"
+      @confirm="confirmNewGame"
+      @cancel="showNewGameConfirm = false"
+    />
 
     <!-- Auto-Save Confirmation -->
-    <BaseModal
+    <ConfirmModal
       v-if="showAutoSaveConfirm"
       title="Disable Auto-Save?"
+      message="This will delete your saved game data. You won't be able to recover your current game if you refresh the page."
       icon="floppy-disk"
-      @close="showAutoSaveConfirm = false"
-    >
-      <p class="mb-6 text-gray-600">
-        This will delete your saved game data. You won't be able to recover your current game if you
-        refresh the page.
-      </p>
-      <div class="flex justify-end gap-3">
-        <BaseButton variant="ghost" @click="showAutoSaveConfirm = false">Cancel</BaseButton>
-        <BaseButton color="red" @click="confirmDisableAutoSave">
-          <FontAwesomeIcon icon="trash" /> Disable
-        </BaseButton>
-      </div>
-    </BaseModal>
+      confirm-text="Disable"
+      @confirm="confirmDisableAutoSave"
+      @cancel="showAutoSaveConfirm = false"
+    />
   </div>
 </template>
