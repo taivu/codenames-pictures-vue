@@ -177,7 +177,7 @@ function confirmDisableAutoSave() {
           @click="handleNewGameClick"
         >
           <FontAwesomeIcon
-            icon="rotate"
+            icon="rotate-right"
             class="w-5 text-gray-500 transition-colors group-hover:text-green-600 [@media(hover:none)]:text-green-600"
           />
           <span class="font-medium">New Game</span>
@@ -265,7 +265,7 @@ function confirmDisableAutoSave() {
       v-if="showNewGameConfirm"
       title="Start New Game?"
       message="This will shuffle and deal new cards. Teams and scores will be kept."
-      icon="rotate"
+      icon="rotate-right"
       confirm-text="New Game"
       confirm-color="green"
       @confirm="confirmNewGame"

@@ -22,6 +22,7 @@ interface Props {
   label?: string
   disabled?: boolean
   touchHover?: boolean
+  alwaysShowText?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
@@ -31,6 +32,7 @@ withDefaults(defineProps<Props>(), {
   rounded: 'lg',
   disabled: false,
   touchHover: false,
+  alwaysShowText: false,
 })
 
 defineEmits<{
@@ -55,6 +57,6 @@ const hasText = () => !!slots.default
     @click="$emit('click', $event)"
   >
     <FontAwesomeIcon :icon="icon" />
-    <span v-if="hasText()" class="hidden sm:inline"><slot /></span>
+    <span v-if="hasText()" :class="alwaysShowText ? '' : 'hidden sm:inline'"><slot /></span>
   </BaseButton>
 </template>

@@ -91,7 +91,7 @@ const teamColors = computed((): TeamColor[] => {
       >
         Start Fresh
       </IconButton>
-      <IconButton icon="play" color="green" label="Continue" @click="$emit('restore')">
+      <IconButton icon="play" color="green" label="Continue" always-show-text @click="$emit('restore')">
         Continue
       </IconButton>
     </div>

@@ -41,7 +41,10 @@ const baseUrl = import.meta.env.BASE_URL
 
           <div class="grid gap-4 md:grid-cols-2">
             <div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
-              <h3 class="mb-2 text-blue-700">Spymasters</h3>
+              <h3 class="mb-2 text-blue-700">
+                <FontAwesomeIcon icon="user-secret" class="mr-2" />
+                Spymasters
+              </h3>
               <p>
                 One player from each team is the Spymaster. They can see the secret key card that
                 shows which pictures belong to which team. Their job is to give clever one-word
@@ -49,8 +52,11 @@ const baseUrl = import.meta.env.BASE_URL
               </p>
             </div>
 
-            <div class="rounded-lg border border-green-200 bg-green-50 p-4">
-              <h3 class="mb-2 text-green-700">Field Operatives</h3>
+            <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
+              <h3 class="mb-2 text-amber-700">
+                <FontAwesomeIcon icon="users" class="mr-2" />
+                Field Operatives
+              </h3>
               <p>
                 Everyone else on the team are Field Operatives. They listen to the Spymaster's clues
                 and try to guess which pictures belong to their team. They can discuss amongst
