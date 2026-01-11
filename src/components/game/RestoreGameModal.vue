@@ -12,6 +12,7 @@ interface SavedGameData {
   mode: GameMode
   cards: Card[]
   teams: Record<TeamColor, Team>
+  startingTeam: TeamColor | null
 }
 
 interface Props {
@@ -45,6 +46,11 @@ const teamColors = computed((): TeamColor[] => {
       >
         <div class="shrink-0 sm:contents">
           <div :class="['font-bold whitespace-nowrap capitalize', teamTextClasses[color]]">
+            <FontAwesomeIcon
+              v-if="savedGame.startingTeam === color"
+              icon="star"
+              class="mr-1 text-xs text-yellow-500"
+            />
             {{ color }} Team
           </div>
           <div class="text-sm whitespace-nowrap text-gray-600">
