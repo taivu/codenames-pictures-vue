@@ -13,7 +13,7 @@ defineEmits<{
   <IconButton
     icon="bars"
     size="lg"
-    variant="primary"
+    variant="glass"
     label="Open menu"
     @click="$emit('click', $event)"
   />

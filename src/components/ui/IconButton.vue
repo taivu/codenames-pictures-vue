@@ -1,67 +1,55 @@
 <script setup lang="ts">
 /**
- * IconButton - Circular or square button with FontAwesome icon.
+ * IconButton - Icon button that extends BaseButton, with optional text.
  */
+import { useSlots } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import BaseButton, { type ButtonColor, type ButtonSize, type ButtonVariant, type ButtonRounded } from './BaseButton.vue'
 
 interface Props {
   icon: string | string[] | IconDefinition
-  size?: 'xs' | 'sm' | 'md' | 'lg'
-  shape?: 'round' | 'square'
-  variant?: 'default' | 'primary' | 'ghost' | 'subtle'
+  color?: ButtonColor
+  variant?: ButtonVariant
+  size?: ButtonSize
+  rounded?: ButtonRounded
+  to?: RouteLocationRaw
   label?: string
   disabled?: boolean
+  touchHover?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
+  color: 'gray',
+  variant: 'ghost',
   size: 'md',
-  shape: 'round',
-  variant: 'default',
+  rounded: 'lg',
   disabled: false,
+  touchHover: false,
 })
 
 defineEmits<{
   click: [event: MouseEvent]
 }>()
 
-const sizeClasses = {
-  xs: 'w-7 h-7 text-xs',
-  sm: 'w-8 h-8 text-sm',
-  md: 'w-10 h-10 text-base',
-  lg: 'w-12 h-12 text-lg',
-}
-
-const shapeClasses = {
-  round: 'rounded-full',
-  square: 'rounded-lg',
-}
-
-const variantClasses = {
-  default: 'bg-white border-2 border-gray-800 text-gray-800 hover:bg-gray-100 active:bg-gray-200',
-  primary:
-    'bg-white/90 backdrop-blur-md border border-gray-200 text-gray-700 hover:bg-white hover:border-gray-300 active:bg-gray-50',
-  ghost: 'bg-transparent text-gray-700 hover:bg-black/10 active:bg-black/20',
-  subtle: 'bg-transparent text-gray-400 hover:bg-gray-100 hover:text-gray-600',
-}
+const slots = useSlots()
+const hasText = () => !!slots.default
 </script>
 
 <template>
-  <button
-    type="button"
-    :class="[
-      'flex items-center justify-center transition-all duration-150',
-      variant !== 'subtle' && 'shadow-md hover:shadow-lg',
-      'active:scale-95',
-      'focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:outline-none',
-      sizeClasses[size],
-      shapeClasses[shape],
-      variantClasses[variant],
-      disabled && 'cursor-not-allowed opacity-50',
-    ]"
+  <BaseButton
+    :color="color"
+    :variant="variant"
+    :size="size"
+    :rounded="rounded"
+    :to="to"
     :disabled="disabled"
+    :touch-hover="touchHover"
     :aria-label="label"
+    :icon-only="!hasText()"
     @click="$emit('click', $event)"
   >
     <FontAwesomeIcon :icon="icon" />
-  </button>
+    <span v-if="hasText()" class="hidden sm:inline"><slot /></span>
+  </BaseButton>
 </template>

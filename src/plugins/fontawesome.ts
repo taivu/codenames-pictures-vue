@@ -16,6 +16,7 @@ import {
   faCircleExclamation,
   faCompass,
   faCircleInfo,
+  faCopy,
   faDice,
   faFaceLaughSquint,
   faFire,
@@ -24,10 +25,12 @@ import {
   faGear,
   faGhost,
   faHandPointRight,
+  faHouse,
   faImages,
   faLock,
   faLockOpen,
   faMagnifyingGlass,
+  faMinus,
   faPause,
   faPepperHot,
   faPlay,
@@ -43,6 +46,7 @@ import {
   faStar,
   faStopwatch,
   faToiletPaper,
+  faTrash,
   faTriangleExclamation,
   faTrophy,
   faTv,
@@ -62,6 +66,7 @@ library.add(
   faCheck,
   faChevronDown,
   faChevronUp,
+  faCopy,
   faPlus,
   faSpinner,
   faTv,
@@ -71,6 +76,7 @@ library.add(
   faCircleInfo,
   faCompass,
   faGear,
+  faHouse,
   faUpRightFromSquare,
   // Game
   faDice,
@@ -79,6 +85,7 @@ library.add(
   faLock,
   faLockOpen,
   faMagnifyingGlass,
+  faMinus,
   faPause,
   faPlay,
   faRotate,
@@ -105,6 +112,7 @@ library.add(
   // Settings
   faFloppyDisk,
   faSliders,
+  faTrash,
   // Warnings
   faTriangleExclamation
 )

@@ -6,7 +6,7 @@ import type { TeamColor } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { useTeamColors, usePressureMode } from '@/composables'
 import { pressureModeConfig } from '@/config'
-import { CircularTimer } from '@/components/ui'
+import { BaseButton, CircularTimer } from '@/components/ui'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 const store = useGameStore()
@@ -85,24 +85,30 @@ function getTimerColorClass(): string {
     <!-- Pressure Mode Controls -->
     <div class="shrink-0 border-t border-gray-200 px-3 py-2" @click.stop>
       <!-- Enable Pressure Mode Button -->
-      <button
+      <BaseButton
         v-if="!settingsStore.pressureModeEnabled"
-        class="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-100 px-3 py-2 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-200"
+        color="purple"
+        variant="secondary"
+        size="sm"
+        class="w-full justify-center"
         @click="settingsStore.setPressureMode(true)"
       >
         <FontAwesomeIcon icon="stopwatch" />
         Pressure Mode
-      </button>
+      </BaseButton>
 
       <!-- Start Timer Button -->
-      <button
+      <BaseButton
         v-else-if="!pressureMode.isActive.value"
-        class="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-100 px-3 py-2 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-200"
+        color="purple"
+        variant="secondary"
+        size="sm"
+        class="w-full justify-center"
         @click="pressureMode.startTimer"
       >
         <FontAwesomeIcon icon="stopwatch" />
         Add Pressure
-      </button>
+      </BaseButton>
 
       <!-- Active Timer Display -->
       <button

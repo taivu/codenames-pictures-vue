@@ -7,6 +7,7 @@ import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
 import { trackPlayerAdded, trackStartingTeamSet } from '@/plugins/analytics'
+import { BaseButton, IconButton } from '@/components/ui'
 
 interface Props {
   color: TeamColor
@@ -97,13 +98,15 @@ function handleSetStartingTeam(): void {
             class="min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm transition-shadow focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none"
             @input="handleUpdatePlayer(index, $event)"
           />
-          <button
-            type="button"
-            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-400 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-500 [@media(hover:none)]:border-red-200 [@media(hover:none)]:bg-red-50 [@media(hover:none)]:text-red-500"
+          <IconButton
+            icon="trash"
+            color="red"
+            variant="ghost"
+            size="sm"
+            label="Remove player"
+            touch-hover
             @click="handleRemovePlayer(index)"
-          >
-            <FontAwesomeIcon icon="xmark" />
-          </button>
+          />
         </div>
       </div>
 
@@ -114,12 +117,9 @@ function handleSetStartingTeam(): void {
           class="min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm placeholder-gray-400 transition-shadow focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none"
           placeholder="Add player..."
         />
-        <button
-          type="submit"
-          class="flex shrink-0 items-center gap-1.5 rounded-lg bg-green-100 px-4 py-2 text-sm font-medium text-green-600 transition-colors hover:bg-green-500 hover:text-white"
-        >
+        <BaseButton type="submit" color="green" variant="secondary" size="sm">
           <FontAwesomeIcon icon="plus" /> Add
-        </button>
+        </BaseButton>
       </div>
     </form>
   </div>

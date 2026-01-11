@@ -5,6 +5,7 @@
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
+import { IconButton } from '@/components/ui'
 
 interface Props {
   color: TeamColor
@@ -40,20 +41,21 @@ function handleDecrement(): void {
     </div>
     <!-- Buttons: below on mobile, sides on tablet+ -->
     <div class="flex gap-3 sm:contents">
-      <button
-        type="button"
-        class="flex h-7 w-7 items-center justify-center rounded-lg bg-white font-bold text-gray-600 shadow-sm transition-colors hover:bg-gray-100 sm:order-first"
+      <IconButton
+        icon="minus"
+        size="xs"
+        variant="secondary"
+        label="Decrease score"
+        class="sm:order-first"
         @click="handleDecrement"
-      >
-        -
-      </button>
-      <button
-        type="button"
-        class="flex h-7 w-7 items-center justify-center rounded-lg bg-white font-bold text-gray-600 shadow-sm transition-colors hover:bg-gray-100"
+      />
+      <IconButton
+        icon="plus"
+        size="xs"
+        variant="secondary"
+        label="Increase score"
         @click="handleIncrement"
-      >
-        +
-      </button>
+      />
     </div>
   </div>
 </template>

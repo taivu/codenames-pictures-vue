@@ -4,11 +4,11 @@
  * Features a lock mode to prevent accidental reveals with peek-to-view.
  */
 import { ref, computed, onMounted, watch } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useSpyMasterStore } from '@/stores'
 import { useSpyMasterLock } from '@/composables'
 import { SpyCard, CardSearch } from '@/components/game'
-import { BaseButton } from '@/components/ui'
+import { BaseButton, IconButton } from '@/components/ui'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 
 interface Props {
@@ -86,36 +86,29 @@ function copyShareableUrl(): void {
       <div class="flex items-center" :class="isLocked ? 'justify-center' : ''">
         <!-- Left: Home (hidden when locked) -->
         <div v-if="!isLocked" class="flex flex-1 justify-start">
-          <RouterLink
-            to="/"
-            class="flex items-center justify-center rounded-full bg-white p-2 text-sm text-gray-600 shadow-sm transition-colors hover:bg-gray-100 sm:gap-1.5 sm:px-3"
-          >
-            <FontAwesomeIcon icon="arrow-left" />
-            <span class="hidden sm:inline">Home</span>
-          </RouterLink>
+          <IconButton icon="arrow-left" to="/" variant="secondary" size="sm" rounded="full" class="shadow-sm">
+            Home
+          </IconButton>
         </div>
 
         <!-- Center: Lock toggle -->
-        <button
-          class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-colors"
-          :class="isLocked
-            ? 'bg-green-500 text-white hover:bg-green-600'
-            : 'bg-white text-gray-600 hover:bg-gray-100'"
+        <BaseButton
+          :color="isLocked ? 'green' : 'gray'"
+          :variant="isLocked ? 'primary' : 'secondary'"
+          size="sm"
+          rounded="full"
+          class="shadow-sm"
           @click.stop="lock.toggle"
         >
           <FontAwesomeIcon :icon="isLocked ? 'lock' : 'lock-open'" />
           <span>{{ isLocked ? 'Unlock' : 'Lock' }}</span>
-        </button>
+        </BaseButton>
 
         <!-- Right: New Card (hidden when locked) -->
         <div v-if="!isLocked" class="flex flex-1 justify-end">
-          <button
-            class="flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-2 text-sm font-medium text-green-600 shadow-sm transition-colors hover:bg-green-500 hover:text-white"
-            @click="handleRandomCard"
-          >
-            <FontAwesomeIcon icon="shuffle" />
-            <span class="hidden sm:inline">New Card</span>
-          </button>
+          <IconButton icon="shuffle" color="green" variant="secondary" size="sm" rounded="full" class="shadow-sm" @click="handleRandomCard">
+            New Card
+          </IconButton>
         </div>
       </div>
     </template>
@@ -180,28 +173,32 @@ function copyShareableUrl(): void {
           <br />
           does not exist.
         </p>
-        <BaseButton variant="green" @click="handleRandomCard">
+        <BaseButton color="green" @click="handleRandomCard">
           <FontAwesomeIcon icon="shuffle" />New Card
         </BaseButton>
       </div>
 
       <!-- Card display -->
       <template v-else-if="store.currentCard">
-        <!-- Card info header -->
-        <div class="mb-2 flex w-full max-w-md items-center justify-between px-2">
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-medium text-gray-600">Starting:</span>
-            <span
-              class="rounded px-2 py-1 text-sm font-bold text-white capitalize"
-              :class="store.currentCard.startingColor === 'red' ? 'bg-red-500' : 'bg-blue-500'"
-            >
-              {{ store.currentCard.startingColor }}
-            </span>
+        <div>
+          <!-- Card info header -->
+          <div class="mb-2 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-gray-600">
+                <FontAwesomeIcon icon="star" class="text-yellow-500" /> Starting:
+              </span>
+              <span
+                class="rounded px-2 py-1 text-sm font-bold text-white capitalize"
+                :class="store.currentCard.startingColor === 'red' ? 'bg-red-500' : 'bg-blue-500'"
+              >
+                {{ store.currentCard.startingColor }}
+              </span>
+            </div>
+            <h1 class="text-lg font-bold sm:text-xl">Key Card #{{ store.currentCardId }}</h1>
           </div>
-          <h1 class="text-lg font-bold sm:text-xl">Key Card #{{ store.currentCardId }}</h1>
-        </div>
 
-        <SpyCard :card="store.currentCard" hide-starting-label />
+          <SpyCard :card="store.currentCard" hide-starting-label />
+        </div>
 
         <!-- Card search (hidden when locked) -->
         <div
@@ -223,15 +220,15 @@ function copyShareableUrl(): void {
             <code class="rounded bg-gray-100 px-2 py-1 text-xs text-gray-700 sm:text-sm">
               {{ shareableUrl }}
             </code>
-            <button
-              class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
-              :class="
-                copied ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              "
+            <BaseButton
+              :color="copied ? 'green' : 'gray'"
+              :variant="copied ? 'primary' : 'secondary'"
+              size="sm"
               @click="copyShareableUrl"
             >
+              <FontAwesomeIcon :icon="copied ? 'check' : 'copy'" />
               {{ copied ? 'Copied!' : 'Copy' }}
-            </button>
+            </BaseButton>
           </div>
         </div>
       </template>

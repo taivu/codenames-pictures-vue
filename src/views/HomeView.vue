@@ -2,8 +2,8 @@
 /**
  * HomeView - Landing page with hero section and how-to-play cards.
  */
-import { RouterLink } from 'vue-router'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
+import { BaseButton } from '@/components/ui'
 
 const howToPlaySteps = [
   {
@@ -78,20 +78,14 @@ const howToPlaySteps = [
 
         <!-- Secondary Links -->
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <RouterLink
-            to="/rules"
-            class="inline-flex items-center gap-1.5 rounded-full border border-gray-300 bg-gray-100 px-4 py-2.5 text-sm font-medium text-gray-800 transition-colors hover:bg-gray-200"
-          >
+          <BaseButton to="/rules" variant="outline" rounded="full" size="sm">
             <FontAwesomeIcon icon="book" />
             Read full rules
-          </RouterLink>
-          <RouterLink
-            to="/play-duet"
-            class="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2.5 text-sm font-medium text-green-700 transition-all hover:border-green-300 hover:bg-green-100"
-          >
+          </BaseButton>
+          <BaseButton to="/play-duet" color="green" variant="outline" rounded="full" size="sm">
             <FontAwesomeIcon icon="users" />
             Try Duet Mode
-          </RouterLink>
+          </BaseButton>
         </div>
       </div>
     </div>

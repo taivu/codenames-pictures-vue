@@ -7,7 +7,7 @@ import type { GameMode, TeamColor } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { useTeamColors } from '@/composables'
 import { GameLayout } from '@/components/layout'
-import { BaseModal } from '@/components/ui'
+import { BaseButton, BaseModal } from '@/components/ui'
 import { trackGameStart } from '@/plugins/analytics'
 
 interface Props {
@@ -105,19 +105,13 @@ function handleFreshStartConfirm(): void {
     </div>
 
     <div class="flex justify-end gap-3">
-      <button
-        class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-        @click="handleFreshStartClick"
-      >
+      <BaseButton variant="ghost" @click="handleFreshStartClick">
         Start Fresh
-      </button>
-      <button
-        class="flex items-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-green-600"
-        @click="handleRestoreGame"
-      >
+      </BaseButton>
+      <BaseButton color="green" @click="handleRestoreGame">
         <FontAwesomeIcon icon="play" />
         Continue Game
-      </button>
+      </BaseButton>
     </div>
   </BaseModal>
 
@@ -132,18 +126,12 @@ function handleFreshStartConfirm(): void {
       This will discard your saved game including teams and scores. Are you sure?
     </p>
     <div class="flex justify-end gap-3">
-      <button
-        class="rounded-lg px-4 py-2.5 font-medium text-gray-700 transition-colors hover:bg-gray-100"
-        @click="handleFreshStartCancel"
-      >
+      <BaseButton variant="ghost" @click="handleFreshStartCancel">
         Cancel
-      </button>
-      <button
-        class="rounded-lg bg-red-500 px-4 py-2.5 font-medium text-white shadow-sm transition-colors hover:bg-red-600"
-        @click="handleFreshStartConfirm"
-      >
+      </BaseButton>
+      <BaseButton color="red" @click="handleFreshStartConfirm">
         Start Fresh
-      </button>
+      </BaseButton>
     </div>
   </BaseModal>
 

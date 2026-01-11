@@ -79,8 +79,7 @@ onUnmounted(() => {
                   <IconButton
                     icon="xmark"
                     size="sm"
-                    shape="square"
-                    variant="subtle"
+                    variant="ghost"
                     label="Close"
                     @click="handleClose"
                   />

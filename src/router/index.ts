@@ -45,6 +45,16 @@ const routes: RouteRecordRaw[] = [
     name: 'changelog',
     component: () => import('@/views/ChangelogView.vue'),
   },
+  // Dev-only routes
+  ...(import.meta.env.DEV
+    ? [
+        {
+          path: '/ui',
+          name: 'ui-showcase',
+          component: () => import('@/views/UIShowcaseView.vue'),
+        },
+      ]
+    : []),
 ]
 
 export const router = createRouter({

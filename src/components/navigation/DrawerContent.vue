@@ -119,8 +119,7 @@ function confirmDisableAutoSave() {
       <IconButton
         icon="arrow-right"
         size="sm"
-        shape="square"
-        variant="subtle"
+        variant="ghost"
         label="Close menu"
         @click="emit('close')"
       />
@@ -154,12 +153,9 @@ function confirmDisableAutoSave() {
               class="rounded-lg border border-amber-200 bg-amber-50 p-3 text-center"
             >
               <p class="mb-2 text-xs text-amber-700">No teams set up yet</p>
-              <button
-                class="rounded bg-amber-500 px-3 py-1 text-sm font-bold text-white hover:bg-amber-600"
-                @click="handleOpenTeams"
-              >
+              <BaseButton color="amber" size="sm" @click="handleOpenTeams">
                 Set up teams
-              </button>
+              </BaseButton>
             </div>
           </div>
         </div>
@@ -276,7 +272,7 @@ function confirmDisableAutoSave() {
       </p>
       <div class="flex justify-end gap-3">
         <BaseButton variant="ghost" @click="showNewGameConfirm = false">Cancel</BaseButton>
-        <BaseButton variant="green" @click="confirmNewGame">New Game</BaseButton>
+        <BaseButton color="green" @click="confirmNewGame">New Game</BaseButton>
       </div>
     </BaseModal>
 
@@ -293,7 +289,9 @@ function confirmDisableAutoSave() {
       </p>
       <div class="flex justify-end gap-3">
         <BaseButton variant="ghost" @click="showAutoSaveConfirm = false">Cancel</BaseButton>
-        <BaseButton variant="red" @click="confirmDisableAutoSave">Disable</BaseButton>
+        <BaseButton color="red" @click="confirmDisableAutoSave">
+          <FontAwesomeIcon icon="trash" /> Disable
+        </BaseButton>
       </div>
     </BaseModal>
   </div>
