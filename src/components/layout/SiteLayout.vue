@@ -15,7 +15,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   showHeader: true,
   showFooter: true,
-  fixedHeader: false
+  fixedHeader: false,
 })
 
 const route = useRoute()
@@ -44,7 +44,8 @@ const headerClasses = computed(() => ({
   // Sticky mode: normal scrolling behavior with margin below
   'sticky top-0 z-50 mb-8': !props.fixedHeader,
   // Show background only after scrolling (not in fixed mode)
-  'border-b border-amber-300 bg-amber-100/50 backdrop-blur-md': hasScrolled.value && !props.fixedHeader
+  'border-b border-amber-300 bg-amber-100/50 backdrop-blur-md':
+    hasScrolled.value && !props.fixedHeader,
 }))
 </script>
 
@@ -106,8 +107,9 @@ const headerClasses = computed(() => ({
             href="https://czechgames.com/en/codenames-pictures/"
             target="_blank"
             rel="noopener noreferrer"
-            class="external-link !text-amber-800 font-medium hover:!text-amber-900"
-          >Czech Games Edition</a>
+            class="external-link font-medium !text-amber-800 hover:!text-amber-900"
+            >Czech Games Edition</a
+          >
         </p>
         <div class="flex items-center justify-center gap-3">
           <RouterLink

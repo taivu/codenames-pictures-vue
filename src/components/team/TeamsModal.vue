@@ -83,10 +83,22 @@ function handlePickSpyMasters(): void {
       :class="store.isDuetMode ? 'justify-center' : 'justify-between'"
     >
       <div v-if="!store.isDuetMode" class="flex gap-2">
-        <IconButton icon="shuffle" color="amber" variant="secondary" size="sm" @click="handleShuffleTeams">
+        <IconButton
+          icon="shuffle"
+          color="amber"
+          variant="secondary"
+          size="sm"
+          @click="handleShuffleTeams"
+        >
           Shuffle teams
         </IconButton>
-        <IconButton icon="user-secret" color="blue" variant="secondary" size="sm" @click="handlePickSpyMasters">
+        <IconButton
+          icon="user-secret"
+          color="blue"
+          variant="secondary"
+          size="sm"
+          @click="handlePickSpyMasters"
+        >
           Pick spymasters
         </IconButton>
       </div>

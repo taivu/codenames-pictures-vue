@@ -50,7 +50,8 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
               target="_blank"
               rel="noopener noreferrer"
               class="external-link"
-            >official physical version</a>
+              >official physical version</a
+            >
             to support the original creators and designers.
           </p>
         </div>

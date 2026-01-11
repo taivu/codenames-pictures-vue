@@ -67,7 +67,9 @@ onUnmounted(() => {
           @mousedown.stop
         >
           <!-- Header -->
-          <div class="relative z-10 shrink-0 border-b border-gray-100 px-5 py-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+          <div
+            class="relative z-10 shrink-0 border-b border-gray-100 px-5 py-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+          >
             <slot name="header" :close="handleClose">
               <div class="flex items-center justify-between">
                 <h3 v-if="title" class="flex items-center gap-2 text-xl font-bold text-gray-800">

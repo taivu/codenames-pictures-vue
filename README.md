@@ -1,5 +1,30 @@
-# Vue 3 + TypeScript + Vite
+# Codenames Pictures
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A web app for playing Codenames: Pictures with friends. One screen shows the board, spymasters peek at secret colors on their phones.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Built because the official app doesn't exist and setting up the physical game takes forever.
+
+**Play it:** https://codenames.taivu.com
+
+## Features
+
+- **Classic & Duet modes** - 4x5 or 5x5 grids
+- **Spy Master view** - Lock screen with trash talk while you think
+- **Pressure Mode** - Countdown timer, 3 strikes, dramatic tension
+- **Auto-save** - Restore interrupted games with a preview
+- **Mobile-first** - Swipe gestures, responsive everything
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Stack
+
+Vue 3 + TypeScript + Vite + Tailwind + Pinia
+
+## License
+
+Do whatever you want with it.

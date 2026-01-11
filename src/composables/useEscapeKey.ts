@@ -1,13 +1,13 @@
-import { useEventListener } from './useEventListener'
-
 /**
- * Composable to handle Escape key press.
- * Automatically manages event listener lifecycle.
+ * Close things when you hit Escape. Simple.
  */
+import { onMounted, onUnmounted } from 'vue'
+
 export function useEscapeKey(callback: () => void): void {
-  useEventListener(document, 'keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      callback()
-    }
-  })
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'Escape') callback()
+  }
+
+  onMounted(() => document.addEventListener('keydown', handleKeydown))
+  onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
 }

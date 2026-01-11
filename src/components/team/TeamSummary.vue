@@ -5,7 +5,7 @@
 import { computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
-import { useTeamColors } from '@/composables'
+import { teamTextClasses } from '@/utils'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 interface Props {
@@ -15,7 +15,6 @@ interface Props {
 const props = defineProps<Props>()
 
 const store = useGameStore()
-const { teamTextClasses } = useTeamColors()
 
 const team = computed(() => store.teams[props.color])
 const hasPlayers = computed(() => team.value.players.length > 0)

@@ -18,14 +18,16 @@ const howToPlaySteps = [
     icon: 'user-secret',
     iconBg: 'bg-blue-100 text-blue-600',
     title: 'Spymasters grab their phones',
-    description: 'Each spymaster opens the Spy Master page on their own phone to see the secret key card.',
+    description:
+      'Each spymaster opens the Spy Master page on their own phone to see the secret key card.',
   },
   {
     to: '/rules',
     icon: 'book',
     iconBg: 'bg-yellow-100 text-yellow-600',
     title: 'Give clues & guess!',
-    description: 'Spymasters give one-word clues. Everyone else guesses which pictures match. First team to find all their agents wins!',
+    description:
+      'Spymasters give one-word clues. Everyone else guesses which pictures match. First team to find all their agents wins!',
   },
 ]
 </script>
@@ -41,14 +43,15 @@ const howToPlaySteps = [
           Codenames Pictures
         </h1>
         <p class="mx-auto mb-8 max-w-2xl text-lg text-gray-600 sm:text-xl">
-          The perfect party game for game night. Two teams, secret agents, and one-word clues.
-          Based on
+          The perfect party game for game night. Two teams, secret agents, and one-word clues. Based
+          on
           <a
             href="https://czechgames.com/en/codenames-pictures/"
             target="_blank"
             rel="noopener noreferrer"
             class="external-link font-semibold"
-          >Codenames Pictures</a>
+            >Codenames Pictures</a
+          >
           by Czech Games.
         </p>
       </div>

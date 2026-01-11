@@ -5,7 +5,7 @@
 import { ref, computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
-import { useTeamColors } from '@/composables'
+import { teamTextClasses, teamBgClasses } from '@/utils'
 import { trackPlayerAdded, trackStartingTeamSet } from '@/plugins/analytics'
 import { BaseButton, IconButton } from '@/components/ui'
 
@@ -16,7 +16,6 @@ interface Props {
 const props = defineProps<Props>()
 
 const store = useGameStore()
-const { teamTextClasses, teamBgClasses } = useTeamColors()
 
 // ===================
 // State
@@ -72,7 +71,7 @@ function handleSetStartingTeam(): void {
 <template>
   <div class="overflow-hidden rounded-xl bg-gray-50 p-4">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
-      <h3 class="text-lg font-bold capitalize whitespace-nowrap" :class="teamTextClasses[color]">
+      <h3 class="text-lg font-bold whitespace-nowrap capitalize" :class="teamTextClasses[color]">
         {{ color }} Team
       </h3>
 

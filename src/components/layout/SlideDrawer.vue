@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /**
- * SlideDrawer - Slide-out panel with swipe-to-close and backdrop.
+ * The menu that slides in from the right. Swipe it away or tap
+ * outside to close. Escape key works too.
  */
 import { ref, watch, onUnmounted } from 'vue'
 import { useClickOutside, useEscapeKey } from '@/composables'
@@ -119,7 +120,6 @@ onUnmounted(() => {
       <div v-if="open" class="fixed inset-0 z-50">
         <!-- Backdrop -->
         <div
-          ref="backdropRef"
           class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
           @click="close"
         />

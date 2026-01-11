@@ -3,11 +3,11 @@
  * HUDCollapsed - Compact score badges and timer shown when HUD is minimized.
  */
 import { useGameStore } from '@/stores'
-import { useTeamColors, usePressureMode } from '@/composables'
+import { usePressureMode } from '@/composables'
+import { teamBgClasses } from '@/utils'
 import { CircularTimer } from '@/components/ui'
 
 const store = useGameStore()
-const { teamBgClasses } = useTeamColors()
 const pressureMode = usePressureMode()
 
 function getTimerColorClass(): string {

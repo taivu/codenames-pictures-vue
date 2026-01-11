@@ -22,13 +22,14 @@ const baseUrl = import.meta.env.BASE_URL
         >
           <h2 class="mb-3 text-amber-800">What is Codenames: Pictures?</h2>
           <p class="mb-4">
-            Two teams compete to find their secret agents hidden among a grid of mysterious pictures.
-            Each team has a Spymaster who knows which pictures belong to their team. The Spymaster
-            gives one-word clues to help their teammates guess the right pictures.
+            Two teams compete to find their secret agents hidden among a grid of mysterious
+            pictures. Each team has a Spymaster who knows which pictures belong to their team. The
+            Spymaster gives one-word clues to help their teammates guess the right pictures.
           </p>
           <p>
-            Be careful though &mdash; some pictures are innocent bystanders, some belong to the other
-            team, and one is the deadly assassin. Find the assassin and your team loses instantly!
+            Be careful though &mdash; some pictures are innocent bystanders, some belong to the
+            other team, and one is the deadly assassin. Find the assassin and your team loses
+            instantly!
           </p>
         </div>
       </div>
@@ -40,16 +41,22 @@ const baseUrl = import.meta.env.BASE_URL
 
           <div class="grid gap-4 md:grid-cols-2">
             <div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
-              <h3 class="mb-2 text-blue-700">Spymasters</h3>
+              <h3 class="mb-2 text-blue-700">
+                <FontAwesomeIcon icon="user-secret" class="mr-2" />
+                Spymasters
+              </h3>
               <p>
                 One player from each team is the Spymaster. They can see the secret key card that
-                shows which pictures belong to which team. Their job is to give clever one-word clues
-                to guide their teammates.
+                shows which pictures belong to which team. Their job is to give clever one-word
+                clues to guide their teammates.
               </p>
             </div>
 
-            <div class="rounded-lg border border-green-200 bg-green-50 p-4">
-              <h3 class="mb-2 text-green-700">Field Operatives</h3>
+            <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
+              <h3 class="mb-2 text-amber-700">
+                <FontAwesomeIcon icon="users" class="mr-2" />
+                Field Operatives
+              </h3>
               <p>
                 Everyone else on the team are Field Operatives. They listen to the Spymaster's clues
                 and try to guess which pictures belong to their team. They can discuss amongst
@@ -71,14 +78,25 @@ const baseUrl = import.meta.env.BASE_URL
             and reveals which pictures are:
           </p>
           <ul class="mb-4 list-inside list-disc space-y-2">
-            <li><strong class="text-blue-600">Blue agents</strong> &mdash; Pictures the Blue team needs to find</li>
-            <li><strong class="text-red-600">Red agents</strong> &mdash; Pictures the Red team needs to find</li>
-            <li><strong class="text-amber-600">Innocent bystanders</strong> &mdash; Neutral pictures that end your turn</li>
-            <li><strong>The assassin</strong> &mdash; One deadly picture that loses the game instantly</li>
+            <li>
+              <strong class="text-blue-600">Blue agents</strong> &mdash; Pictures the Blue team
+              needs to find
+            </li>
+            <li>
+              <strong class="text-red-600">Red agents</strong> &mdash; Pictures the Red team needs
+              to find
+            </li>
+            <li>
+              <strong class="text-amber-600">Innocent bystanders</strong> &mdash; Neutral pictures
+              that end your turn
+            </li>
+            <li>
+              <strong>The assassin</strong> &mdash; One deadly picture that loses the game instantly
+            </li>
           </ul>
           <p>
-            The starting team (shown by the border color on the key card) has 8 agents to find.
-            The other team has 7. This balances out the advantage of going first.
+            The starting team (shown by the border color on the key card) has 8 agents to find. The
+            other team has 7. This balances out the advantage of going first.
           </p>
         </div>
       </div>
@@ -92,9 +110,7 @@ const baseUrl = import.meta.env.BASE_URL
           </p>
 
           <div class="mb-4 rounded-lg bg-amber-50 p-4 text-center">
-            <p class="text-xl">
-              <strong>One word</strong> + <strong>One number</strong>
-            </p>
+            <p class="text-xl"><strong>One word</strong> + <strong>One number</strong></p>
             <p class="mt-2 text-gray-600 italic">Example: "Flying: 2"</p>
           </div>
 
@@ -129,9 +145,9 @@ const baseUrl = import.meta.env.BASE_URL
           <h2 class="mb-4">Clue Rules</h2>
           <div class="space-y-3">
             <p>
-              <strong>One word only.</strong> Your clue must be a single word. No hyphens, no spaces,
-              no "sort of two words." If your group agrees, you can relax this for common phrases
-              like "hot dog" or "New York."
+              <strong>One word only.</strong> Your clue must be a single word. No hyphens, no
+              spaces, no "sort of two words." If your group agrees, you can relax this for common
+              phrases like "hot dog" or "New York."
             </p>
             <p>
               <strong>You can describe what you see.</strong> Unlike regular Codenames, you're
@@ -159,21 +175,21 @@ const baseUrl = import.meta.env.BASE_URL
             <div class="rounded-lg border border-green-200 bg-green-50 p-4">
               <h4 class="mb-2 text-green-700">Correct!</h4>
               <p>
-                You found one of your agents! You may keep guessing or stop and end your turn safely.
+                You found one of your agents! You may keep guessing or stop and end your turn
+                safely.
               </p>
             </div>
 
             <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
               <h4 class="mb-2 text-amber-700">Innocent Bystander</h4>
-              <p>
-                Oops, that's nobody important. Your turn ends, but no harm done.
-              </p>
+              <p>Oops, that's nobody important. Your turn ends, but no harm done.</p>
             </div>
 
             <div class="rounded-lg border border-red-200 bg-red-50 p-4">
               <h4 class="mb-2 text-red-700">Other Team's Agent</h4>
               <p>
-                You just helped the other team! Your turn ends and they're one step closer to winning.
+                You just helped the other team! Your turn ends and they're one step closer to
+                winning.
               </p>
             </div>
 
@@ -236,16 +252,14 @@ const baseUrl = import.meta.env.BASE_URL
         <div class="grid gap-6 md:grid-cols-2">
           <!-- Game Board -->
           <div class="rounded-xl border-2 border-gray-300 bg-white/80 p-6 shadow-sm">
-            <h3 class="mb-3 text-gray-700">
-              <FontAwesomeIcon icon="tv" class="mr-2" />Game Board
-            </h3>
-            <p class="mb-3">
-              This is what everyone sees. Display it on a TV or shared screen.
-            </p>
+            <h3 class="mb-3 text-gray-700"><FontAwesomeIcon icon="tv" class="mr-2" />Game Board</h3>
+            <p class="mb-3">This is what everyone sees. Display it on a TV or shared screen.</p>
             <div class="space-y-3">
               <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
                 <h4 class="mb-1">Mark a Card</h4>
-                <p>Tap any card, then pick a color to mark it as red, blue, neutral, or assassin.</p>
+                <p>
+                  Tap any card, then pick a color to mark it as red, blue, neutral, or assassin.
+                </p>
               </div>
               <div class="rounded-lg border border-gray-200 bg-gray-50 p-4">
                 <h4 class="mb-1">Remove a Mark</h4>
@@ -279,7 +293,10 @@ const baseUrl = import.meta.env.BASE_URL
               </div>
               <div class="rounded-lg border border-blue-200 bg-white/70 p-4">
                 <h4 class="mb-1">Search for Card</h4>
-                <p>Look up any card by number. Handy when both Spymasters are deciding which key card to use.</p>
+                <p>
+                  Look up any card by number. Handy when both Spymasters are deciding which key card
+                  to use.
+                </p>
               </div>
               <div class="rounded-lg border border-blue-200 bg-white/70 p-4">
                 <h4 class="mb-1">Lock Screen</h4>

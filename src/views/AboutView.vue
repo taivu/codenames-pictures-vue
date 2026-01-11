@@ -32,9 +32,7 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
         <div
           class="mb-6 rounded-xl border-2 border-green-300 bg-gradient-to-br from-green-50 to-emerald-50 p-6 shadow-md"
         >
-          <h2 class="mb-4 text-green-800">
-            Uhh, why is this game on your site Tai?
-          </h2>
+          <h2 class="mb-4 text-green-800">Uhh, why is this game on your site Tai?</h2>
           <div class="space-y-4">
             <p>
               Picture this: family trip in Florida, everyone's hyped to play Codenames: Pictures.
@@ -133,9 +131,7 @@ import SiteLayout from '@/components/layout/SiteLayout.vue'
             to support the creators!
           </p>
         </div>
-
       </div>
     </div>
   </SiteLayout>
 </template>
-

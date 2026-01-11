@@ -5,7 +5,12 @@
 import { useSlots } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import BaseButton, { type ButtonColor, type ButtonSize, type ButtonVariant, type ButtonRounded } from './BaseButton.vue'
+import BaseButton, {
+  type ButtonColor,
+  type ButtonSize,
+  type ButtonVariant,
+  type ButtonRounded,
+} from './BaseButton.vue'
 
 interface Props {
   icon: string | string[] | IconDefinition
@@ -17,6 +22,7 @@ interface Props {
   label?: string
   disabled?: boolean
   touchHover?: boolean
+  alwaysShowText?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
@@ -26,6 +32,7 @@ withDefaults(defineProps<Props>(), {
   rounded: 'lg',
   disabled: false,
   touchHover: false,
+  alwaysShowText: false,
 })
 
 defineEmits<{
@@ -50,6 +57,6 @@ const hasText = () => !!slots.default
     @click="$emit('click', $event)"
   >
     <FontAwesomeIcon :icon="icon" />
-    <span v-if="hasText()" class="hidden sm:inline"><slot /></span>
+    <span v-if="hasText()" :class="alwaysShowText ? '' : 'hidden sm:inline'"><slot /></span>
   </BaseButton>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /**
- * SpyCard - Displays the spymaster key card grid showing team assignments.
+ * The secret key card that spymasters see. Shows which card is which team.
+ * Has colored bars on the sides to remind you who goes first.
  */
 import { computed } from 'vue'
 import type { SpyCard } from '@/types'

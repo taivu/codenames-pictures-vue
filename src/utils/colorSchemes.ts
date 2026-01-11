@@ -1,15 +1,17 @@
 /**
  * Color Schemes - Tailwind class mappings for cards and teams.
- * Centralized definitions ensure consistent styling across components.
+ * Just simple lookup tables. No magic.
  */
 import type { CardColor, TeamColor } from '@/types'
 
 // ===================
-// Card Color Classes
+// Card Colors
 // ===================
 
-// Ring/border styles for selected cards
-export const cardRingClasses: Record<Exclude<CardColor, ''>, string> = {
+// Empty string key ('') lets us do direct lookups like cardRingClasses[card.color]
+// without needing wrapper functions to handle the "no color" case.
+export const cardRingClasses: Record<CardColor, string> = {
+  '': '',
   red: 'ring-4 ring-red-500',
   blue: 'ring-4 ring-blue-500',
   green: 'ring-4 ring-green-500',
@@ -17,8 +19,8 @@ export const cardRingClasses: Record<Exclude<CardColor, ''>, string> = {
   black: 'ring-4 ring-gray-900',
 }
 
-// Background overlay styles for selected cards
-export const cardOverlayClasses: Record<Exclude<CardColor, ''>, string> = {
+export const cardOverlayClasses: Record<CardColor, string> = {
+  '': '',
   red: 'bg-red-500/50',
   blue: 'bg-blue-500/50',
   green: 'bg-green-500/50',
@@ -83,22 +85,4 @@ export const spyMasterStartingClasses: Record<string, string> = {
   red: 'bg-red-500',
   blue: 'bg-blue-500',
   green: 'bg-green-500',
-}
-
-// ===================
-// Helper Functions
-// ===================
-
-export function getCardRingClass(color: CardColor): string {
-  if (color === '') return ''
-  return cardRingClasses[color] ?? ''
-}
-
-export function getCardOverlayClass(color: CardColor): string {
-  if (color === '') return ''
-  return cardOverlayClasses[color] ?? ''
-}
-
-export function getCardButtonClass(color: CardColor): string {
-  return cardButtonClasses[color] ?? ''
 }

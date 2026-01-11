@@ -1,12 +1,13 @@
 <script setup lang="ts">
 /**
- * GameCard - Interactive card with color selection menu and zoom view.
+ * The card you tap during the game. Click to mark team colors,
+ * click again to unmark. Long-press the badge to zoom in.
  */
 import { computed, ref } from 'vue'
 import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { usePressureMode } from '@/composables'
-import { getCardRingClass, getCardOverlayClass, getCardImagePath } from '@/utils'
+import { cardRingClasses, cardOverlayClasses, getCardImagePath } from '@/utils'
 import CardContextMenu from './CardContextMenu.vue'
 import CardViewModal from './CardViewModal.vue'
 import { trackModalOpened, trackCardMarked } from '@/plugins/analytics'
@@ -37,7 +38,7 @@ const isElevated = computed(() => isMenuActive.value || (store.colorMenuOpen && 
 
 // Combined classes for card container
 const cardClasses = computed(() => [
-  getCardRingClass(props.card.color),
+  cardRingClasses[props.card.color],
   isMenuActive.value && 'z-50 scale-105 ring-4 ring-white',
   isElevated.value && !isMenuActive.value && 'z-50',
 ])
@@ -126,7 +127,7 @@ function handleCardViewClose() {
     <div
       v-if="hasColor"
       class="pointer-events-none absolute inset-0"
-      :class="getCardOverlayClass(card.color)"
+      :class="cardOverlayClasses[card.color]"
     />
 
     <!-- Duet mode neutral marker -->

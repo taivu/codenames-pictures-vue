@@ -50,6 +50,7 @@ import {
   faTriangleExclamation,
   faTrophy,
   faTv,
+  faWandMagicSparkles,
   faUpRightFromSquare,
   faUserSecret,
   faUsers,
@@ -92,6 +93,7 @@ library.add(
   faShuffle,
   faStar,
   faTrophy,
+  faWandMagicSparkles,
   faUserSecret,
   faUsers,
   // Shit-talking icons

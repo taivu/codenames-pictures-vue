@@ -1,6 +1,6 @@
 /**
- * Game Store - Central state management for gameplay.
- * Handles cards, teams, scoring, and game persistence.
+ * Where all the game state lives. Cards, teams, scores.
+ * Auto-saves to localStorage so you can pick up where you left off.
  */
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'

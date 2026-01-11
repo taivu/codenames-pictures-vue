@@ -1,6 +1,7 @@
 /**
- * Spy Master Lock - Screen lock with peek-to-reveal functionality.
- * Prevents accidental card reveals and keeps screen awake while locked.
+ * Lock screen for spymasters so they don't accidentally flash the key card.
+ * Hold the screen to peek, let go to hide. Shows random trash talk to keep
+ * things interesting. Keeps the screen awake so you don't lose your place.
  */
 import { ref } from 'vue'
 

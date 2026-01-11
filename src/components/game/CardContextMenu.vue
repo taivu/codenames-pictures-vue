@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import type { CardColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useClickOutside, usePositionedMenu } from '@/composables'
-import { getCardButtonClass } from '@/utils'
+import { cardButtonClasses } from '@/utils'
 
 const emit = defineEmits<{
   select: [color: CardColor]
@@ -28,7 +28,7 @@ function handleSelect(color: CardColor): void {
 function getButtonClasses(color: CardColor): string {
   const baseClasses =
     'w-full px-4 py-2.5 text-left text-base font-semibold transition-all cursor-pointer block'
-  return `${baseClasses} ${getCardButtonClass(color)}`
+  return `${baseClasses} ${cardButtonClasses[color]}`
 }
 </script>
 

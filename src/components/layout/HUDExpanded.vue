@@ -4,14 +4,14 @@
  */
 import type { TeamColor } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
-import { useTeamColors, usePressureMode } from '@/composables'
+import { usePressureMode } from '@/composables'
+import { teamBgClasses, teamTextClasses } from '@/utils'
 import { pressureModeConfig } from '@/config'
 import { BaseButton, CircularTimer } from '@/components/ui'
 import { trackStartingTeamSet } from '@/plugins/analytics'
 
 const store = useGameStore()
 const settingsStore = useSettingsStore()
-const { teamBgClasses, teamTextClasses } = useTeamColors()
 const pressureMode = usePressureMode()
 
 function handleSetStartingTeam(color: TeamColor): void {
