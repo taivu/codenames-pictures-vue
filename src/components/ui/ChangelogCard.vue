@@ -3,15 +3,31 @@ import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import changelogMd from '../../../CHANGELOG.md?raw'
 
-// Parse markdown to HTML (skip the h1 title) and sanitize
-const rawHtml = marked.parse(changelogMd.replace(/^# Changelog\n+/, ''))
-const changelogHtml = DOMPurify.sanitize(rawHtml as string)
+// Remove the h1 title and split by h2 sections
+const content = changelogMd.replace(/^# Changelog\n+/, '')
+const sections = content.split(/(?=^## )/m).filter((s) => s.trim())
+
+// Parse each section into a card
+const cards = sections.map((section) => {
+  const titleMatch = section.match(/^## (.+)\n/)
+  const title = titleMatch ? titleMatch[1] : 'Update'
+  const body = section.replace(/^## .+\n+/, '')
+  const rawHtml = marked.parse(body)
+  const html = DOMPurify.sanitize(rawHtml as string)
+  return { title, html }
+})
 </script>
 
 <template>
-  <div class="rounded-xl border-2 border-gray-300 bg-white/80 p-6 shadow-sm">
-    <h2 class="mb-4">Changelog</h2>
-    <div class="changelog-content" v-html="changelogHtml" />
+  <div class="space-y-6">
+    <div
+      v-for="(card, index) in cards"
+      :key="index"
+      class="rounded-xl border-2 border-gray-300 bg-white/80 p-6 shadow-sm"
+    >
+      <h2 class="mb-4">{{ card.title }}</h2>
+      <div class="changelog-content" v-html="card.html" />
+    </div>
   </div>
 </template>
 

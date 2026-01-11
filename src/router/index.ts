@@ -40,6 +40,11 @@ const routes: RouteRecordRaw[] = [
     name: 'disclaimer',
     component: () => import('@/views/DisclaimerView.vue'),
   },
+  {
+    path: '/changelog',
+    name: 'changelog',
+    component: () => import('@/views/ChangelogView.vue'),
+  },
 ]
 
 export const router = createRouter({

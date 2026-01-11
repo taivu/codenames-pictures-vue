@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
-import { ChangelogCard } from '@/components/ui'
 </script>
 
 <template>
@@ -79,9 +78,6 @@ import { ChangelogCard } from '@/components/ui'
             </p>
           </div>
         </div>
-
-        <!-- Changelog -->
-        <ChangelogCard class="mb-6" />
 
         <!-- Credits Card -->
         <div

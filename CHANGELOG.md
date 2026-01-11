@@ -31,8 +31,11 @@ A new optional game mode that adds tension with a countdown timer:
 
 ### Navigation
 - **Slide-out menu** - Swipe from the right edge or tap the menu button
-- **Quick access header** - Start Game and Spy Master buttons always visible
-- **Dedicated pages** - Rules, About, and Disclaimer pages for all the details
+- **Quick access header** - Play and Spy Master buttons always visible with consistent layout
+- **Home button** - Always visible on mobile, easy to get back
+- **Sticky header** - Header background appears on scroll for better visibility
+- **Dedicated pages** - Rules, About, Disclaimer, and Changelog pages
+- **Changelog** - Tap the version number to see what's new
 
 ## Original Fork (2024)
 

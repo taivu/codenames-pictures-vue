@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useSpyMasterStore } from '@/stores'
 import { useSpyMasterLock } from '@/composables'
 import { SpyCard, CardSearch } from '@/components/game'
@@ -23,7 +23,7 @@ const shareableUrl = computed(() => {
   return `${window.location.origin}/spy-master/${store.currentCardId}`
 })
 
-const showHeader = computed(() => store.currentCard && !(lock.isLocked.value && lock.isPeeking.value))
+const hideHeader = computed(() => !store.currentCard || (lock.isLocked.value && lock.isPeeking.value))
 
 onMounted(async () => {
   await Promise.all([store.fetchCards(), lock.loadPhrases()])
@@ -62,47 +62,53 @@ function copyShareableUrl(): void {
 </script>
 
 <template>
-  <SiteLayout hide-action-buttons :hide-footer="lock.isLocked.value">
-    <!-- Header row: Home | Lock | New Card -->
-    <div
-      v-if="showHeader"
-      class="z-60 flex items-center px-4"
-      :class="lock.isLocked.value ? 'fixed top-4 right-0 left-0 justify-center' : 'justify-between py-4'"
-    >
-      <!-- Left: Home button -->
-      <a
-        v-if="!lock.isLocked.value"
-        href="/"
-        class="flex items-center gap-1.5 rounded-full bg-white px-3 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:bg-gray-100"
+  <SiteLayout
+    :hide-action-buttons="hideHeader"
+    :hide-footer="lock.isLocked.value"
+    :fixed-header="lock.isLocked.value"
+  >
+    <template #action-buttons>
+      <div
+        class="flex items-center"
+        :class="lock.isLocked.value ? 'justify-center' : ''"
       >
-        <FontAwesomeIcon icon="arrow-left" />
-        <span class="hidden sm:inline">Home</span>
-      </a>
+        <!-- Left: Home button -->
+        <div v-if="!lock.isLocked.value" class="flex flex-1 justify-start">
+          <RouterLink
+            to="/"
+            class="flex items-center justify-center rounded-full bg-white p-2 text-sm text-gray-600 shadow-sm transition-colors hover:bg-gray-100 sm:gap-1.5 sm:px-3"
+          >
+            <FontAwesomeIcon icon="arrow-left" />
+            <span class="hidden sm:inline">Home</span>
+          </RouterLink>
+        </div>
 
-      <!-- Center: Lock button -->
-      <button
-        class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-colors"
-        :class="
-          lock.isLocked.value
-            ? 'bg-green-500 text-white hover:bg-green-600'
-            : 'bg-white text-gray-600 hover:bg-gray-100'
-        "
-        @click.stop="lock.toggle"
-      >
-        <FontAwesomeIcon :icon="lock.isLocked.value ? 'lock' : 'lock-open'" />
-        <span>{{ lock.isLocked.value ? 'Unlock' : 'Lock' }}</span>
-      </button>
+        <!-- Center: Lock button -->
+        <button
+          class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-colors"
+          :class="
+            lock.isLocked.value
+              ? 'bg-green-500 text-white hover:bg-green-600'
+              : 'bg-white text-gray-600 hover:bg-gray-100'
+          "
+          @click.stop="lock.toggle"
+        >
+          <FontAwesomeIcon :icon="lock.isLocked.value ? 'lock' : 'lock-open'" />
+          <span>{{ lock.isLocked.value ? 'Unlock' : 'Lock' }}</span>
+        </button>
 
-      <!-- Right: New Card button -->
-      <button
-        v-if="!lock.isLocked.value"
-        class="flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-2 text-sm font-medium text-green-600 shadow-sm transition-colors hover:bg-green-500 hover:text-white"
-        @click="handleRandomCard"
-      >
-        <FontAwesomeIcon icon="shuffle" />
-        <span>New Card</span>
-      </button>
-    </div>
+        <!-- Right: New Card button -->
+        <div v-if="!lock.isLocked.value" class="flex flex-1 justify-end">
+          <button
+            class="flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-2 text-sm font-medium text-green-600 shadow-sm transition-colors hover:bg-green-500 hover:text-white"
+            @click="handleRandomCard"
+          >
+            <FontAwesomeIcon icon="shuffle" />
+            <span class="hidden sm:inline">New Card</span>
+          </button>
+        </div>
+      </div>
+    </template>
 
     <!-- Lock mode overlays -->
     <template v-if="lock.isLocked.value">
