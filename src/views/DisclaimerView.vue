@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * DisclaimerView - Legal disclaimer and fan project notice.
+ */
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 </script>
 

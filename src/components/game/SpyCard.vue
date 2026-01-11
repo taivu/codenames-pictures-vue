@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * SpyCard - Displays the spymaster key card grid showing team assignments.
+ */
 import { computed } from 'vue'
 import type { SpyCard } from '@/types'
 import { spyMasterCellClasses, spyMasterStartingClasses } from '@/utils'

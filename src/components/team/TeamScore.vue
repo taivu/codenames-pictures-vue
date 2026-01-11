@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * TeamScore - Single team score with increment/decrement controls.
+ */
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'

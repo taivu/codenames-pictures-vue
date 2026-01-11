@@ -1,3 +1,7 @@
+/**
+ * Settings Store - User preferences persisted to localStorage.
+ * Manages card set selection, auto-save, and pressure mode settings.
+ */
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { cardSets, getDefaultCardSetIds, getCardSetById } from '@/config'
@@ -13,13 +17,19 @@ interface PersistedSettings {
 }
 
 export const useSettingsStore = defineStore('settings', () => {
-  // Load initial state from localStorage or use defaults
+  // ===================
+  // State
+  // ===================
+
   const stored = loadFromStorage<PersistedSettings>(STORAGE_KEY)
   const enabledCardSetIds = ref<string[]>(stored?.enabledCardSetIds ?? getDefaultCardSetIds())
   const autoSaveEnabled = ref<boolean>(stored?.autoSaveEnabled ?? false)
   const pressureModeEnabled = ref<boolean>(stored?.pressureModeEnabled ?? false)
 
+  // ===================
   // Computed
+  // ===================
+
   const enabledCardSets = computed<CardSet[]>(() =>
     enabledCardSetIds.value
       .map((id) => getCardSetById(id))
@@ -32,41 +42,37 @@ export const useSettingsStore = defineStore('settings', () => {
 
   const allCardSets = computed<CardSet[]>(() => cardSets)
 
+  // ===================
   // Actions
-  function toggleCardSet(setId: string): void {
-    const index = enabledCardSetIds.value.indexOf(setId)
-    if (index === -1) {
-      // Enable the set
-      enabledCardSetIds.value.push(setId)
-    } else {
-      // Disable the set (but ensure at least one remains enabled)
-      if (enabledCardSetIds.value.length > 1) {
-        enabledCardSetIds.value.splice(index, 1)
-      }
-    }
-    persist()
-  }
-
-  function setCardSetEnabled(setId: string, enabled: boolean): void {
-    const index = enabledCardSetIds.value.indexOf(setId)
-    if (enabled && index === -1) {
-      enabledCardSetIds.value.push(setId)
-      persist()
-    } else if (!enabled && index !== -1 && enabledCardSetIds.value.length > 1) {
-      enabledCardSetIds.value.splice(index, 1)
-      persist()
-    }
-  }
+  // ===================
 
   function isCardSetEnabled(setId: string): boolean {
     return enabledCardSetIds.value.includes(setId)
   }
 
-  function resetToDefaults(): void {
-    enabledCardSetIds.value = getDefaultCardSetIds()
-    autoSaveEnabled.value = false
-    pressureModeEnabled.value = false
-    persist()
+  /**
+   * Enable or disable a card set.
+   * At least one card set must remain enabled to play the game.
+   */
+  function setCardSetEnabled(setId: string, enabled: boolean): void {
+    const currentIndex = enabledCardSetIds.value.indexOf(setId)
+    const isCurrentlyEnabled = currentIndex !== -1
+    const isLastEnabled = enabledCardSetIds.value.length === 1
+
+    if (enabled && !isCurrentlyEnabled) {
+      enabledCardSetIds.value.push(setId)
+      persist()
+    }
+
+    if (!enabled && isCurrentlyEnabled && !isLastEnabled) {
+      enabledCardSetIds.value.splice(currentIndex, 1)
+      persist()
+    }
+    // Silently ignore: trying to disable the last remaining set
+  }
+
+  function toggleCardSet(setId: string): void {
+    setCardSetEnabled(setId, !isCardSetEnabled(setId))
   }
 
   function setAutoSave(enabled: boolean): void {
@@ -78,6 +84,17 @@ export const useSettingsStore = defineStore('settings', () => {
     pressureModeEnabled.value = enabled
     persist()
   }
+
+  function resetToDefaults(): void {
+    enabledCardSetIds.value = getDefaultCardSetIds()
+    autoSaveEnabled.value = false
+    pressureModeEnabled.value = false
+    persist()
+  }
+
+  // ===================
+  // Persistence
+  // ===================
 
   function persist(): void {
     saveToStorage<PersistedSettings>(STORAGE_KEY, {
@@ -97,11 +114,11 @@ export const useSettingsStore = defineStore('settings', () => {
     totalEnabledCards,
     allCardSets,
     // Actions
-    toggleCardSet,
-    setCardSetEnabled,
     isCardSetEnabled,
-    resetToDefaults,
+    setCardSetEnabled,
+    toggleCardSet,
     setAutoSave,
     setPressureMode,
+    resetToDefaults,
   }
 })

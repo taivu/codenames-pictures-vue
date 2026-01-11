@@ -1,22 +1,31 @@
 <script setup lang="ts">
+/**
+ * SiteLayout - Main layout wrapper with sticky header and footer.
+ * Provides an action-buttons slot for custom navigation.
+ */
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
 interface Props {
-  hideActionButtons?: boolean
-  hideFooter?: boolean
+  showHeader?: boolean
+  showFooter?: boolean
   fixedHeader?: boolean
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  showHeader: true,
+  showFooter: true,
+  fixedHeader: false
+})
 
 const route = useRoute()
 const isHomePage = computed(() => route.path === '/')
 
-const isSticky = ref(false)
+// Track scroll position to show/hide header background
+const hasScrolled = ref(false)
 
 function handleScroll(): void {
-  isSticky.value = window.scrollY > 10
+  hasScrolled.value = window.scrollY > 10
 }
 
 onMounted(() => {
@@ -27,20 +36,27 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
+
+// Header positioning and styling
+const headerClasses = computed(() => ({
+  // Fixed mode: stays at top even when scrolling (used by SpyMasterView lock mode)
+  'fixed top-0 right-0 left-0 z-[60]': props.fixedHeader,
+  // Sticky mode: normal scrolling behavior with margin below
+  'sticky top-0 z-50 mb-8': !props.fixedHeader,
+  // Show background only after scrolling (not in fixed mode)
+  'border-b border-amber-300 bg-amber-100/50 backdrop-blur-md': hasScrolled.value && !props.fixedHeader
+}))
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col">
-    <!-- Sticky/Fixed Action Buttons -->
-    <div
-      v-if="!hideActionButtons"
+    <!-- Header with navigation -->
+    <header
+      v-if="showHeader"
       class="px-4 py-3 transition-colors duration-200"
-      :class="[
-        fixedHeader ? 'fixed top-0 right-0 left-0 z-[60]' : 'sticky top-0 z-50 mb-8',
-        isSticky && !fixedHeader ? 'border-b border-amber-300 bg-amber-100/50 backdrop-blur-md' : ''
-      ]"
+      :class="headerClasses"
     >
-      <slot name="action-buttons" :is-sticky="isSticky">
+      <slot name="action-buttons" :has-scrolled="hasScrolled">
         <!-- Default action buttons -->
         <div class="flex items-center">
           <!-- Left: Home (hidden on homepage) -->
@@ -76,13 +92,13 @@ onUnmounted(() => {
           </div>
         </div>
       </slot>
-    </div>
+    </header>
 
     <main class="flex-1">
       <slot />
     </main>
 
-    <footer v-if="!hideFooter" class="border-t border-amber-300 bg-amber-100/50 px-4 py-4">
+    <footer v-if="showFooter" class="border-t border-amber-300 bg-amber-100/50 px-4 py-4">
       <div class="mx-auto max-w-4xl text-center text-sm text-amber-800">
         <p class="mb-2">
           Fan-made project. Not affiliated with

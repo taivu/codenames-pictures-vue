@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CardGrid - Responsive grid layout for the game board cards.
+ */
 import { useGameStore } from '@/stores'
 import GameCard from './GameCard.vue'
 

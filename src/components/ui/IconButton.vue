@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * IconButton - Circular or square button with FontAwesome icon.
+ */
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 interface Props {

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CircularTimer - SVG circular progress indicator for pressure mode countdown.
+ */
 import { computed } from 'vue'
 
 interface Props {

@@ -79,6 +79,7 @@ export function usePressureMode() {
 
   function startTimer(): void {
     if (!settingsStore.pressureModeEnabled) return
+
     strikes.value = 0
     isPaused.value = false
     timeRemaining.value = pressureModeConfig.durations[0]
@@ -87,13 +88,16 @@ export function usePressureMode() {
   }
 
   function resetTimer(): void {
-    if (!isActive.value || !settingsStore.pressureModeEnabled) return
+    const canReset = isActive.value && settingsStore.pressureModeEnabled
+    if (!canReset) return
+
     timeRemaining.value = currentDuration.value
     startInterval(tick)
   }
 
   function togglePause(): void {
-    if (isActive.value) isPaused.value = !isPaused.value
+    if (!isActive.value) return
+    isPaused.value = !isPaused.value
   }
 
   function acknowledgeStrike(): void {

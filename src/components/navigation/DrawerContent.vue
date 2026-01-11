@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * DrawerContent - Tabbed drawer panel with team info and navigation links.
+ */
 import { ref, computed } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { ScoreBoard, TeamSummary } from '@/components/team'

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * SettingsModal - Game settings dialog for auto-save, pressure mode, and card sets.
+ */
 import { ref } from 'vue'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { BaseModal, ToggleSwitch, BaseButton } from '@/components/ui'

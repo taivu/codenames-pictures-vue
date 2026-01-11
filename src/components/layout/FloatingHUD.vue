@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * FloatingHUD - Toggleable floating heads-up display showing team scores and timer.
+ */
 import { ref, watch } from 'vue'
 import { useGameStore } from '@/stores'
 import HUDCollapsed from './HUDCollapsed.vue'

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * DrawerTrigger - Floating button that opens the slide drawer menu.
+ */
 import { IconButton } from '@/components/ui'
 
 defineEmits<{

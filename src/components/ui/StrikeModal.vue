@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * StrikeModal - Strike notification shown when timer expires in pressure mode.
+ */
 import { ref, onMounted } from 'vue'
 import { pressureModeConfig } from '@/config'
 

@@ -1,3 +1,6 @@
+/**
+ * Click Outside Detection - Trigger callback when clicking outside an element.
+ */
 import type { Ref } from 'vue'
 import { useEventListener } from './useEventListener'
 

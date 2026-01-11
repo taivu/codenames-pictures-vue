@@ -1,3 +1,7 @@
+/**
+ * Swipe Gesture Detection - Touch swipe handlers for elements.
+ * Supports directional swipes with configurable thresholds.
+ */
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 
 interface SwipeOptions {
@@ -15,6 +19,13 @@ interface SwipeState {
   startTime: number
 }
 
+// Swipe validation constants
+const MAX_SWIPE_DURATION_MS = 500
+const MIN_DISTANCE_MULTIPLIER = 2
+
+/**
+ * Detect swipe gestures on an element.
+ */
 export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: SwipeOptions = {}) {
   const { threshold = 50, onSwipeLeft, onSwipeRight, onSwipeUp, onSwipeDown } = options
 
@@ -24,6 +35,7 @@ export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: Swi
   function handleTouchStart(e: TouchEvent) {
     const touch = e.touches[0]
     if (!touch) return
+
     swipeState.value = {
       startX: touch.clientX,
       startY: touch.clientY,
@@ -37,32 +49,31 @@ export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: Swi
 
     const touch = e.changedTouches[0]
     if (!touch) return
+
     const deltaX = touch.clientX - swipeState.value.startX
     const deltaY = touch.clientY - swipeState.value.startY
     const deltaTime = Date.now() - swipeState.value.startTime
 
-    // Only register swipe if it was quick enough (under 300ms) or long enough distance
-    if (deltaTime > 500 && Math.abs(deltaX) < threshold * 2 && Math.abs(deltaY) < threshold * 2) {
+    // Reject slow, short movements (likely not intentional swipes)
+    const isTooSlow = deltaTime > MAX_SWIPE_DURATION_MS
+    const isTooShort =
+      Math.abs(deltaX) < threshold * MIN_DISTANCE_MULTIPLIER &&
+      Math.abs(deltaY) < threshold * MIN_DISTANCE_MULTIPLIER
+
+    if (isTooSlow && isTooShort) {
       reset()
       return
     }
 
+    // Determine swipe direction (horizontal vs vertical)
     const absX = Math.abs(deltaX)
     const absY = Math.abs(deltaY)
+    const isHorizontal = absX > absY
 
-    // Determine if horizontal or vertical swipe
-    if (absX > absY && absX > threshold) {
-      if (deltaX > 0) {
-        onSwipeRight?.()
-      } else {
-        onSwipeLeft?.()
-      }
-    } else if (absY > absX && absY > threshold) {
-      if (deltaY > 0) {
-        onSwipeDown?.()
-      } else {
-        onSwipeUp?.()
-      }
+    if (isHorizontal && absX > threshold) {
+      deltaX > 0 ? onSwipeRight?.() : onSwipeLeft?.()
+    } else if (!isHorizontal && absY > threshold) {
+      deltaY > 0 ? onSwipeDown?.() : onSwipeUp?.()
     }
 
     reset()
@@ -100,7 +111,9 @@ export function useSwipeGesture(targetRef: Ref<HTMLElement | null>, options: Swi
   }
 }
 
-// Hook for detecting edge swipes (useful for opening drawers)
+/**
+ * Detect swipes from screen edge (useful for opening drawers).
+ */
 export function useEdgeSwipe(options: {
   edge: 'left' | 'right'
   edgeSize?: number

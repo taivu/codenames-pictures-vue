@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * BaseMenu - Expandable dropdown menu with trigger button.
+ */
 import { ref } from 'vue'
 import { useClickOutside } from '@/composables'
 

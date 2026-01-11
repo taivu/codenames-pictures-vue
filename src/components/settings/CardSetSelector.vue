@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CardSetSelector - Toggle list for enabling/disabling card image sets.
+ */
 import { useSettingsStore } from '@/stores'
 import type { CardSet } from '@/config'
 

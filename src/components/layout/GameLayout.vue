@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * GameLayout - Main game screen with card grid, HUD, drawer, and modals.
+ */
 import { ref } from 'vue'
 import { useEdgeSwipe, usePressureMode } from '@/composables'
 import { trackModalOpened } from '@/plugins/analytics'

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CardViewModal - Full-screen modal for viewing a card image in detail.
+ */
 import type { Card } from '@/types'
 import { ref, computed, onMounted } from 'vue'
 import { useEscapeKey } from '@/composables'

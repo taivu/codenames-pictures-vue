@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CardSearch - Input form for looking up spymaster key cards by number.
+ */
 import { ref } from 'vue'
 
 const emit = defineEmits<{

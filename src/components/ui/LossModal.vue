@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * LossModal - Game over screen shown after three strikes in pressure mode.
+ */
 const emit = defineEmits<{
   newGame: []
   continueAsScrub: []

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * HomeView - Landing page with hero section and how-to-play cards.
+ */
 import { RouterLink } from 'vue-router'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 

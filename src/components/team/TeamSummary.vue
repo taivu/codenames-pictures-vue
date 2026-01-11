@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * TeamSummary - Compact team card showing players and progress in drawer.
+ */
 import { computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'

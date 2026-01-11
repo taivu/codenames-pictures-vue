@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * GameCard - Interactive card with color selection menu and zoom view.
+ */
 import { computed, ref } from 'vue'
 import type { Card, CardColor } from '@/types'
 import { useGameStore } from '@/stores'
@@ -13,18 +16,36 @@ const props = defineProps<{ card: Card }>()
 const store = useGameStore()
 const pressureMode = usePressureMode()
 
-// UI state
+// ===================
+// UI State
+// ===================
+
 const showMenu = ref(false)
 const showCardView = ref(false)
 const restoreMenuAfterCardView = ref(false)
 
+// ===================
 // Computed
+// ===================
+
 const imagePath = computed(() => getCardImagePath(props.card))
 const hasColor = computed(() => props.card.color !== '')
 const isMenuActive = computed(() => showMenu.value || restoreMenuAfterCardView.value)
+
+// Cards with color stay elevated when any menu is open (for visual hierarchy)
 const isElevated = computed(() => isMenuActive.value || (store.colorMenuOpen && hasColor.value))
 
+// Combined classes for card container
+const cardClasses = computed(() => [
+  getCardRingClass(props.card.color),
+  isMenuActive.value && 'z-50 scale-105 ring-4 ring-white',
+  isElevated.value && !isMenuActive.value && 'z-50',
+])
+
+// ===================
 // Handlers
+// ===================
+
 function handleCardClick(event: MouseEvent) {
   event.preventDefault()
   if (hasColor.value) {
@@ -71,11 +92,7 @@ function handleCardViewClose() {
 <template>
   <div
     class="relative cursor-pointer overflow-hidden rounded-lg border border-black"
-    :class="[
-      getCardRingClass(card.color),
-      isMenuActive && 'z-50 scale-105 ring-4 ring-white',
-      isElevated && !isMenuActive && 'z-50',
-    ]"
+    :class="cardClasses"
     @click="handleCardClick"
     @contextmenu="handleCardClick"
   >

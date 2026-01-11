@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * CardContextMenu - Color selection menu that appears when clicking an unmarked card.
+ */
 import { ref } from 'vue'
 import type { CardColor } from '@/types'
 import { useGameStore } from '@/stores'

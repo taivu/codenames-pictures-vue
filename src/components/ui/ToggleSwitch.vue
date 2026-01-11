@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * ToggleSwitch - Boolean toggle with sliding knob and color variants.
+ */
 interface Props {
   modelValue: boolean
   activeColor?: 'green' | 'orange' | 'blue' | 'purple'

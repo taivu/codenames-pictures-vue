@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * AboutView - Credits, backstory, and disclaimer for the app.
+ */
 import { RouterLink } from 'vue-router'
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 </script>

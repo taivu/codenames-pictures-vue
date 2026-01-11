@@ -1,3 +1,7 @@
+/**
+ * Game Store - Central state management for gameplay.
+ * Handles cards, teams, scoring, and game persistence.
+ */
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import type { Card, CardColor, TeamColor, GameMode, Team, CardColorOption } from '@/types'

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * AppVersion - Displays app version with link to changelog.
+ */
 import { RouterLink } from 'vue-router'
 import { appConfig } from '@/config'
 </script>

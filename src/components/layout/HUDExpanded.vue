@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * HUDExpanded - Full team panel with players, scores, and pressure mode controls.
+ */
 import type { TeamColor } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { useTeamColors, usePressureMode } from '@/composables'

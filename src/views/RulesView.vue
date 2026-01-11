@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * RulesView - Full game rules and app usage instructions.
+ */
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 
 const baseUrl = import.meta.env.BASE_URL

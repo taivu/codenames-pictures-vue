@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * TeamsModal - Full team setup dialog with player management and randomization.
+ */
 import { useGameStore } from '@/stores'
 import { BaseModal, BaseButton } from '@/components/ui'
 import TeamSetup from './TeamSetup.vue'

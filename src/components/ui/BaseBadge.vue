@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * BaseBadge - Small colored label for status or counts.
+ */
 interface Props {
   variant?: 'default' | 'success' | 'warning' | 'danger'
 }

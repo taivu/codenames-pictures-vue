@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * ChangelogView - Version history page with styled changelog cards.
+ */
 import SiteLayout from '@/components/layout/SiteLayout.vue'
 import { ChangelogCard } from '@/components/ui'
 </script>

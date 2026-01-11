@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * HUDCollapsed - Compact score badges and timer shown when HUD is minimized.
+ */
 import { useGameStore } from '@/stores'
 import { useTeamColors, usePressureMode } from '@/composables'
 import { CircularTimer } from '@/components/ui'

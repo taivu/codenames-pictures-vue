@@ -1,8 +1,12 @@
+/**
+ * Color Schemes - Tailwind class mappings for cards and teams.
+ * Centralized definitions ensure consistent styling across components.
+ */
 import type { CardColor, TeamColor } from '@/types'
 
-/**
- * Centralized color scheme definitions for consistent styling across components
- */
+// ===================
+// Card Color Classes
+// ===================
 
 // Ring/border styles for selected cards
 export const cardRingClasses: Record<Exclude<CardColor, ''>, string> = {
@@ -42,6 +46,10 @@ export const spyMasterCellClasses: Record<string, string> = {
   '': 'bg-gray-200',
 }
 
+// ===================
+// Team Color Classes
+// ===================
+
 // Team text colors
 export const teamTextClasses: Record<TeamColor, string> = {
   red: 'text-red-500',
@@ -77,25 +85,20 @@ export const spyMasterStartingClasses: Record<string, string> = {
   green: 'bg-green-500',
 }
 
-/**
- * Get ring class for a card color
- */
+// ===================
+// Helper Functions
+// ===================
+
 export function getCardRingClass(color: CardColor): string {
   if (color === '') return ''
   return cardRingClasses[color] ?? ''
 }
 
-/**
- * Get overlay class for a card color
- */
 export function getCardOverlayClass(color: CardColor): string {
   if (color === '') return ''
   return cardOverlayClasses[color] ?? ''
 }
 
-/**
- * Get button class for a card color
- */
 export function getCardButtonClass(color: CardColor): string {
   return cardButtonClasses[color] ?? ''
 }

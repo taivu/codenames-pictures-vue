@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * ScoreBoard - Horizontal display of all team scores with trophy separator.
+ */
 import { computed } from 'vue'
 import { useGameStore } from '@/stores'
 import TeamScore from './TeamScore.vue'

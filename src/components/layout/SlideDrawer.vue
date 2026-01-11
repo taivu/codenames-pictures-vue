@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * SlideDrawer - Slide-out panel with swipe-to-close and backdrop.
+ */
 import { ref, watch, onUnmounted } from 'vue'
 import { useClickOutside, useEscapeKey } from '@/composables'
 

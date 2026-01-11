@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * GameView - Main game entry point with save/restore prompt and game layout.
+ */
 import { ref, computed, onMounted } from 'vue'
 import type { GameMode, TeamColor } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'

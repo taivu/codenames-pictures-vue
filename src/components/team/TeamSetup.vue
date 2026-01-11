@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+/**
+ * TeamSetup - Player input and starting team selection for a single team.
+ */
+import { ref, computed } from 'vue'
 import type { TeamColor } from '@/types'
 import { useGameStore } from '@/stores'
 import { useTeamColors } from '@/composables'
@@ -13,12 +16,35 @@ const props = defineProps<Props>()
 
 const store = useGameStore()
 const { teamTextClasses, teamBgClasses } = useTeamColors()
+
+// ===================
+// State
+// ===================
+
 const newPlayer = ref('')
 const newPlayerInput = ref<HTMLInputElement | null>(null)
+
+// ===================
+// Computed
+// ===================
+
+const isStartingTeam = computed(() => store.startingTeam === props.color)
+const players = computed(() => store.teams[props.color].players)
+
+const startingButtonClasses = computed(() =>
+  isStartingTeam.value
+    ? [teamBgClasses[props.color], 'text-white shadow-sm']
+    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+)
+
+// ===================
+// Handlers
+// ===================
 
 function handleSubmit(): void {
   const name = newPlayer.value.trim()
   if (!name) return
+
   store.addPlayer(props.color, name)
   trackPlayerAdded(props.color, name)
   newPlayer.value = ''
@@ -52,24 +78,20 @@ function handleSetStartingTeam(): void {
       <button
         type="button"
         class="rounded-lg px-3 py-1.5 text-xs transition-all"
-        :class="
-          store.startingTeam === color
-            ? [teamBgClasses[color], 'text-white shadow-sm']
-            : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-        "
+        :class="startingButtonClasses"
         @click="handleSetStartingTeam"
       >
         <FontAwesomeIcon
           icon="star"
-          :class="['mr-1', store.startingTeam === color ? 'text-yellow-300' : 'text-gray-400']"
+          :class="['mr-1', isStartingTeam ? 'text-yellow-300' : 'text-gray-400']"
         />
-        {{ store.startingTeam === color ? 'Starting' : 'Set starting' }}
+        {{ isStartingTeam ? 'Starting' : 'Set starting' }}
       </button>
     </div>
 
     <form @submit.prevent="handleSubmit">
       <div class="space-y-2">
-        <div v-for="(player, index) in store.teams[color].players" :key="index" class="flex gap-2">
+        <div v-for="(player, index) in players" :key="index" class="flex gap-2">
           <input
             :value="player"
             class="min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm transition-shadow focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none"

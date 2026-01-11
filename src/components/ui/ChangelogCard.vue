@@ -1,4 +1,7 @@
 <script setup lang="ts">
+/**
+ * ChangelogCard - Renders changelog markdown as styled cards per version.
+ */
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import changelogMd from '../../../CHANGELOG.md?raw'

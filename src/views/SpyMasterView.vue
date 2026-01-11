@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * SpyMasterView - Displays the key card for spy masters.
+ * Features a lock mode to prevent accidental reveals with peek-to-view.
+ */
 import { ref, computed, onMounted, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useSpyMasterStore } from '@/stores'
@@ -16,14 +20,23 @@ const router = useRouter()
 const store = useSpyMasterStore()
 const lock = useSpyMasterLock()
 
+// Shorthand for lock state (used frequently in template)
+const isLocked = computed(() => lock.isLocked.value)
+const isPeeking = computed(() => lock.isPeeking.value)
+
+// Header visibility: hide when no card loaded, or when peeking in lock mode
+const showHeader = computed(() => {
+  if (!store.currentCard) return false
+  if (isLocked.value && isPeeking.value) return false
+  return true
+})
+
 const copied = ref(false)
 
 const shareableUrl = computed(() => {
   if (!store.currentCardId) return ''
   return `${window.location.origin}/spy-master/${store.currentCardId}`
 })
-
-const hideHeader = computed(() => !store.currentCard || (lock.isLocked.value && lock.isPeeking.value))
 
 onMounted(async () => {
   await Promise.all([store.fetchCards(), lock.loadPhrases()])
@@ -35,6 +48,7 @@ onMounted(async () => {
   }
 })
 
+// Sync URL with selected card
 watch(
   () => store.currentCardId,
   (newId, oldId) => {
@@ -63,17 +77,15 @@ function copyShareableUrl(): void {
 
 <template>
   <SiteLayout
-    :hide-action-buttons="hideHeader"
-    :hide-footer="lock.isLocked.value"
-    :fixed-header="lock.isLocked.value"
+    :show-header="showHeader"
+    :show-footer="!isLocked"
+    :fixed-header="isLocked"
   >
+    <!-- Custom header: Home | Lock | New Card -->
     <template #action-buttons>
-      <div
-        class="flex items-center"
-        :class="lock.isLocked.value ? 'justify-center' : ''"
-      >
-        <!-- Left: Home button -->
-        <div v-if="!lock.isLocked.value" class="flex flex-1 justify-start">
+      <div class="flex items-center" :class="isLocked ? 'justify-center' : ''">
+        <!-- Left: Home (hidden when locked) -->
+        <div v-if="!isLocked" class="flex flex-1 justify-start">
           <RouterLink
             to="/"
             class="flex items-center justify-center rounded-full bg-white p-2 text-sm text-gray-600 shadow-sm transition-colors hover:bg-gray-100 sm:gap-1.5 sm:px-3"
@@ -83,22 +95,20 @@ function copyShareableUrl(): void {
           </RouterLink>
         </div>
 
-        <!-- Center: Lock button -->
+        <!-- Center: Lock toggle -->
         <button
           class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium shadow-sm transition-colors"
-          :class="
-            lock.isLocked.value
-              ? 'bg-green-500 text-white hover:bg-green-600'
-              : 'bg-white text-gray-600 hover:bg-gray-100'
-          "
+          :class="isLocked
+            ? 'bg-green-500 text-white hover:bg-green-600'
+            : 'bg-white text-gray-600 hover:bg-gray-100'"
           @click.stop="lock.toggle"
         >
-          <FontAwesomeIcon :icon="lock.isLocked.value ? 'lock' : 'lock-open'" />
-          <span>{{ lock.isLocked.value ? 'Unlock' : 'Lock' }}</span>
+          <FontAwesomeIcon :icon="isLocked ? 'lock' : 'lock-open'" />
+          <span>{{ isLocked ? 'Unlock' : 'Lock' }}</span>
         </button>
 
-        <!-- Right: New Card button -->
-        <div v-if="!lock.isLocked.value" class="flex flex-1 justify-end">
+        <!-- Right: New Card (hidden when locked) -->
+        <div v-if="!isLocked" class="flex flex-1 justify-end">
           <button
             class="flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-2 text-sm font-medium text-green-600 shadow-sm transition-colors hover:bg-green-500 hover:text-white"
             @click="handleRandomCard"
@@ -110,9 +120,15 @@ function copyShareableUrl(): void {
       </div>
     </template>
 
-    <!-- Lock mode overlays -->
-    <template v-if="lock.isLocked.value">
-      <!-- Touch capture (z-50) -->
+    <!--
+      Lock mode overlay system (z-index layering):
+      - z-30: Main content (card display)
+      - z-40: Black overlay with phrase
+      - z-50: Invisible touch capture layer
+      - z-60: Header with unlock button (set by SiteLayout fixedHeader)
+    -->
+    <template v-if="isLocked">
+      <!-- Touch capture: intercepts all touches for peek behavior -->
       <div
         class="fixed inset-0 z-50 select-none touch-none [-webkit-touch-callout:none] [-webkit-user-select:none]"
         @mousedown="lock.startPeek"
@@ -124,9 +140,9 @@ function copyShareableUrl(): void {
         @contextmenu.prevent
       />
 
-      <!-- Black overlay with phrase (z-40, hidden when peeking) -->
+      <!-- Black overlay with trash talk (hidden when peeking) -->
       <div
-        v-if="!lock.isPeeking.value"
+        v-if="!isPeeking"
         class="pointer-events-none fixed inset-0 z-40 flex flex-col items-center justify-center bg-black px-8 select-none"
       >
         <span class="mb-6 text-xl font-medium text-white">Hold anywhere to reveal</span>
@@ -146,7 +162,7 @@ function copyShareableUrl(): void {
     <!-- Main content -->
     <div
       class="flex flex-col items-center justify-center px-4 pb-4 sm:px-8 sm:pb-8"
-      :class="lock.isLocked.value ? 'fixed inset-0 z-30' : 'flex-1'"
+      :class="isLocked ? 'fixed inset-0 z-30' : 'flex-1'"
     >
       <!-- Loading -->
       <div v-if="store.isLoading" class="text-xl">Loading...</div>
@@ -189,7 +205,7 @@ function copyShareableUrl(): void {
 
         <!-- Card search (hidden when locked) -->
         <div
-          v-if="!lock.isLocked.value"
+          v-if="!isLocked"
           class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
         >
           <CardSearch @search="handleSearch" />
@@ -197,7 +213,7 @@ function copyShareableUrl(): void {
 
         <!-- Share section (hidden when locked) -->
         <div
-          v-if="!lock.isLocked.value"
+          v-if="!isLocked"
           class="mx-4 mt-6 w-full max-w-md rounded-lg border border-gray-200 bg-white/80 px-4 py-3 text-center"
         >
           <p class="mb-2 text-xs font-medium tracking-wide text-gray-500 uppercase">

@@ -1,32 +1,32 @@
 <script setup lang="ts">
+/**
+ * BaseModal - Reusable modal dialog with backdrop and close handling.
+ */
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useClickOutside, useEscapeKey } from '@/composables'
 import IconButton from './IconButton.vue'
 
+type ModalSize = 'sm' | 'md' | 'lg' | 'xl'
+
 interface Props {
   title?: string
   icon?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
+  size?: ModalSize
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 })
 
-const sizeClasses = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'max-w-sm'
-    case 'md':
-      return 'max-w-md'
-    case 'lg':
-      return 'max-w-2xl'
-    case 'xl':
-      return 'max-w-4xl'
-    default:
-      return 'max-w-md'
-  }
-})
+// Size classes as a lookup map
+const sizeClassMap: Record<ModalSize, string> = {
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-2xl',
+  xl: 'max-w-4xl',
+}
+
+const sizeClasses = computed(() => sizeClassMap[props.size])
 
 const emit = defineEmits<{
   close: []
