@@ -3,7 +3,7 @@
  * GameView - Main game entry point with save/restore prompt and game layout.
  */
 import { ref, computed, onMounted } from 'vue'
-import { onBeforeRouteLeave } from 'vue-router'
+import { useRouter, onBeforeRouteLeave, type RouteLocationRaw } from 'vue-router'
 import type { GameMode } from '@/types'
 import { useGameStore, useSettingsStore } from '@/stores'
 import { GameLayout } from '@/components/layout'
@@ -17,6 +17,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const router = useRouter()
 const gameStore = useGameStore()
 const settingsStore = useSettingsStore()
 
@@ -27,7 +28,8 @@ const settingsStore = useSettingsStore()
 const showRestorePrompt = ref(false)
 const showFreshStartConfirm = ref(false)
 const showLeaveConfirm = ref(false)
-const pendingNavigation = ref<(() => void) | null>(null)
+const pendingDestination = ref<RouteLocationRaw | null>(null)
+const skipLeaveGuard = ref(false)
 const isReady = ref(false)
 
 // ===================
@@ -49,10 +51,14 @@ onMounted(() => {
 })
 
 // Warn user before leaving if auto-save is disabled
-onBeforeRouteLeave((_to, _from, next) => {
+onBeforeRouteLeave((to, _from, next) => {
+  if (skipLeaveGuard.value) {
+    next()
+    return
+  }
   if (isReady.value && !settingsStore.autoSaveEnabled) {
     showLeaveConfirm.value = true
-    pendingNavigation.value = () => next()
+    pendingDestination.value = to
     next(false)
   } else {
     next()
@@ -87,14 +93,14 @@ function handleFreshStartConfirm(): void {
 
 function handleLeaveCancel(): void {
   showLeaveConfirm.value = false
-  pendingNavigation.value = null
+  pendingDestination.value = null
 }
 
 function handleLeaveConfirm(): void {
   showLeaveConfirm.value = false
-  if (pendingNavigation.value) {
-    pendingNavigation.value()
-    pendingNavigation.value = null
+  if (pendingDestination.value) {
+    skipLeaveGuard.value = true
+    router.push(pendingDestination.value)
   }
 }
 </script>

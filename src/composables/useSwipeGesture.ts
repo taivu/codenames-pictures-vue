@@ -62,11 +62,16 @@ export function useSwipeGesture(
     isSwiping.value = false
   }
 
+  function handleTouchCancel() {
+    isSwiping.value = false
+  }
+
   onMounted(() => {
     const el = targetRef.value
     if (!el) return
     el.addEventListener('touchstart', handleTouchStart, { passive: true })
     el.addEventListener('touchend', handleTouchEnd, { passive: true })
+    el.addEventListener('touchcancel', handleTouchCancel, { passive: true })
   })
 
   onUnmounted(() => {
@@ -74,6 +79,7 @@ export function useSwipeGesture(
     if (!el) return
     el.removeEventListener('touchstart', handleTouchStart)
     el.removeEventListener('touchend', handleTouchEnd)
+    el.removeEventListener('touchcancel', handleTouchCancel)
   })
 
   return { isSwiping }
